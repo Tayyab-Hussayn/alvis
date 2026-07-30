@@ -1,94 +1,86 @@
 'use client'
 
-import Image from 'next/image'
-import { Linkedin, Plus } from 'lucide-react'
-import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/Button'
-import { SectionLabel } from '@/components/ui/SectionLabel'
-import { Container } from '@/components/ui/Container'
-import { team } from '@/data/team'
+import Link from 'next/link'
+import { Plus } from 'lucide-react'
 
-function getInitials(name: string) {
-  return name
-    .split(' ')
-    .slice(0, 2)
-    .map((n) => n[0])
-    .join('')
-    .toUpperCase()
-}
+const team = [
+  {
+    initials: 'TH',
+    name: 'Tayyab H.',
+    role: 'Founder & Technical Lead',
+    bio: 'Full-stack dev and automation architect. Shipped 200+ projects. Obsessed with systems that scale.',
+  },
+  {
+    initials: 'SK',
+    name: 'Sarah K.',
+    role: 'Design & Creative Lead',
+    bio: 'UI/UX and brand designer. Makes complex products feel intuitive. 6 years in digital product design.',
+  },
+  {
+    initials: 'OA',
+    name: 'Omar A.',
+    role: 'Growth & Automation Lead',
+    bio: 'Runs outreach systems and AI workflows. Built lead generation infrastructure for 30+ businesses.',
+  },
+]
 
 export function TeamSection() {
   return (
-    <section className="py-20 md:py-28 lg:py-36 bg-bg">
-      <Container>
-        <div className="mb-12 md:mb-16">
-          <SectionLabel className="mb-4">The Team</SectionLabel>
-          <h2 className="text-display-lg font-display font-bold text-text">
-            The People Who Deliver
+    <section className="w-full bg-[#f8f9ff] py-20 md:py-28 lg:py-36">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
+
+        <div className="text-center mb-16">
+          <span className="block text-[#004ac6] uppercase text-[12px] tracking-widest font-semibold mb-4">
+            THE TEAM
+          </span>
+          <h2 className="text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-tight tracking-tight text-[#0b1c30] mb-4">
+            Small team, big output
           </h2>
+          <p className="text-[18px] text-[#434655] leading-relaxed max-w-2xl mx-auto">
+            Every person here ships code, writes copy, or runs campaigns. No passengers.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {team.map((member) => (
-            <motion.div
-              key={member.name}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.2 }}
-              className="group cursor-default"
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {team.map(({ initials, name, role, bio }) => (
+            <div
+              key={name}
+              className="bg-white rounded-2xl border border-[#c3c6d7]/20 p-8 flex flex-col items-center text-center hover:-translate-y-1 transition-transform duration-300"
+              style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.04)' }}
             >
-              {/* Photo */}
-              <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-subtle relative">
-                <motion.div
-                  whileHover={{ scale: 1.04 }}
-                  transition={{ duration: 0.4 }}
-                  className="absolute inset-0"
-                >
-                  {/* Gradient placeholder — user will replace with real photos */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent-soft to-subtle flex items-center justify-center">
-                    <span className="text-display-xl font-display font-bold text-accent/40">
-                      {getInitials(member.name)}
-                    </span>
-                  </div>
-                  {/* Uncomment when real photos exist:
-                  <Image src={member.photo} alt={member.name} fill className="object-cover object-top" />
-                  */}
-                </motion.div>
+              <div
+                className="w-20 h-20 rounded-full flex items-center justify-center mb-5 border-2 border-[#004ac6]/20 shrink-0"
+                style={{ background: 'linear-gradient(135deg, #e5eeff 0%, #dce9ff 100%)' }}
+              >
+                <span className="text-[#004ac6] font-bold text-[22px]">{initials}</span>
               </div>
-
-              {/* Details */}
-              <div className="flex items-start justify-between mt-4">
-                <div>
-                  <p className="text-body-lg font-display font-semibold text-text">
-                    {member.name}
-                  </p>
-                  <p className="text-body-sm text-text-muted mt-0.5">{member.role}</p>
-                </div>
-                <a
-                  href={member.linkedin}
-                  aria-label={`${member.name} on LinkedIn`}
-                  className="text-text-faint hover:text-accent transition-colors duration-200 mt-1"
-                >
-                  <Linkedin size={18} />
-                </a>
-              </div>
-            </motion.div>
+              <p className="text-[#0b1c30] font-bold text-[18px]">{name}</p>
+              <span className="inline-block mt-2 mb-4 px-3 py-1 rounded-full bg-[#eff4ff] text-[#004ac6] text-[11px] font-semibold uppercase tracking-wide">
+                {role}
+              </span>
+              <p className="text-[14px] text-[#434655] leading-relaxed">{bio}</p>
+            </div>
           ))}
 
-          {/* We're Hiring card */}
-          <div className="bg-accent-soft border border-accent border-dashed rounded-2xl p-8 flex flex-col items-center justify-center aspect-[3/4]">
-            <Plus size={32} className="text-accent mb-4" />
-            <h3 className="text-display-md font-display font-semibold text-text mb-2 text-center">
-              We&apos;re Growing
-            </h3>
-            <p className="text-body-sm text-text-muted text-center mb-6">
-              Think you belong here? We&apos;d love to hear from you.
+          {/* We're Growing card */}
+          <div className="bg-white rounded-2xl border-2 border-dashed border-[#c3c6d7]/40 p-8 flex flex-col items-center justify-center text-center hover:-translate-y-1 transition-transform duration-300">
+            <div className="w-12 h-12 rounded-full bg-[#eff4ff] flex items-center justify-center mb-4">
+              <Plus size={22} className="text-[#004ac6]" />
+            </div>
+            <h3 className="text-[#0b1c30] font-bold text-[17px] mb-2">{"We're Growing"}</h3>
+            <p className="text-[#434655] text-[14px] leading-relaxed mb-5">
+              Think you belong here? We want to hear from you.
             </p>
-            <Button href="/contact" variant="ghost" withArrow>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center px-6 py-2.5 rounded-full border border-[#004ac6] text-[#004ac6] text-[13px] font-semibold hover:bg-[#eff4ff] transition-colors duration-200"
+            >
               Say Hello
-            </Button>
+            </Link>
           </div>
         </div>
-      </Container>
+
+      </div>
     </section>
   )
 }

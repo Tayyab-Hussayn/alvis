@@ -27,13 +27,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-12 lg:gap-8">
           {/* Col 1: Brand */}
           <div className="flex flex-col gap-5">
-            <Image
-              src="/logo.svg"
-              alt="Alvis"
-              width={100}
-              height={36}
-              className="brightness-0 invert"
-            />
+            <div className="bg-white rounded-xl p-2.5 inline-flex">
+              <Image
+                src="/images/alvisLogo.jpg"
+                alt="Alvis"
+                width={120}
+                height={48}
+                className="h-12 w-auto object-contain"
+              />
+            </div>
             <p className="text-body-lg font-display font-semibold text-white">
               Clarity. Strategy. Growth.
             </p>

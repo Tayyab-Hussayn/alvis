@@ -1,109 +1,101 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import {
-  Monitor, TrendingUp, Share2, Target, Palette, Layout, FileText, Server,
-} from 'lucide-react'
-import { Button } from '@/components/ui/Button'
-import { SectionLabel } from '@/components/ui/SectionLabel'
-import { Container } from '@/components/ui/Container'
-
-const iconItems = [
-  { Icon: Monitor,    label: 'Web Design & Dev',    top: '10%',  left: '5%'  },
-  { Icon: TrendingUp, label: 'SEO',                 top: '5%',   left: '40%' },
-  { Icon: Share2,     label: 'Social Media',        top: '18%',  left: '70%' },
-  { Icon: Target,     label: 'Google Ads & PPC',    top: '48%',  left: '10%' },
-  { Icon: Palette,    label: 'Branding',            top: '55%',  left: '50%' },
-  { Icon: Layout,     label: 'UI/UX Design',        top: '38%',  left: '78%' },
-  { Icon: FileText,   label: 'Content Marketing',   top: '72%',  left: '22%' },
-  { Icon: Server,     label: 'IT Consulting',       top: '75%',  left: '65%' },
-]
+import Link from 'next/link'
 
 export function ServicesHero() {
-  const iconsRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced || !iconsRef.current) return
-
-    const init = async () => {
-      const { gsap } = await import('gsap')
-
-      const icons = Array.from(iconsRef.current!.children) as HTMLElement[]
-      icons.forEach((icon, i) => {
-        gsap.from(icon, {
-          opacity: 0,
-          scale: 0.6,
-          duration: 0.5,
-          delay: 0.4 + i * 0.07,
-          ease: 'back.out(1.7)',
-        })
-        gsap.to(icon, {
-          y: i % 2 === 0 ? -8 : 8,
-          duration: 3 + i * 0.4,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          delay: i * 0.3,
-        })
-      })
-    }
-
-    init()
-  }, [])
-
   return (
-    <section className="relative min-h-[65vh] flex flex-col justify-center pt-36 pb-20 overflow-hidden">
-      {/* Grid background */}
-      <div
-        className="absolute inset-0 opacity-50 pointer-events-none"
-        style={{
-          backgroundImage:
-            'linear-gradient(var(--color-border) 1px, transparent 1px), linear-gradient(90deg, var(--color-border) 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-          maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
-        }}
-      />
+    <section className="w-full bg-[#f8f9ff] py-20 md:py-28 lg:py-36">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
 
-      <Container className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left text */}
-          <div className="lg:col-span-8">
-            <SectionLabel className="mb-6">Our Services</SectionLabel>
-            <h1 className="text-display-2xl font-display font-bold text-text mb-6">
-              Every Service,<br />
-              Engineered to<br />
-              <span className="text-accent italic">Perform.</span>
+          {/* Left Column */}
+          <div className="flex flex-col items-start gap-6">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-[#dbe1ff] text-[#004ac6] text-[12px] font-semibold uppercase tracking-widest">
+              WHAT WE BUILD
+            </div>
+            <h1 className="text-[clamp(2.25rem,5vw,4rem)] font-bold leading-tight tracking-tight text-[#0b1c30]">
+              Technical services that turn ideas into working software
             </h1>
-            <p className="text-body-lg text-text-muted max-w-xl mb-10">
-              We don&apos;t offer generic services. Each engagement is custom-built around your
-              business, your market, and your goals. From design to digital marketing to IT —
-              Alvis delivers results you can measure.
+            <p className="text-[18px] leading-relaxed text-[#434655] max-w-lg">
+              From AI-powered automation to full-stack web products — Alvis builds what others only plan.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <Button href="/contact" variant="primary">Get a Free Audit</Button>
-              <Button href="/case-studies" variant="secondary">See Our Results</Button>
+            <div className="flex flex-wrap gap-4 mt-2">
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-[#004ac6] text-white text-[14px] font-semibold shadow-lg hover:-translate-y-0.5 hover:shadow-xl transition-all duration-200 active:scale-95"
+              >
+                Get in Touch
+              </Link>
+              <Link
+                href="/case-studies"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-[#c3c6d7] text-[#0b1c30] text-[14px] font-semibold hover:bg-[#e5eeff] hover:-translate-y-0.5 transition-all duration-200"
+              >
+                See Our Work
+              </Link>
             </div>
           </div>
 
-          {/* Right — icon cloud */}
-          <div className="hidden lg:block lg:col-span-4">
-            <div ref={iconsRef} className="relative h-80">
-              {iconItems.map(({ Icon, label, top, left }) => (
-                <div
-                  key={label}
-                  title={label}
-                  className="group absolute w-14 h-14 rounded-2xl bg-surface border border-border shadow-sm flex items-center justify-center hover:-translate-y-1 hover:border-accent transition-all duration-200 cursor-default"
-                  style={{ top, left }}
-                >
-                  <Icon size={22} className="text-text-muted group-hover:text-accent transition-colors" />
+          {/* Right Column: CSS Dashboard Mockup */}
+          <div className="relative w-full flex justify-center items-center py-8">
+            <div className="relative w-full max-w-[460px]" style={{ perspective: '1000px' }}>
+              <div
+                className="bg-[#0b1c30] rounded-2xl p-6 shadow-2xl"
+                style={{ transform: 'rotateY(-6deg) rotateX(3deg)' }}
+              >
+                {/* Window chrome */}
+                <div className="flex items-center gap-2 mb-5">
+                  <div className="w-3 h-3 rounded-full bg-red-400/50" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-400/50" />
+                  <div className="w-3 h-3 rounded-full bg-green-400/50" />
+                  <span className="ml-3 text-[#c3c6d7]/30 text-[11px]">dashboard.alvis.app</span>
                 </div>
-              ))}
+
+                {/* Metric cards */}
+                <div className="grid grid-cols-3 gap-3 mb-4">
+                  {[
+                    { label: 'Automations', val: '142' },
+                    { label: 'Time Saved',   val: '38h'  },
+                    { label: 'ROI',          val: '4.2x' },
+                  ].map(m => (
+                    <div key={m.label} className="bg-white/5 rounded-xl p-3 border border-white/10">
+                      <div className="text-[#004ac6] text-[10px] uppercase tracking-wide mb-1">{m.label}</div>
+                      <div className="text-white text-[20px] font-bold">{m.val}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bar chart */}
+                <div className="bg-white/5 rounded-xl p-4 border border-white/10">
+                  <div className="text-[#c3c6d7]/40 text-[11px] mb-3">Weekly Output</div>
+                  <div className="flex items-end gap-1.5 h-12">
+                    {[40, 62, 48, 82, 55, 95, 70].map((h, i) => (
+                      <div
+                        key={i}
+                        className="flex-1 rounded-sm"
+                        style={{
+                          height: `${h}%`,
+                          backgroundColor: '#004ac6',
+                          opacity: i === 5 ? 1 : 0.25 + i * 0.12,
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Ambient glow */}
+              <div
+                className="absolute inset-0 -z-10 pointer-events-none rounded-full"
+                style={{
+                  background: 'radial-gradient(circle, rgba(0,74,198,0.12) 0%, transparent 70%)',
+                  filter: 'blur(60px)',
+                }}
+              />
             </div>
           </div>
+
         </div>
-      </Container>
+      </div>
     </section>
   )
 }

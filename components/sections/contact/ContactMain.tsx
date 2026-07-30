@@ -337,12 +337,12 @@ function ContactDetails() {
 
 export function ContactMain() {
   return (
-    <section className="py-16 bg-bg">
+    <section className="py-16 bg-white">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
           {/* Form */}
           <div className="lg:col-span-3">
-            <h2 className="text-display-md font-display font-bold text-text mb-8">
+            <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-bold text-[#0b1c30] mb-8">
               Send Us a Message
             </h2>
             <Suspense fallback={<div className="h-96 animate-pulse bg-subtle rounded-2xl" />}>

@@ -65,14 +65,19 @@ export function Header() {
         <Container className="h-full flex items-center justify-between">
           {/* Logo */}
           <Link href="/" aria-label="Alvis - Home" className="flex-shrink-0 relative z-10">
-            <Image
-              src="/logo.svg"
-              alt="Alvis"
-              width={100}
-              height={36}
-              priority
-              className={cn('w-20 md:w-[100px] transition-all duration-300', darkHero && 'invert')}
-            />
+            <div className={cn(
+              'transition-all duration-300',
+              darkHero && 'bg-white rounded-xl px-2 py-1',
+            )}>
+              <Image
+                src="/images/alvisLogo.jpg"
+                alt="Alvis"
+                width={200}
+                height={200}
+                priority
+                className="w-16 h-16 md:w-20 md:h-20 object-contain scale-[1.6] origin-left"
+              />
+            </div>
           </Link>
 
           {/* Desktop Nav — centered absolutely */}

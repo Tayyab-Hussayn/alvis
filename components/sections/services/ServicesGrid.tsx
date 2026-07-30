@@ -1,90 +1,85 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import {
-  Monitor, TrendingUp, Share2, Target, Palette, Layout, FileText, Server,
-} from 'lucide-react'
-import { SectionLabel } from '@/components/ui/SectionLabel'
-import { Container } from '@/components/ui/Container'
-import { services } from '@/data/services'
+import { Code2, Bot, Network, Target, CheckCircle, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 
-const iconMap: Record<string, React.ElementType> = {
-  Monitor, TrendingUp, Share2, Target, Palette, Layout, FileText, Server,
-}
+const services = [
+  {
+    icon: Code2,
+    title: 'Web Development & Design',
+    desc: 'Production-grade websites, web apps, and SaaS dashboards built with Next.js and TypeScript.',
+    includes: ['Custom UI/UX design', 'Next.js App Router', 'SEO & performance'],
+  },
+  {
+    icon: Bot,
+    title: 'AI Automation & Agents',
+    desc: 'Intelligent automation pipelines that replace manual work — from content generation to data processing.',
+    includes: ['LLM-powered workflows', 'Custom AI agents', 'API integrations'],
+  },
+  {
+    icon: Network,
+    title: 'n8n & Workflow Automation',
+    desc: 'End-to-end n8n workflows that connect your tools and eliminate repetitive operations.',
+    includes: ['Multi-step workflow builds', 'Webhook integrations', 'CRM & data sync'],
+  },
+  {
+    icon: Target,
+    title: 'Lead Generation Systems',
+    desc: 'Data-driven outreach systems and landing pages that bring qualified leads consistently.',
+    includes: ['Outreach infrastructure', 'Landing page conversion', 'Lead tracking setup'],
+  },
+]
 
 export function ServicesGrid() {
-  const gridRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced || !gridRef.current) return
-
-    const init = async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      gsap.from(Array.from(gridRef.current!.children), {
-        opacity: 0,
-        y: 40,
-        duration: 0.6,
-        stagger: 0.08,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: gridRef.current, start: 'top 80%' },
-      })
-    }
-
-    init()
-  }, [])
-
-  const scrollToService = (slug: string) => {
-    document.getElementById(slug)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
   return (
-    <section className="py-20 md:py-28 bg-subtle">
-      <Container>
-        <div className="mb-12 md:mb-16">
-          <SectionLabel className="mb-4">What We Offer</SectionLabel>
-          <h2 className="text-display-lg font-display font-bold text-text mb-4">
-            Full-Spectrum Digital Services
+    <section className="w-full bg-[#f8f9ff] py-20 md:py-28 lg:py-36">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
+
+        {/* Section Header */}
+        <div className="flex flex-col items-center text-center mb-16 max-w-3xl mx-auto">
+          <span className="text-[#004ac6] text-[12px] font-semibold uppercase tracking-widest mb-4">
+            OUR SERVICES
+          </span>
+          <h2 className="text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-tight tracking-tight text-[#0b1c30] mb-4">
+            Everything you need to build, automate, and grow
           </h2>
-          <p className="text-body-lg text-text-muted max-w-2xl">
-            Pick one. Pick all. Every service is designed to work standalone or as
-            part of a comprehensive growth strategy.
+          <p className="text-[18px] text-[#434655] leading-relaxed">
+            Four core capabilities, built to work together.
           </p>
         </div>
 
-        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {services.map((service, i) => {
-            const Icon = iconMap[service.icon]
-            const num = String(i + 1).padStart(2, '0')
-            return (
-              <button
-                key={service.slug}
-                onClick={() => scrollToService(service.slug)}
-                className="group relative bg-surface border border-border rounded-2xl p-6 md:p-8 text-left hover:border-accent hover:shadow-sm hover:-translate-y-1 transition-all duration-250 overflow-hidden"
+        {/* 2×2 Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {services.map(({ icon: Icon, title, desc, includes }) => (
+            <div
+              key={title}
+              className="bg-white rounded-2xl border border-[#c3c6d7]/30 p-10 flex flex-col h-full hover:-translate-y-1 transition-transform duration-300"
+              style={{ boxShadow: '0 10px 25px -5px rgba(37,99,235,0.08), 0 8px 10px -6px rgba(37,99,235,0.05)' }}
+            >
+              <div className="bg-[#eff4ff] w-16 h-16 rounded-xl flex items-center justify-center mb-6 shrink-0">
+                <Icon className="text-[#004ac6]" size={28} />
+              </div>
+              <h3 className="text-[22px] font-bold text-[#0b1c30] mb-4">{title}</h3>
+              <p className="text-[16px] text-[#434655] leading-relaxed mb-8 flex-grow">{desc}</p>
+              <ul className="space-y-3 mb-8">
+                {includes.map(item => (
+                  <li key={item} className="flex items-start gap-3">
+                    <CheckCircle size={18} className="text-[#004ac6] mt-0.5 shrink-0" />
+                    <span className="text-[15px] text-[#434655]">{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 text-[#004ac6] text-[14px] font-semibold hover:opacity-70 transition-opacity mt-auto"
               >
-                {/* Decorative number */}
-                <span className="absolute top-4 right-5 text-display-lg font-display font-bold text-text-faint select-none">
-                  {num}
-                </span>
-
-                <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center mb-6">
-                  {Icon && <Icon size={22} className="text-accent" />}
-                </div>
-
-                <h3 className="text-display-md font-display font-semibold text-text mb-3 pr-8">
-                  {service.title}
-                </h3>
-                <p className="text-body-sm text-text-muted leading-relaxed">
-                  {service.shortDesc}
-                </p>
-              </button>
-            )
-          })}
+                Explore <ArrowRight size={16} />
+              </Link>
+            </div>
+          ))}
         </div>
-      </Container>
+
+      </div>
     </section>
   )
 }

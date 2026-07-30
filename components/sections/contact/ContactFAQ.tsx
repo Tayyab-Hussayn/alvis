@@ -2,14 +2,11 @@
 
 import { ChevronDown } from 'lucide-react'
 import * as Accordion from '@radix-ui/react-accordion'
-import { motion, AnimatePresence } from 'framer-motion'
-import { SectionLabel } from '@/components/ui/SectionLabel'
-import { Container } from '@/components/ui/Container'
 
 const faqs = [
   {
     q: 'How quickly will you respond?',
-    a: 'Within 24 hours on business days. If it\'s urgent, say so in your message.',
+    a: "Within 24 hours on business days. If it's urgent, say so in your message.",
   },
   {
     q: 'Do you work with small businesses or just large companies?',
@@ -17,65 +14,71 @@ const faqs = [
   },
   {
     q: 'Do you require a long-term contract?',
-    a: "No. Some services (like SEO) work best with 3–6 month commitments for results to compound, but we don't lock you in with punitive contracts.",
+    a: "No. Project-based work has no lock-in. Some services like SEO work best with 3–6 month commitments for results to compound, but we don't trap you.",
   },
   {
-    q: 'Can I see more work than what\'s on the website?',
+    q: "Can I see more work than what's on the website?",
     a: 'Yes — NDA-protected case studies are available on request. Just mention it in your message.',
   },
   {
     q: 'Do you work with clients outside your country?',
-    a: 'Entirely remote. We have clients across 12 countries. Time zones are manageable.',
+    a: 'Entirely remote. We have clients across 12+ countries. Time zones are manageable.',
   },
   {
     q: 'What happens after I send a message?',
-    a: "We review your project, and if it's a good fit, we schedule a 30-minute discovery call — no charge. From there, we'll propose next steps.",
+    a: "We review your project, and if it's a good fit, we schedule a 30-minute discovery call — no charge. From there, we'll propose exact next steps.",
   },
 ]
 
 export function ContactFAQ() {
   return (
-    <section className="bg-subtle py-20 border-t border-border">
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          {/* Left label */}
-          <div>
-            <SectionLabel className="mb-4">Common Questions</SectionLabel>
-            <h2 className="text-display-lg font-display font-bold text-text mt-4">
-              Before You<br />Reach Out
-            </h2>
-            <p className="text-body-lg text-text-muted mt-4 max-w-sm">
-              The questions we hear most often — answered honestly.
-            </p>
+    <section className="w-full bg-[#f8f9ff] py-20 md:py-28">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+
+          {/* Left sticky header */}
+          <div className="lg:col-span-5">
+            <div className="lg:sticky lg:top-32">
+              <span className="block text-[#004ac6] uppercase text-[12px] tracking-widest font-semibold mb-4">
+                COMMON QUESTIONS
+              </span>
+              <h2 className="text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-tight tracking-tight text-[#0b1c30] mb-4">
+                Before you<br />reach out
+              </h2>
+              <p className="text-[18px] text-[#434655] leading-relaxed max-w-sm">
+                The questions we hear most often — answered honestly.
+              </p>
+            </div>
           </div>
 
-          {/* Right accordion */}
-          <Accordion.Root type="single" collapsible className="space-y-0">
-            {faqs.map((faq, i) => (
-              <Accordion.Item key={i} value={`item-${i}`} className="border-b border-border last:border-b-0">
-                <Accordion.Trigger className="group flex items-center justify-between w-full text-body-md font-semibold text-text py-5 hover:text-accent transition-colors duration-200 text-left">
-                  {faq.q}
-                  <motion.span
-                    className="flex-shrink-0 ml-4 text-text-muted group-hover:text-accent transition-colors"
-                    initial={false}
-                  >
+          {/* Right: accordion */}
+          <div className="lg:col-span-7">
+            <Accordion.Root type="single" collapsible className="flex flex-col border-t border-[#c3c6d7]/30">
+              {faqs.map((faq, i) => (
+                <Accordion.Item
+                  key={i}
+                  value={`item-${i}`}
+                  className="border-b border-[#c3c6d7]/30"
+                >
+                  <Accordion.Trigger className="group flex items-center justify-between w-full text-[17px] font-semibold text-[#0b1c30] py-5 hover:text-[#004ac6] transition-colors duration-200 text-left gap-4">
+                    {faq.q}
                     <ChevronDown
                       size={18}
-                      className="transition-transform duration-200 group-data-[state=open]:rotate-180"
+                      className="shrink-0 text-[#004ac6] transition-transform duration-200 group-data-[state=open]:rotate-180"
                     />
-                  </motion.span>
-                </Accordion.Trigger>
+                  </Accordion.Trigger>
+                  <Accordion.Content className="overflow-hidden data-[state=open]:animate-[accordion-down_0.2s_ease-out] data-[state=closed]:animate-[accordion-up_0.2s_ease-out]">
+                    <p className="text-[15px] text-[#434655] pb-5 leading-relaxed pr-8">
+                      {faq.a}
+                    </p>
+                  </Accordion.Content>
+                </Accordion.Item>
+              ))}
+            </Accordion.Root>
+          </div>
 
-                <Accordion.Content className="overflow-hidden data-[state=open]:animate-[accordion-down_0.2s_ease-out] data-[state=closed]:animate-[accordion-up_0.2s_ease-out]">
-                  <p className="text-body-md text-text-muted pb-5 leading-relaxed pr-8">
-                    {faq.a}
-                  </p>
-                </Accordion.Content>
-              </Accordion.Item>
-            ))}
-          </Accordion.Root>
         </div>
-      </Container>
+      </div>
     </section>
   )
 }

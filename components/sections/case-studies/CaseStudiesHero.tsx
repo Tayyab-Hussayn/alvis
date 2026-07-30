@@ -1,65 +1,50 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { SectionLabel } from '@/components/ui/SectionLabel'
-import { Container } from '@/components/ui/Container'
-
 export function CaseStudiesHero() {
-  const h1Ref    = useRef<HTMLHeadingElement>(null)
-  const bodyRef  = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
-
-    const init = async () => {
-      const { gsap } = await import('gsap')
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-      tl.from(h1Ref.current,   { opacity: 0, y: 50, duration: 0.9, delay: 0.2 })
-        .from(bodyRef.current, { opacity: 0, y: 20, duration: 0.6 }, '-=0.4')
-    }
-
-    init()
-  }, [])
-
   return (
-    <section className="min-h-[50vh] flex flex-col justify-center pt-36 pb-16 bg-bg">
-      <Container>
-        <SectionLabel className="mb-4">Our Work</SectionLabel>
+    <section className="w-full bg-white pt-36 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-end">
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-end mt-4">
-          <h1
-            ref={h1Ref}
-            className="text-display-2xl font-display font-bold text-text"
-          >
-            Work That
-            <span className="text-accent italic"> Speaks</span>
-            <br />for Itself.
-          </h1>
-
-          <div ref={bodyRef}>
-            <p className="text-body-lg text-text-muted mb-6">
-              From brand launches to SEO campaigns to full website rebuilds —
-              every case study here is a real business problem we solved with
-              measurable outcomes.
+          {/* Left: headline */}
+          <div>
+            <span className="block text-[#004ac6] uppercase text-[12px] tracking-widest font-semibold mb-5">
+              OUR WORK
+            </span>
+            <h1 className="font-bold leading-none tracking-tight text-[#0b1c30] mb-6"
+              style={{ fontSize: 'clamp(2.5rem,6vw,4.5rem)' }}>
+              Results we&apos;re<br />
+              proud of.
+            </h1>
+            <p className="text-[18px] text-[#434655] leading-relaxed max-w-lg">
+              Every number here represents a real business problem solved. No vanity metrics, no cherry-picked wins.
             </p>
-            <div className="flex gap-8 text-body-sm text-text-muted">
-              <span>
-                <strong className="block text-display-md font-display font-bold text-text">50+</strong>
-                Projects
-              </span>
-              <span>
-                <strong className="block text-display-md font-display font-bold text-text">12</strong>
-                Countries
-              </span>
-              <span>
-                <strong className="block text-display-md font-display font-bold text-text">8</strong>
-                Industries
-              </span>
-            </div>
           </div>
+
+          {/* Right: stat counters */}
+          <div className="grid grid-cols-3 gap-6 lg:gap-8 pb-2">
+            {[
+              { value: '9', label: 'Case Studies' },
+              { value: '50+', label: 'Total Clients' },
+              { value: '200+', label: 'Projects Shipped' },
+            ].map(({ value, label }) => (
+              <div key={label} className="flex flex-col items-start">
+                <span className="font-extrabold text-[#004ac6] leading-none mb-2"
+                  style={{ fontSize: 'clamp(2.25rem,4vw,3rem)' }}>
+                  {value}
+                </span>
+                <span className="text-[#434655] text-[13px] uppercase tracking-widest font-medium">
+                  {label}
+                </span>
+              </div>
+            ))}
+          </div>
+
         </div>
-      </Container>
+
+        {/* Divider */}
+        <div className="mt-16 h-px bg-[#c3c6d7]/30" />
+      </div>
     </section>
   )
 }

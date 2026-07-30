@@ -1,96 +1,70 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { Eye, Gem, Shield, Lightbulb } from 'lucide-react'
-import { SectionLabel } from '@/components/ui/SectionLabel'
-import { Container } from '@/components/ui/Container'
+import { Gem, MessageSquareMore, Layers, Users } from 'lucide-react'
 
 const values = [
   {
-    number: '01',
-    Icon: Eye,
-    title: 'Radical Transparency',
-    body: "We tell clients what they need to hear, not what sounds good. No hidden fees. No inflated reports. If something isn't working, we say so first.",
-  },
-  {
-    number: '02',
+    num: '01',
     Icon: Gem,
-    title: 'Obsession With Craft',
-    body: 'Every piece of work — a social post, a landing page, an API endpoint — gets treated like it matters. Because it does.',
+    title: 'Craft Over Speed',
+    desc: "We won't ship something we're not proud of. Quality is our default state, not an upgrade.",
   },
   {
-    number: '03',
-    Icon: Shield,
-    title: 'Accountability Over Excuses',
-    body: "We set goals we can be held to. If we miss, we analyze why and fix it. We don't blame market conditions or client decisions.",
+    num: '02',
+    Icon: MessageSquareMore,
+    title: 'Honest Before Polished',
+    desc: "We tell clients what won't work before we agree to build it. Uncomfortable truths now beat expensive pivots later.",
   },
   {
-    number: '04',
-    Icon: Lightbulb,
-    title: 'Curiosity as Strategy',
-    body: 'The best solutions come from asking better questions. We never assume we already know the answer.',
+    num: '03',
+    Icon: Layers,
+    title: 'Technical Depth First',
+    desc: 'We understand what we build at the infrastructure level. Surface-level solutions never make it past our review.',
+  },
+  {
+    num: '04',
+    Icon: Users,
+    title: 'Small Enough to Care',
+    desc: 'We deliberately stay lean. Every client gets senior attention because we never overcommit.',
   },
 ]
 
 export function OurValues() {
-  const gridRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced || !gridRef.current) return
-
-    const init = async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      gsap.from(Array.from(gridRef.current!.children), {
-        opacity: 0,
-        y: 40,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: gridRef.current, start: 'top 80%' },
-      })
-    }
-
-    init()
-  }, [])
-
   return (
-    <section className="py-20 md:py-28 lg:py-36 bg-subtle">
-      <Container>
+    <section className="w-full bg-white py-20 md:py-28 lg:py-36">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
+
         <div className="text-center mb-16">
-          <SectionLabel className="mb-4 justify-center">What We Believe</SectionLabel>
-          <h2 className="text-display-lg font-display font-bold text-text mt-4 mb-4">
-            The Principles Behind Every Decision
+          <span className="block text-[#004ac6] uppercase text-[12px] tracking-widest font-semibold mb-4">
+            HOW WE THINK
+          </span>
+          <h2 className="text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-tight tracking-tight text-[#0b1c30] mb-4">
+            Four principles we never compromise on
           </h2>
-          <p className="text-body-lg text-text-muted max-w-2xl mx-auto">
-            Culture is not a poster on the wall. These are the values that actually show up
-            in how we work.
+          <p className="text-[18px] text-[#434655] leading-relaxed max-w-2xl mx-auto">
+            Not wall-art values — how we actually make decisions every day.
           </p>
         </div>
 
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {values.map(({ number, Icon, title, body }) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {values.map(({ num, Icon, title, desc }) => (
             <div
-              key={number}
-              className="bg-surface border border-border rounded-2xl p-8 hover:bg-subtle hover:border-accent transition-all duration-250"
+              key={num}
+              className="bg-[#f8f9ff] rounded-2xl border border-[#c3c6d7]/20 p-8 relative overflow-hidden hover:-translate-y-1 transition-transform duration-300"
             >
-              <div className="w-14 h-14 rounded-2xl bg-accent-soft flex items-center justify-center mb-6">
-                <Icon size={24} className="text-accent" />
+              <span className="absolute top-4 right-6 text-[80px] font-bold leading-none select-none text-[#004ac6]/10">
+                {num}
+              </span>
+              <div className="w-12 h-12 bg-[#eff4ff] rounded-xl flex items-center justify-center mb-6">
+                <Icon size={22} className="text-[#004ac6]" />
               </div>
-              <p className="text-label font-mono text-text-faint uppercase tracking-widest mb-2">
-                {number}
-              </p>
-              <h3 className="text-display-md font-display font-semibold text-text mb-3">
-                {title}
-              </h3>
-              <p className="text-body-md text-text-muted leading-relaxed">{body}</p>
+              <h3 className="text-[20px] font-bold text-[#0b1c30] mb-2">{title}</h3>
+              <p className="text-[15px] text-[#434655] leading-relaxed pr-8">{desc}</p>
             </div>
           ))}
         </div>
-      </Container>
+
+      </div>
     </section>
   )
 }

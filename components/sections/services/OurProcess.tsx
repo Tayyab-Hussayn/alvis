@@ -1,137 +1,71 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { Search, Map, Zap, TrendingUp } from 'lucide-react'
-import { SectionLabel } from '@/components/ui/SectionLabel'
-import { Container } from '@/components/ui/Container'
+import { Search, Wrench, Rocket } from 'lucide-react'
 
 const steps = [
   {
-    number: '01',
-    Icon: Search,
-    title: 'Discovery',
-    content: 'We start by understanding your business, audience, market position, and goals. No assumptions — just clarity.',
-    outputs: ['Audit report', 'Competitor analysis', 'Goal definition'],
+    num: '01',
+    icon: Search,
+    title: 'Discovery & Scope',
+    desc: 'We learn your business, constraints, and goals in a focused 60-min call. Scoping takes days, not weeks.',
   },
   {
-    number: '02',
-    Icon: Map,
-    title: 'Strategy',
-    content: 'Every engagement gets a custom roadmap. We define what success looks like before we write a single line of code or run a single ad.',
-    outputs: ['Custom roadmap', 'KPI framework', 'Timeline & budget'],
+    num: '02',
+    icon: Wrench,
+    title: 'Build & Iterate',
+    desc: 'We ship working software fast, then refine based on real feedback. You see progress weekly.',
   },
   {
-    number: '03',
-    Icon: Zap,
-    title: 'Execution',
-    content: 'Our team executes with precision. Design, development, campaigns — done on time, within budget, to standard.',
-    outputs: ['Delivered on time', 'Quality assured', 'Weekly updates'],
-  },
-  {
-    number: '04',
-    Icon: TrendingUp,
-    title: 'Growth',
-    content: 'We measure, analyze, and iterate. What works gets amplified. What doesn\'t gets cut.',
-    outputs: ['Monthly reports', 'Optimization cycles', 'Ongoing advisory'],
+    num: '03',
+    icon: Rocket,
+    title: 'Ship & Scale',
+    desc: "Clean handoff with documentation. We stay available for support and scaling when you're ready.",
   },
 ]
 
 export function OurProcess() {
-  const lineRef  = useRef<HTMLDivElement>(null)
-  const stepsRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
-
-    const init = async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      if (lineRef.current) {
-        gsap.from(lineRef.current, {
-          scaleY: 0,
-          transformOrigin: 'top center',
-          duration: 1.2,
-          ease: 'power2.out',
-          scrollTrigger: { trigger: lineRef.current, start: 'top 70%' },
-        })
-      }
-
-      if (stepsRef.current) {
-        gsap.from(Array.from(stepsRef.current.children), {
-          opacity: 0,
-          y: 30,
-          duration: 0.6,
-          stagger: 0.18,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: stepsRef.current, start: 'top 80%' },
-        })
-      }
-    }
-
-    init()
-  }, [])
-
   return (
-    <section className="py-20 md:py-28 lg:py-36 bg-subtle">
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
-          {/* Left label column */}
-          <div className="lg:col-span-4 flex flex-col justify-start">
-            <SectionLabel className="mb-6">How We Work</SectionLabel>
-            <h2 className="text-display-lg font-display font-bold text-text mb-4">
-              A Process That<br />Delivers Every Time
-            </h2>
-            <p className="text-body-lg text-text-muted">
-              We don&apos;t guess. We research, plan, execute, and optimize — at every stage.
-            </p>
-          </div>
+    <section className="w-full bg-white py-20 md:py-28">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
 
-          {/* Right timeline */}
-          <div className="lg:col-span-8">
-            <div className="relative">
-              {/* Vertical line */}
+        {/* Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="block text-[#004ac6] uppercase text-[12px] tracking-widest font-semibold mb-4">
+            OUR PROCESS
+          </span>
+          <h2 className="text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-tight tracking-tight text-[#0b1c30] mb-4">
+            Simple process, serious execution
+          </h2>
+          <p className="text-[18px] text-[#434655] leading-relaxed">
+            No lengthy discovery phases, no scope creep. We move fast without cutting corners.
+          </p>
+        </div>
+
+        {/* Steps grid */}
+        <div className="relative">
+          {/* Desktop connector line */}
+          <div className="hidden md:block absolute top-[76px] left-[22%] right-[22%] h-px border-t-2 border-dashed border-[#c3c6d7]/40 z-0" />
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+            {steps.map(({ num, icon: Icon, title, desc }) => (
               <div
-                ref={lineRef}
-                className="absolute left-6 top-0 bottom-0 w-px bg-border"
-              />
-
-              <div ref={stepsRef} className="flex flex-col gap-12">
-                {steps.map(({ number, Icon, title, content, outputs }) => (
-                  <div key={number} className="relative pl-20">
-                    {/* Dot */}
-                    <div className="absolute left-0 w-12 h-12 rounded-full bg-accent-soft border border-accent flex items-center justify-center">
-                      <span className="text-label font-mono font-bold text-accent">{number}</span>
-                    </div>
-
-                    <div className="flex items-start gap-4 mb-3">
-                      <div className="w-8 h-8 rounded-lg bg-accent-soft flex items-center justify-center flex-shrink-0">
-                        <Icon size={16} className="text-accent" />
-                      </div>
-                      <h3 className="text-display-md font-display font-semibold text-text">{title}</h3>
-                    </div>
-
-                    <p className="text-body-md text-text-muted mb-4 max-w-lg">{content}</p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {outputs.map((out) => (
-                        <span
-                          key={out}
-                          className="text-label text-accent bg-accent-soft px-3 py-1 rounded-full"
-                        >
-                          {out}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                key={num}
+                className="bg-white rounded-2xl border border-[#c3c6d7]/20 p-6 shadow-lg flex flex-col relative hover:-translate-y-1 transition-all duration-200"
+              >
+                <span className="absolute top-4 right-4 text-[64px] font-bold text-[#004ac6]/10 leading-none select-none">
+                  {num}
+                </span>
+                <div className="h-12 w-12 rounded-xl bg-[#e5eeff] flex items-center justify-center mb-6 shadow-sm">
+                  <Icon size={22} className="text-[#004ac6]" />
+                </div>
+                <h3 className="text-[20px] font-semibold text-[#0b1c30] mb-2">{title}</h3>
+                <p className="text-[15px] text-[#434655] leading-relaxed">{desc}</p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
-      </Container>
+
+      </div>
     </section>
   )
 }
