@@ -58,7 +58,8 @@ export function MobileMenu({ open, onClose, links, pathname }: MobileMenuProps) 
 
             <Dialog.Content asChild>
               <motion.div
-                className="fixed inset-0 z-[70] bg-surface flex flex-col px-6 py-6"
+                className="fixed inset-0 z-[70] flex flex-col px-6 py-6"
+                style={{ background: '#fff8f7' }}
                 variants={contentVariants}
                 initial="hidden"
                 animate="visible"

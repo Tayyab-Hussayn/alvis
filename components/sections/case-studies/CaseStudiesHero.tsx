@@ -2,48 +2,59 @@
 
 export function CaseStudiesHero() {
   return (
-    <section className="w-full bg-white pt-36 pb-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-end">
+    <section className="pt-40 pb-16 px-5 md:px-8" style={{ background: '#fff8f7' }}>
+      <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-          {/* Left: headline */}
-          <div>
-            <span className="block text-[#004ac6] uppercase text-[12px] tracking-widest font-semibold mb-5">
-              OUR WORK
-            </span>
-            <h1 className="font-bold leading-none tracking-tight text-[#0b1c30] mb-6"
-              style={{ fontSize: 'clamp(2.5rem,6vw,4.5rem)' }}>
-              Results we&apos;re<br />
-              proud of.
-            </h1>
-            <p className="text-[18px] text-[#434655] leading-relaxed max-w-lg">
-              Every number here represents a real business problem solved. No vanity metrics, no cherry-picked wins.
-            </p>
+        <div className="lg:col-span-5">
+          <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-5" style={{ color: '#e63946' }}>
+            Case Studies
+          </span>
+
+          <h1
+            className="font-display font-extrabold mb-6"
+            style={{ fontSize: 'clamp(2.4rem, 4.6vw, 3.7rem)', lineHeight: '1.08', letterSpacing: '-0.04em', color: '#0d0d0d' }}
+          >
+            Real Results.<br />
+            Real <span style={{ color: '#e63946' }}>Impact.</span>
+          </h1>
+
+          <p className="mb-9 max-w-md" style={{ fontSize: '16px', lineHeight: '1.65', color: '#5b403f' }}>
+            Discover how we helped brands overcome challenges, achieve their goals, and grow beyond expectations.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-4">
+            <a
+              href="/contact"
+              className="flex items-center gap-3 rounded-full text-white text-[13px] font-bold pl-7 pr-2 py-2 transition-transform hover:scale-[1.02]"
+              style={{ background: '#e63946', boxShadow: '0 20px 40px -14px rgba(230,57,70,0.45)' }}
+            >
+              Get Free Consultation
+              <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.22)' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14m-7-7 7 7-7 7" />
+                </svg>
+              </span>
+            </a>
+
+            <a
+              href="/services"
+              className="flex items-center gap-3 rounded-full bg-white text-[13px] font-bold pl-7 pr-2 py-2 border transition-transform hover:scale-[1.02]"
+              style={{ borderColor: '#f0dedd', color: '#0d0d0d', boxShadow: '0 10px 30px -18px rgba(0,0,0,0.35)' }}
+            >
+              View Our Services
+              <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: '#0d0d0d' }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14m-7-7 7 7-7 7" />
+                </svg>
+              </span>
+            </a>
           </div>
-
-          {/* Right: stat counters */}
-          <div className="grid grid-cols-3 gap-6 lg:gap-8 pb-2">
-            {[
-              { value: '9', label: 'Case Studies' },
-              { value: '50+', label: 'Total Clients' },
-              { value: '200+', label: 'Projects Shipped' },
-            ].map(({ value, label }) => (
-              <div key={label} className="flex flex-col items-start">
-                <span className="font-extrabold text-[#004ac6] leading-none mb-2"
-                  style={{ fontSize: 'clamp(2.25rem,4vw,3rem)' }}>
-                  {value}
-                </span>
-                <span className="text-[#434655] text-[13px] uppercase tracking-widest font-medium">
-                  {label}
-                </span>
-              </div>
-            ))}
-          </div>
-
         </div>
 
-        {/* Divider */}
-        <div className="mt-16 h-px bg-[#c3c6d7]/30" />
+        <div className="lg:col-span-7">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/case-studies/hero-illustration.png" alt="Alvis performance results dashboard" className="w-full h-auto" />
+        </div>
       </div>
     </section>
   )

@@ -8,7 +8,15 @@ const RATE_WINDOW = 60 * 1000  // 1 minute
 const RATE_MAX    = 3           // 3 submissions per minute per IP
 
 function checkRateLimit(ip: string): boolean {
-  const now   = Date.now()
+  const now = Date.now()
+
+  // Purge expired entries to prevent unbounded Map growth on long-running process
+  if (rateLimit.size > 500) {
+    Array.from(rateLimit.entries()).forEach(([key, val]) => {
+      if (now > val.resetAt) rateLimit.delete(key)
+    })
+  }
+
   const entry = rateLimit.get(ip)
   if (!entry || now > entry.resetAt) {
     rateLimit.set(ip, { count: 1, resetAt: now + RATE_WINDOW })
@@ -70,7 +78,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error('[Contact API] Email send failed:', err)
     return NextResponse.json(
-      { error: 'Failed to send message. Please email us directly at hello@alvis.agency.' },
+      { error: 'Failed to send message. Please email us directly at hello@alvisagency.com.' },
       { status: 500 },
     )
   }

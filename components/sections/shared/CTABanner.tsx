@@ -12,11 +12,11 @@ interface CTABannerProps {
 
 export function CTABanner({ label, heading, body, primaryCTA, secondaryCTA }: CTABannerProps) {
   return (
-    <section className="relative bg-text py-24 md:py-32 overflow-hidden">
+    <section className="relative py-24 md:py-32 overflow-hidden" style={{ background: '#0a1b3d' }}>
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(37,99,235,0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse at 50% 50%, rgba(230,57,70,0.16) 0%, transparent 70%)',
         }}
       />
       <Container className="relative z-10 text-center">

@@ -1,15 +1,14 @@
 import type { Metadata } from 'next'
 import { ServicesHero } from '@/components/sections/services/ServicesHero'
 import { ServicesGrid } from '@/components/sections/services/ServicesGrid'
-import { OurProcess }  from '@/components/sections/services/OurProcess'
-import { WhyAlvis }    from '@/components/sections/services/WhyAlvis'
-import { ServicesFAQ } from '@/components/sections/services/ServicesFAQ'
-import { ServicesCTA } from '@/components/sections/services/ServicesCTA'
+import { OurProcess }   from '@/components/sections/services/OurProcess'
+import { WhyAlvis }     from '@/components/sections/services/WhyAlvis'
+import { ServicesCTA }  from '@/components/sections/services/ServicesCTA'
 
 export const metadata: Metadata = {
-  title: 'Services | Alvis — Web Development, AI Automation & Lead Generation',
+  title: 'Services | Smart Solutions For Real Growth — Alvis',
   description:
-    'Technical services that ship: Next.js web products, AI automation pipelines, n8n workflows, and lead generation systems. Built fast, no lock-in.',
+    'Data-driven digital marketing services that help businesses grow, generate leads and maximize ROI — social media, SEO, branding, content, paid ads and analytics.',
 }
 
 export default function ServicesPage() {
@@ -19,7 +18,6 @@ export default function ServicesPage() {
       <ServicesGrid />
       <OurProcess />
       <WhyAlvis />
-      <ServicesFAQ />
       <ServicesCTA />
     </>
   )

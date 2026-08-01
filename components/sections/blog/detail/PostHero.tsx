@@ -27,9 +27,10 @@ export function PostHero({ post }: Props) {
             <span>{post.readTime} read</span>
           </div>
 
-          {/* Cover image placeholder */}
-          <div className="aspect-video rounded-3xl overflow-hidden mt-12 bg-gradient-to-br from-subtle to-border relative">
-            <div className="absolute inset-0 bg-accent-soft/20" />
+          {/* Cover image */}
+          <div className="aspect-video rounded-3xl overflow-hidden mt-12 bg-subtle relative">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" />
           </div>
         </div>
       </Container>

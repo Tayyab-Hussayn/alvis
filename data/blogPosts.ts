@@ -20,7 +20,7 @@ export const blogPosts: BlogPost[] = [
     author: 'Alvis Team',
     date: '2025-07-15',
     readTime: '6 min',
-    coverImage: '/images/blog/website-leads.jpg',
+    coverImage: '/images/blog/featured.png',
     content: `Your website gets traffic. People land on it, look around, and leave. The contact form sits empty. Something is broken — but it probably isn't what you think.
 
 ## The Conversion Problem Is Structural
@@ -84,7 +84,7 @@ Each of these is a lever that compounds. A faster site with a clearer headline a
     author: 'Alvis Team',
     date: '2025-06-28',
     readTime: '8 min',
-    coverImage: '/images/blog/seo-2025.jpg',
+    coverImage: '/images/blog/post-1.png',
     content: `The agencies still selling "keyword density" and "500 backlinks a month" are selling you a strategy from 2015. Google's algorithm in 2025 is fundamentally different, and the gap between what works and what's outdated has never been wider.
 
 ## What Changed
@@ -151,7 +151,7 @@ SEO is still one of the highest-ROI channels available. But only if you're doing
     author: 'Alvis Team',
     date: '2025-06-10',
     readTime: '5 min',
-    coverImage: '/images/blog/brand-revenue.jpg',
+    coverImage: '/images/blog/post-2.png',
     content: `"We need a rebrand" is one of the most expensive decisions a business can make. It's also one of the most frequently misunderstood. Most companies think they need a new logo. What they actually need is a brand system — and the difference matters enormously for the bottom line.
 
 ## The Logo Is Not the Brand
@@ -207,7 +207,7 @@ The question is not whether brand matters. It does. The question is when the inv
     author: 'Alvis Team',
     date: '2025-05-20',
     readTime: '7 min',
-    coverImage: '/images/blog/google-vs-meta.jpg',
+    coverImage: '/images/blog/post-3.png',
     content: `The most common mistake businesses make with paid advertising is treating Google Ads and Meta Ads as interchangeable channels that both "get you in front of people." They're fundamentally different tools that work on different psychological mechanisms. Using the wrong one for your business model is an expensive lesson.
 
 ## The Core Difference
@@ -269,7 +269,7 @@ The right channel is the one that matches how your customer buys, not the one yo
     author: 'Alvis Team',
     date: '2025-04-30',
     readTime: '7 min',
-    coverImage: '/images/blog/content-strategy.jpg',
+    coverImage: '/images/blog/post-4.png',
     content: `There are two kinds of content strategies. The first fills a calendar with articles and measures success by how many pieces got published. The second builds topical authority systematically and measures success by rankings, traffic, and leads. Only one of them compounds.
 
 ## Why Most Content Strategies Fail
@@ -338,7 +338,7 @@ Traffic that doesn't convert to something — a lead, a subscriber, a follow —
     author: 'Alvis Team',
     date: '2025-04-05',
     readTime: '6 min',
-    coverImage: '/images/blog/it-consulting.jpg',
+    coverImage: '/images/blog/post-5.png',
     content: `Most businesses know when they need a developer: something is broken, needs building, or needs maintaining. IT consulting is different. It's not about building things — it's about making sure you're building the right things, in the right order, on the right foundation. And most businesses wait far too long to bring it in.
 
 ## The Difference Between a Developer and an IT Consultant

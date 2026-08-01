@@ -1,12 +1,15 @@
 import type { Metadata } from 'next'
-import { CaseStudiesHero }   from '@/components/sections/case-studies/CaseStudiesHero'
-import { CaseStudiesClient } from '@/components/sections/case-studies/CaseStudiesClient'
-import { CaseStudiesCTA }    from '@/components/sections/case-studies/CaseStudiesCTA'
+import { CaseStudiesHero }        from '@/components/sections/case-studies/CaseStudiesHero'
+import { CaseStudiesClient }      from '@/components/sections/case-studies/CaseStudiesClient'
+import { CaseStudiesImpact }      from '@/components/sections/case-studies/CaseStudiesImpact'
+import { CaseStudiesTestimonial } from '@/components/sections/case-studies/CaseStudiesTestimonial'
+import { CaseStudiesProcess }     from '@/components/sections/case-studies/CaseStudiesProcess'
+import { CaseStudiesCTA }         from '@/components/sections/case-studies/CaseStudiesCTA'
 
 export const metadata: Metadata = {
-  title: 'Case Studies | Alvis Agency',
+  title: 'Case Studies | Real Results. Real Impact. — Alvis',
   description:
-    'Real results from real projects. Browse Alvis case studies across web development, SEO, branding, and digital marketing.',
+    'Discover how we helped brands overcome challenges, achieve their goals, and grow beyond expectations.',
 }
 
 export default function CaseStudiesPage() {
@@ -14,6 +17,9 @@ export default function CaseStudiesPage() {
     <>
       <CaseStudiesHero />
       <CaseStudiesClient />
+      <CaseStudiesImpact />
+      <CaseStudiesTestimonial />
+      <CaseStudiesProcess />
       <CaseStudiesCTA />
     </>
   )

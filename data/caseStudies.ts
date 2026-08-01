@@ -24,7 +24,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'NovaBridge Consulting',
     category: 'Web Development + SEO',
     tags: ['Web Design', 'SEO', 'CRO'],
-    coverImage: '/images/case-studies/novabridge.jpg',
+    coverImage: '/images/case-studies/ecommerce.png',
     summary: 'Rebuilt a dated corporate site into a high-converting lead engine, paired with technical SEO that pushed 40+ keywords to page one.',
     results: [
       { metric: 'Organic Traffic', value: '+218%' },
@@ -41,7 +41,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Stacklane',
     category: 'PPC + Analytics',
     tags: ['Google Ads', 'PPC', 'Analytics'],
-    coverImage: '/images/case-studies/stacklane.jpg',
+    coverImage: '/images/case-studies/social-media.png',
     summary: 'Restructured a bleeding Google Ads account and built a performance dashboard that gave the growth team full visibility into spend efficiency.',
     results: [
       { metric: 'ROAS', value: '6.1x' },
@@ -58,7 +58,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Lumient Studio',
     category: 'Branding + Design',
     tags: ['Branding', 'Visual Identity', 'UI Design'],
-    coverImage: '/images/case-studies/lumient.jpg',
+    coverImage: '/images/case-studies/seo.png',
     summary: 'Created a complete visual identity — logo, type system, color palette, and brand guidelines — that positioned Lumient as a premium creative agency.',
     results: [
       { metric: 'Pitch Win Rate', value: '+55%' },
@@ -75,7 +75,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Fervent Retail Group',
     category: 'SEO + Content',
     tags: ['SEO', 'Content Marketing', 'E-commerce'],
-    coverImage: '/images/case-studies/fervent.jpg',
+    coverImage: '/images/case-studies/ecommerce.png',
     summary: 'Executed a 12-month technical SEO and content strategy that moved Fervent from page 4 to position 1–3 for their highest-revenue product categories.',
     results: [
       { metric: 'Keyword Rankings (Top 3)', value: '+82 terms' },
@@ -92,7 +92,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Meridian Finance',
     category: 'UI/UX Design',
     tags: ['UI Design', 'UX Research', 'Figma'],
-    coverImage: '/images/case-studies/meridian.jpg',
+    coverImage: '/images/case-studies/social-media.png',
     summary: 'Redesigned a complex financial dashboard into a clean, intuitive interface that reduced user drop-off by 60% and improved daily active usage.',
     results: [
       { metric: 'User Drop-off', value: '-60%' },
@@ -109,7 +109,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Apex Fitness',
     category: 'Social Media Marketing',
     tags: ['Social Media', 'Content', 'Instagram'],
-    coverImage: '/images/case-studies/apex.jpg',
+    coverImage: '/images/case-studies/seo.png',
     summary: 'Built a content strategy and posting system from scratch that grew Apex\'s Instagram from 2K to 28K followers in 8 months and drove measurable revenue.',
     results: [
       { metric: 'Instagram Followers', value: '2K → 28K' },
@@ -126,7 +126,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Qalam Media',
     category: 'AI Automation',
     tags: ['AI Automation', 'n8n', 'OpenAI'],
-    coverImage: '/images/case-studies/qalam.jpg',
+    coverImage: '/images/case-studies/ecommerce.png',
     summary: 'Built a fully autonomous newsletter pipeline using n8n and GPT-4 that researches, writes, and sends weekly content — saving 20+ hours per week.',
     results: [
       { metric: 'Hours Saved Per Week', value: '20+' },
@@ -143,7 +143,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'TechSpirex',
     category: 'Web Development',
     tags: ['Next.js', 'TypeScript', 'Full Stack'],
-    coverImage: '/images/case-studies/techspirex.jpg',
+    coverImage: '/images/case-studies/social-media.png',
     summary: 'Built a complete web platform from scratch — marketing site, client portal, and service delivery dashboard — that replaced a legacy WordPress setup.',
     results: [
       { metric: 'Page Load Speed', value: '0.8s' },
@@ -160,7 +160,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'LeadsGen Co.',
     category: 'Lead Generation',
     tags: ['Lead Generation', 'AI Integration', 'Outreach'],
-    coverImage: '/images/case-studies/leadsgen.jpg',
+    coverImage: '/images/case-studies/seo.png',
     summary: 'Built an end-to-end AI outreach system that identifies prospects, personalizes cold emails using GPT-4, and books discovery calls automatically.',
     results: [
       { metric: 'Cold Email Reply Rate', value: '11.4%' },

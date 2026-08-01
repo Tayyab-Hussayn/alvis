@@ -3,59 +3,91 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useSearchParams } from 'next/navigation'
-import { Suspense } from 'react'
-import {
-  AlertCircle, Loader2, CheckCircle,
-  Mail, Clock, Globe, Linkedin, Instagram, Twitter,
-} from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Button } from '@/components/ui/Button'
-import { Container } from '@/components/ui/Container'
 import { contactSchema, type ContactFormData } from '@/lib/validations'
-import { services } from '@/data/services'
-import { cn } from '@/lib/utils'
 
-const budgets = [
-  'Under $1,000',
-  '$1,000 – $5,000',
-  '$5,000 – $15,000',
-  '$15,000 – $50,000',
-  '$50,000+',
-  'Not Sure Yet',
+const details = [
+  {
+    title: 'Visit Our Office',
+    lines: ['123 Marketing Street,', 'New York, NY 10001'],
+    icon: (
+      <>
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+        <circle cx="12" cy="10" r="3" />
+      </>
+    ),
+  },
+  {
+    title: 'Call Us',
+    lines: ['+1 (555) 123-4567'],
+    icon: <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />,
+  },
+  {
+    title: 'Email Us',
+    lines: ['hello@alvisagency.com'],
+    icon: (
+      <>
+        <rect x="2" y="4" width="20" height="16" rx="2" />
+        <path d="m22 6-10 7L2 6" />
+      </>
+    ),
+  },
+  {
+    title: 'Office Hours',
+    lines: ['Mon - Fri: 9:00 AM - 6:00 PM', 'Saturday: 10:00 AM - 2:00 PM'],
+    icon: (
+      <>
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" />
+      </>
+    ),
+  },
 ]
 
-const socialLinks = [
-  { Icon: Linkedin,  href: '#', label: 'LinkedIn'  },
-  { Icon: Instagram, href: '#', label: 'Instagram' },
-  { Icon: Twitter,   href: '#', label: 'Twitter'   },
+const socials = [
+  { label: 'Facebook',  color: '#1877F2', path: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' },
+  { label: 'Instagram', color: '#E1306C', path: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zM17.8 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z' },
+  { label: 'LinkedIn',  color: '#0A66C2', path: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z' },
+  { label: 'X',         color: '#0d0d0d', path: 'M18.24 2.25h3.31l-7.23 8.26 8.5 11.24H16.17l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z' },
+  { label: 'YouTube',   color: '#FF0000', path: 'M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33zM9.75 15.02V8.48l5.75 3.27z' },
 ]
 
-const fieldClass = cn(
-  'w-full border border-border-dark rounded-xl px-4 py-3.5 text-body-md bg-surface text-text',
-  'transition-all duration-200 outline-none',
-  'focus:border-accent focus:shadow-[0_0_0_3px_var(--color-accent-soft)]',
-  'placeholder:text-text-faint',
-)
+const inputStyle: React.CSSProperties = {
+  border: '1px solid #f0dedd',
+  color: '#271717',
+  background: '#fffdfc',
+}
 
-const errorClass = 'text-body-sm text-error mt-1.5 flex items-center gap-1'
+function Field({
+  id, placeholder, error, register, type = 'text',
+}: {
+  id: string
+  placeholder: string
+  error?: string
+  register: object
+  type?: string
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="sr-only">{placeholder}</label>
+      <input
+        id={id}
+        type={type}
+        placeholder={placeholder}
+        className="w-full rounded-xl px-5 py-4 text-[14px] outline-none transition-colors focus:border-[#e63946]"
+        style={{ ...inputStyle, borderColor: error ? '#e63946' : '#f0dedd' }}
+        {...register}
+      />
+      {error && <p className="text-[12px] mt-1.5" style={{ color: '#e63946' }}>{error}</p>}
+    </div>
+  )
+}
 
-/* ─── Form (inner — needs searchParams) ─────────────────────────── */
-
-function ContactForm() {
-  const searchParams = useSearchParams()
-  const serviceParam = searchParams.get('service') ?? ''
-
+export function ContactMain() {
   const [submitted, setSubmitted] = useState(false)
-  const [apiError,  setApiError]  = useState(false)
+  const [apiError, setApiError] = useState(false)
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<ContactFormData>({
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { service: serviceParam },
   })
 
   const onSubmit = async (data: ContactFormData) => {
@@ -73,289 +105,125 @@ function ContactForm() {
     }
   }
 
-  if (submitted) {
-    return (
-      <motion.div
-        initial={{ scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-        className="text-center py-16"
-      >
-        <div className="w-20 h-20 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-6">
-          <CheckCircle size={36} className="text-success" />
-        </div>
-        <h3 className="text-display-md font-display font-bold text-text mb-3">
-          Message Sent!
-        </h3>
-        <p className="text-body-lg text-text-muted max-w-sm mx-auto">
-          We&apos;ve received your message and will reply within 24 hours.
-        </p>
-      </motion.div>
-    )
-  }
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
-      {/* Name */}
-      <div>
-        <label className="text-body-sm font-medium text-text block mb-2">
-          Full Name <span className="text-error">*</span>
-        </label>
-        <input
-          {...register('name')}
-          type="text"
-          placeholder="Jane Smith"
-          className={cn(fieldClass, errors.name && 'border-error focus:border-error focus:shadow-none')}
-        />
-        {errors.name && (
-          <p className={errorClass}>
-            <AlertCircle size={14} />{errors.name.message}
-          </p>
-        )}
-      </div>
+    <section className="px-5 md:px-8 pb-16" style={{ background: '#fff8f7' }}>
+      <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-      {/* Email + Company */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="text-body-sm font-medium text-text block mb-2">
-            Email Address <span className="text-error">*</span>
-          </label>
-          <input
-            {...register('email')}
-            type="email"
-            placeholder="jane@company.com"
-            className={cn(fieldClass, errors.email && 'border-error focus:border-error focus:shadow-none')}
-          />
-          {errors.email && (
-            <p className={errorClass}>
-              <AlertCircle size={14} />{errors.email.message}
-            </p>
-          )}
-        </div>
-        <div>
-          <label className="text-body-sm font-medium text-text block mb-2">
-            Company / Business Name
-          </label>
-          <input
-            {...register('company')}
-            type="text"
-            placeholder="Acme Inc."
-            className={fieldClass}
-          />
-        </div>
-      </div>
+        {/* Get In Touch */}
+        <div
+          className="lg:col-span-4 bg-white rounded-3xl p-8"
+          style={{ boxShadow: '0 20px 60px -25px rgba(0,0,0,0.12)' }}
+        >
+          <h2 className="font-display font-extrabold text-[22px] mb-2" style={{ color: '#0d0d0d' }}>Get In Touch</h2>
+          <span className="block w-10 h-[3px] rounded-full mb-8" style={{ background: '#e63946' }} />
 
-      {/* Service + Budget */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="text-body-sm font-medium text-text block mb-2">
-            Service Interested In <span className="text-error">*</span>
-          </label>
-          <select
-            {...register('service')}
-            className={cn(fieldClass, errors.service && 'border-error focus:border-error focus:shadow-none')}
-          >
-            <option value="">Select a service…</option>
-            {services.map((s) => (
-              <option key={s.slug} value={s.slug}>
-                {s.title}
-              </option>
+          <ul className="space-y-6 mb-8">
+            {details.map(d => (
+              <li key={d.title} className="flex items-start gap-4">
+                <span className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: '#fde8ea', color: '#e63946' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    {d.icon}
+                  </svg>
+                </span>
+                <span>
+                  <span className="block font-bold text-[14px] mb-1" style={{ color: '#0d0d0d' }}>{d.title}</span>
+                  {d.lines.map(l => (
+                    <span key={l} className="block text-[13px]" style={{ lineHeight: '1.5', color: '#5b403f' }}>{l}</span>
+                  ))}
+                </span>
+              </li>
             ))}
-          </select>
-          {errors.service && (
-            <p className={errorClass}>
-              <AlertCircle size={14} />{errors.service.message}
-            </p>
-          )}
-        </div>
-        <div>
-          <label className="text-body-sm font-medium text-text block mb-2">
-            Budget Range <span className="text-error">*</span>
-          </label>
-          <select
-            {...register('budget')}
-            className={cn(fieldClass, errors.budget && 'border-error focus:border-error focus:shadow-none')}
-          >
-            <option value="">Select a range…</option>
-            {budgets.map((b) => (
-              <option key={b} value={b}>{b}</option>
+          </ul>
+
+          <p className="font-bold text-[13px] mb-4" style={{ color: '#0d0d0d' }}>Follow Us</p>
+          <div className="flex items-center gap-3">
+            {socials.map(s => (
+              <a
+                key={s.label}
+                href="#"
+                aria-label={s.label}
+                className="w-10 h-10 rounded-xl flex items-center justify-center transition-transform hover:-translate-y-0.5"
+                style={{ border: '1px solid #f0dedd', color: s.color }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d={s.path} />
+                </svg>
+              </a>
             ))}
-          </select>
-          {errors.budget && (
-            <p className={errorClass}>
-              <AlertCircle size={14} />{errors.budget.message}
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* Message */}
-      <div>
-        <label className="text-body-sm font-medium text-text block mb-2">
-          Tell Us About Your Project <span className="text-error">*</span>
-        </label>
-        <textarea
-          {...register('message')}
-          rows={5}
-          placeholder="Describe your project, goals, and any specific requirements…"
-          className={cn(fieldClass, 'resize-none', errors.message && 'border-error focus:border-error focus:shadow-none')}
-        />
-        {errors.message && (
-          <p className={errorClass}>
-            <AlertCircle size={14} />{errors.message.message}
-          </p>
-        )}
-      </div>
-
-      {/* Honeypot — invisible to users, bots fill it */}
-      <input
-        type="text"
-        tabIndex={-1}
-        autoComplete="off"
-        aria-hidden="true"
-        className="sr-only"
-        {...register('_gotcha')}
-      />
-
-      {/* API error banner */}
-      <AnimatePresence>
-        {apiError && (
-          <motion.div
-            initial={{ y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="bg-red-50 border border-red-200 text-error rounded-xl p-4 text-body-sm flex items-center gap-2"
-          >
-            <AlertCircle size={16} />
-            Something went wrong. Please try again or email us directly at{' '}
-            <a href="mailto:hello@alvis.agency" className="underline">hello@alvis.agency</a>.
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <Button
-        type="submit"
-        variant="primary"
-        size="lg"
-        className="w-full mt-2"
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? (
-          <span className="flex items-center gap-2">
-            <Loader2 size={18} className="animate-spin" /> Sending…
-          </span>
-        ) : (
-          'Send Message →'
-        )}
-      </Button>
-    </form>
-  )
-}
-
-/* ─── Details sidebar ────────────────────────────────────────────── */
-
-function ContactDetails() {
-  return (
-    <div className="space-y-8 sticky top-24">
-      <h3 className="text-display-md font-display font-bold text-text">
-        Other Ways to Reach Us
-      </h3>
-
-      {/* Email */}
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center flex-shrink-0">
-          <Mail size={20} className="text-accent" />
-        </div>
-        <div>
-          <p className="text-body-sm text-text-muted mb-1">Email</p>
-          <a
-            href="mailto:hello@alvis.agency"
-            className="text-body-md font-medium text-text hover:text-accent transition-colors duration-200"
-          >
-            hello@alvis.agency
-          </a>
-        </div>
-      </div>
-
-      {/* Response time */}
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center flex-shrink-0">
-          <Clock size={20} className="text-accent" />
-        </div>
-        <div>
-          <p className="text-body-sm text-text-muted mb-1">Response Time</p>
-          <p className="text-body-md font-medium text-text">Within 24 hours</p>
-          <p className="text-body-sm text-text-faint">Monday – Friday</p>
-        </div>
-      </div>
-
-      {/* Location */}
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-xl bg-accent-soft flex items-center justify-center flex-shrink-0">
-          <Globe size={20} className="text-accent" />
-        </div>
-        <div>
-          <p className="text-body-sm text-text-muted mb-1">Location</p>
-          <p className="text-body-md font-medium text-text">Remote-First</p>
-          <p className="text-body-sm text-text-faint">Serving clients worldwide</p>
-        </div>
-      </div>
-
-      {/* Social */}
-      <div>
-        <p className="text-body-sm text-text-muted mb-4">Follow Alvis</p>
-        <div className="flex gap-3">
-          {socialLinks.map(({ Icon, href, label }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-text-muted hover:border-accent hover:text-accent transition-all duration-200"
-            >
-              <Icon size={16} />
-            </a>
-          ))}
-        </div>
-      </div>
-
-      {/* Trust note */}
-      <div className="bg-subtle rounded-2xl p-6 border border-border">
-        <p className="text-body-sm text-text-muted leading-relaxed">
-          <strong className="text-text font-semibold">Not ready to commit?</strong>
-          <br />
-          No problem. Tell us what you&apos;re thinking — even a rough idea — and we&apos;ll
-          give you honest direction for free.
-        </p>
-      </div>
-    </div>
-  )
-}
-
-/* ─── Main export ────────────────────────────────────────────────── */
-
-export function ContactMain() {
-  return (
-    <section className="py-16 bg-white">
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
-          {/* Form */}
-          <div className="lg:col-span-3">
-            <h2 className="text-[clamp(1.5rem,3vw,2rem)] font-bold text-[#0b1c30] mb-8">
-              Send Us a Message
-            </h2>
-            <Suspense fallback={<div className="h-96 animate-pulse bg-subtle rounded-2xl" />}>
-              <ContactForm />
-            </Suspense>
-          </div>
-
-          {/* Details */}
-          <div className="lg:col-span-2">
-            <ContactDetails />
           </div>
         </div>
-      </Container>
+
+        {/* Send Us a Message */}
+        <div
+          className="lg:col-span-8 bg-white rounded-3xl p-8"
+          style={{ boxShadow: '0 20px 60px -25px rgba(0,0,0,0.12)' }}
+        >
+          <h2 className="font-display font-extrabold text-[22px] mb-2" style={{ color: '#0d0d0d' }}>Send Us a Message</h2>
+          <span className="block w-10 h-[3px] rounded-full mb-8" style={{ background: '#e63946' }} />
+
+          {submitted ? (
+            <div className="text-center py-16">
+              <span className="w-16 h-16 rounded-full mx-auto mb-5 flex items-center justify-center" style={{ background: '#e3f7ec' }}>
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+              </span>
+              <h3 className="font-display font-extrabold text-[22px] mb-2" style={{ color: '#0d0d0d' }}>Message Sent!</h3>
+              <p className="text-[14px]" style={{ color: '#5b403f' }}>
+                We&apos;ve received your message and will reply within 24 hours.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <Field id="name"  placeholder="Your Name"  error={errors.name?.message}  register={register('name')} />
+                <Field id="email" placeholder="Your Email" error={errors.email?.message} register={register('email')} type="email" />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <Field id="phone"   placeholder="Phone Number" error={errors.phone?.message}   register={register('phone')} />
+                <Field id="subject" placeholder="Subject"      error={errors.subject?.message} register={register('subject')} />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="sr-only">Your Message</label>
+                <textarea
+                  id="message"
+                  rows={6}
+                  placeholder="Your Message"
+                  className="w-full rounded-xl px-5 py-4 text-[14px] outline-none resize-none transition-colors focus:border-[#e63946]"
+                  style={{ ...inputStyle, borderColor: errors.message ? '#e63946' : '#f0dedd' }}
+                  {...register('message')}
+                />
+                {errors.message && <p className="text-[12px] mt-1.5" style={{ color: '#e63946' }}>{errors.message.message}</p>}
+              </div>
+
+              {/* Honeypot — invisible to users, bots fill it */}
+              <input type="text" tabIndex={-1} autoComplete="off" aria-hidden="true" className="sr-only" {...register('_gotcha')} />
+
+              {apiError && (
+                <p className="rounded-xl p-4 text-[13px]" style={{ background: '#fde8ea', color: '#b7102a' }}>
+                  Something went wrong. Please try again or email us at hello@alvisagency.com.
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex items-center gap-3 rounded-full text-white text-[13px] font-bold pl-8 pr-2 py-2 transition-transform hover:scale-[1.02] disabled:opacity-60"
+                style={{ background: '#e63946', boxShadow: '0 20px 40px -14px rgba(230,57,70,0.45)' }}
+              >
+                {isSubmitting ? 'Sending…' : 'Send Message'}
+                <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.22)' }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14m-7-7 7 7-7 7" />
+                  </svg>
+                </span>
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
     </section>
   )
 }

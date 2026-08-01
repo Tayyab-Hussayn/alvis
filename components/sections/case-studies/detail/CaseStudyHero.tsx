@@ -7,11 +7,18 @@ interface Props { study: CaseStudy }
 export function CaseStudyHero({ study }: Props) {
   return (
     <section className="min-h-[80vh] relative flex flex-col justify-end pt-36 pb-20 overflow-hidden">
-      {/* Background placeholder — replace with Image when covers are available */}
-      <div className="absolute inset-0 bg-gradient-to-br from-text via-text/90 to-text/70" />
+      {/* Cover image behind a navy wash so the headline stays legible */}
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg,#0a1b3d 0%,#0d2350 60%,#123068 100%)' }} />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={study.coverImage}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover opacity-30"
+      />
 
       {/* Dark overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,27,61,0.92) 0%, rgba(10,27,61,0.65) 45%, rgba(10,27,61,0.25) 100%)' }} />
 
       <Container className="relative z-10">
         <Badge className="mb-4 bg-white/10 text-white border border-white/20">

@@ -1,122 +1,94 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/Button'
-import { Container } from '@/components/ui/Container'
+import { Menu } from 'lucide-react'
 import { MobileMenu } from './MobileMenu'
 
 const navLinks = [
   { label: 'Home',         href: '/' },
-  { label: 'Services',     href: '/services' },
   { label: 'About',        href: '/about' },
-  { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Services',     href: '/services' },
+  { label: 'Work',         href: '/case-studies' },
   { label: 'Blog',         href: '/blog' },
   { label: 'Contact',      href: '/contact' },
 ]
 
-const darkHeroRoutes = ['/about']
-
 export function Header() {
   const pathname = usePathname()
-  const [scrolled, setScrolled]         = useState(false)
-  const [visible, setVisible]           = useState(true)
-  const [mobileOpen, setMobileOpen]     = useState(false)
-  const lastScrollY                     = useRef(0)
-
-  const darkHero = !scrolled && darkHeroRoutes.includes(pathname)
+  const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY
-      const goingDown = y > lastScrollY.current
-
-      setScrolled(y > 80)
-      if (y < 80) {
-        setVisible(true)
-      } else if (goingDown) {
-        setVisible(false)
-      } else {
-        setVisible(true)
-      }
-
-      lastScrollY.current = y
-    }
-
+    const onScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
     <>
-      <header
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 h-16 md:h-20 transition-all duration-300',
-          scrolled
-            ? 'bg-white/95 backdrop-blur-md border-b border-border shadow-[0_1px_3px_rgba(0,0,0,0.04)]'
-            : 'bg-transparent',
-          visible ? 'translate-y-0' : '-translate-y-full',
-        )}
+      <nav
+        className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] z-50 flex justify-between items-center px-8 py-3 rounded-full transition-all duration-300"
+        style={{
+          maxWidth: '1280px',
+          background: scrolled ? '#ffffff' : 'rgba(255,255,255,0.7)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          boxShadow: scrolled ? '0 20px 40px -8px rgba(0,0,0,0.12)' : '0 4px 12px rgba(0,0,0,0.06)',
+        }}
       >
-        <Container className="h-full flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" aria-label="Alvis - Home" className="flex-shrink-0 relative z-10">
-            <div className={cn(
-              'transition-all duration-300',
-              darkHero && 'bg-white rounded-xl px-2 py-1',
-            )}>
-              <Image
-                src="/images/alvisLogo.jpg"
-                alt="Alvis"
-                width={200}
-                height={200}
-                priority
-                className="w-16 h-16 md:w-20 md:h-20 object-contain scale-[1.6] origin-left"
-              />
-            </div>
-          </Link>
+        {/* Logo */}
+        <Link href="/" aria-label="Alvis - Home" className="flex items-center gap-2 group cursor-pointer">
+          <img
+            src="/images/alvisLogo.jpg"
+            alt="ALVIS"
+            style={{ height: '33.6px', width: 'auto' }}
+          />
+        </Link>
 
-          {/* Desktop Nav — centered absolutely */}
-          <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  'font-display text-body-sm font-medium transition-colors duration-200',
-                  pathname === link.href
-                    ? 'text-accent'
-                    : darkHero
-                      ? 'text-white/80 hover:text-white'
-                      : 'text-text hover:text-accent',
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="relative text-[12px] font-bold tracking-[0.1em] uppercase transition-colors"
+              style={{ color: pathname === link.href ? '#b7102a' : '#5b403f' }}
+              onMouseEnter={e => { if (pathname !== link.href) e.currentTarget.style.color = '#b7102a' }}
+              onMouseLeave={e => { if (pathname !== link.href) e.currentTarget.style.color = '#5b403f' }}
+            >
+              {link.label}
+              {pathname === link.href && (
+                <span
+                  className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+                  style={{ background: '#b7102a' }}
+                />
+              )}
+            </Link>
+          ))}
+        </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex relative z-10">
-            <Button href="/contact" variant="primary" size="sm">
-              Let&apos;s Talk
-            </Button>
-          </div>
-
-          {/* Mobile Hamburger */}
+        {/* CTA + hamburger */}
+        <div className="flex items-center gap-4">
+          <a
+            href="/contact"
+            className="hidden lg:flex items-center text-white text-[12px] font-bold tracking-[0.1em] uppercase px-6 py-2.5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-md"
+            style={{ background: '#b7102a' }}
+          >
+            Get Free Consultation
+          </a>
           <button
-            className={cn('md:hidden relative z-10 p-2', darkHero ? 'text-white' : 'text-text')}
+            className="md:hidden"
             onClick={() => setMobileOpen(true)}
             aria-label="Open menu"
+            style={{ color: '#271717' }}
           >
             <Menu size={24} />
           </button>
-        </Container>
-      </header>
+        </div>
+      </nav>
 
       <MobileMenu
         open={mobileOpen}

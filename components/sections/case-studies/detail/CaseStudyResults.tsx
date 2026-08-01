@@ -6,7 +6,7 @@ interface Props { study: CaseStudy }
 
 export function CaseStudyResults({ study }: Props) {
   return (
-    <section className="bg-text py-20 md:py-28">
+    <section className="py-20 md:py-28" style={{ background: '#0a1b3d' }}>
       <Container>
         <SectionLabel className="mb-8 [&>span:first-child]:bg-white/30 [&>span:last-child]:text-white/50">
           By the Numbers

@@ -5,6 +5,7 @@ import { Footer }         from '@/components/layout/Footer'
 import { CustomCursor }   from '@/components/ui/CustomCursor'
 import { GSAPProvider }   from '@/components/animations/GSAPProvider'
 import { PageTransition } from '@/components/animations/PageTransition'
+import { Preloader }      from '@/components/ui/Preloader'
 import '@/styles/globals.css'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alvis.agency'
@@ -34,6 +35,9 @@ export const metadata: Metadata = {
     follow:    true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
   },
+  alternates: {
+    canonical: siteUrl,
+  },
   openGraph: {
     type:        'website',
     locale:      'en_US',
@@ -42,25 +46,20 @@ export const metadata: Metadata = {
     title:       'Alvis | Digital Marketing & IT Services Agency',
     description: 'Strategy, design, and technology for ambitious businesses.',
     images: [{
-      url:    '/images/og-image.jpg',
-      width:  1200,
-      height: 630,
-      alt:    'Alvis Digital Agency',
+      url:    '/images/alvisLogo.jpg',
+      width:  1024,
+      height: 1024,
+      alt:    'Alvis Marketing Agency',
     }],
   },
   twitter: {
-    card:        'summary_large_image',
+    card:        'summary',
     title:       'Alvis | Digital Marketing & IT Services Agency',
     description: 'Strategy, design, and technology for ambitious businesses.',
-    images:      ['/images/og-image.jpg'],
+    images:      ['/images/alvisLogo.jpg'],
   },
   icons: {
-    icon: [
-      { url: '/favicon.ico' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: '/apple-touch-icon.png',
+    icon: [{ url: '/logo.svg', type: 'image/svg+xml' }],
   },
 }
 
@@ -69,9 +68,9 @@ const organizationSchema = {
   '@type':    'Organization',
   name:        'Alvis',
   url:         siteUrl,
-  logo:        `${siteUrl}/logo.svg`,
+  logo:        `${siteUrl}/images/alvisLogo.jpg`,
   description: 'Full-service digital marketing and IT agency.',
-  email:       'hello@alvis.agency',
+  email:       'hello@alvisagency.com',
   sameAs: [
     'https://www.linkedin.com/company/alvis-agency',
     'https://www.instagram.com/alvisagency',
@@ -95,6 +94,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-bg text-text antialiased">
+        <Preloader />
+
         {/* Skip to main content — keyboard accessibility */}
         <a
           href="#main-content"

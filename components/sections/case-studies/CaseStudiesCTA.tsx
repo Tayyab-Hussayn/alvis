@@ -1,49 +1,78 @@
 'use client'
 
-import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+function RocketArt() {
+  return (
+    <svg width="180" height="170" viewBox="0 0 200 180" fill="none" className="w-full max-w-[180px]">
+      <path d="M100 108c-9 0-16 10-16 20s7 16 16 16 16-6 16-16-7-20-16-20z" fill="#3b82f6" opacity="0.85" />
+      <path d="M100 118c-5 0-9 6-9 12s4 9 9 9 9-3 9-9-4-12-9-12z" fill="#93c5fd" />
+      <path d="M100 8c18 16 28 40 28 66v22H72V74c0-26 10-50 28-66z" fill="#fff" />
+      <path d="M100 8c18 16 28 40 28 66v22h-28V8z" fill="#eef2f7" />
+      <path d="M100 8c8 7 14 17 18 28H82c4-11 10-21 18-28z" fill="#e63946" />
+      <path d="M72 76c-12 6-20 18-22 32l22-8V76z" fill="#e63946" />
+      <path d="M128 76c12 6 20 18 22 32l-22-8V76z" fill="#c81e2f" />
+      <circle cx="100" cy="62" r="13" fill="#0a1b3d" />
+      <circle cx="100" cy="62" r="9" fill="#3b82f6" />
+      <circle cx="96" cy="58" r="3" fill="#bfdbfe" />
+      <g fill="#fff">
+        <ellipse cx="70" cy="158" rx="30" ry="17" />
+        <ellipse cx="104" cy="166" rx="36" ry="14" />
+        <ellipse cx="138" cy="156" rx="26" ry="15" />
+      </g>
+      <g fill="#e63946">
+        <circle cx="34" cy="60" r="3" />
+        <circle cx="168" cy="44" r="2.5" />
+      </g>
+    </svg>
+  )
+}
 
 export function CaseStudiesCTA() {
   return (
-    <section className="relative w-full bg-[#0b1c30] py-32 overflow-hidden flex items-center justify-center">
+    <section className="px-5 md:px-8 pb-24" style={{ background: '#fff8f7' }}>
       <div
-        className="absolute inset-0 z-0 pointer-events-none opacity-50"
-        style={{
-          backgroundImage: 'radial-gradient(rgba(195,198,215,0.1) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
-      <div
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{ background: 'radial-gradient(circle at center, rgba(0,74,198,0.15) 0%, transparent 60%)' }}
-      />
+        className="max-w-[1280px] mx-auto rounded-3xl relative overflow-hidden px-6 md:px-12 py-10"
+        style={{ background: '#0a1b3d' }}
+      >
+        <span
+          className="absolute right-0 top-0 h-full w-1/3 pointer-events-none opacity-[0.12]"
+          style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '18px 18px' }}
+        />
 
-      <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-8 text-center flex flex-col items-center">
-        <div className="inline-block px-4 py-1.5 rounded-full border border-[#c3c6d7]/20 bg-white/5 backdrop-blur-sm mb-8">
-          <span className="text-[#c3c6d7]/80 uppercase tracking-widest text-[12px] font-semibold">
-            START A PROJECT
-          </span>
-        </div>
-        <h2 className="text-white font-bold text-[clamp(2rem,5vw,3rem)] leading-tight tracking-tight mb-6">
-          {"Let's create your success story."}
-        </h2>
-        <p className="text-[#c3c6d7]/70 text-[18px] leading-relaxed max-w-lg mx-auto mb-10">
-          Every case study here started with a conversation. Tell us what you&apos;re building and we&apos;ll tell you exactly how we&apos;d approach it.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center gap-4">
-          <Link
-            href="/contact"
-            className="inline-flex items-center justify-center gap-2 bg-[#004ac6] text-white rounded-full px-8 py-4 text-[14px] font-semibold shadow-[0_8px_24px_rgba(0,74,198,0.25)] hover:shadow-[0_12px_32px_rgba(0,74,198,0.35)] hover:-translate-y-1 transition-all duration-200 group"
-          >
-            Get in Touch
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform duration-200" />
-          </Link>
-          <Link
-            href="/services"
-            className="inline-flex items-center justify-center border border-[#c3c6d7]/30 text-white rounded-full px-8 py-4 text-[14px] font-semibold hover:bg-white/5 hover:-translate-y-1 transition-all duration-200"
-          >
-            Our Services
-          </Link>
+        <div className="relative grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+          <div className="md:col-span-3 flex justify-center">
+            <RocketArt />
+          </div>
+
+          <div className="md:col-span-5 text-center md:text-left">
+            <span className="block text-[11px] font-bold uppercase tracking-[0.1em] mb-3" style={{ color: '#e63946' }}>
+              Ready to be our next success story?
+            </span>
+            <h2
+              className="font-display font-extrabold text-white"
+              style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2.1rem)', lineHeight: '1.2', letterSpacing: '-0.03em' }}
+            >
+              Let&apos;s Build Something<br />
+              Amazing <span style={{ color: '#e63946' }}>Together</span>!
+            </h2>
+          </div>
+
+          <div className="md:col-span-4 flex flex-col items-center md:items-end gap-5">
+            <p className="text-center md:text-right" style={{ fontSize: '14px', lineHeight: '1.6', color: 'rgba(255,255,255,0.72)' }}>
+              Book a free consultation call with our<br className="hidden md:block" /> experts and let&apos;s grow your business.
+            </p>
+            <a
+              href="/contact"
+              className="flex items-center gap-3 rounded-full text-white text-[13px] font-bold pl-7 pr-2 py-2 transition-transform hover:scale-[1.02]"
+              style={{ background: '#e63946', boxShadow: '0 20px 40px -14px rgba(230,57,70,0.5)' }}
+            >
+              Get Free Consultation
+              <span className="w-8 h-8 rounded-full bg-white flex items-center justify-center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e63946" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14m-7-7 7 7-7 7" />
+                </svg>
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </section>

@@ -26,8 +26,13 @@ export function RelatedPosts({ currentSlug, category }: Props) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {posts.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex flex-col">
-              <div className="aspect-video rounded-2xl overflow-hidden relative mb-4 bg-gradient-to-br from-subtle to-border">
-                <div className="absolute inset-0 bg-accent-soft/20 group-hover:scale-105 transition-transform duration-500" />
+              <div className="aspect-video rounded-2xl overflow-hidden relative mb-4 bg-subtle">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={post.coverImage}
+                  alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
 
               <div className="flex items-center gap-3 mb-3">

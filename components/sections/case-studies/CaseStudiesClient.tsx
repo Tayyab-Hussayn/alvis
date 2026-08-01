@@ -2,190 +2,191 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
-import { caseStudies } from '@/data/caseStudies'
 
-const CATEGORIES = ['All', 'Web Development', 'AI Automation', 'SEO', 'Branding', 'UI/UX', 'Lead Generation', 'Social Media', 'PPC']
+const filters = ['All Case Studies', 'SEO', 'Social Media', 'Paid Advertising', 'E-Commerce', 'Branding']
 
-const COVER_GRADIENTS: Record<string, string> = {
-  'Web Development': 'linear-gradient(135deg, rgba(0,74,198,0.25) 0%, rgba(11,28,48,0.80) 100%)',
-  'AI Automation':   'linear-gradient(135deg, rgba(79,70,229,0.30) 0%, rgba(11,28,48,0.80) 100%)',
-  'SEO + Content':   'linear-gradient(135deg, rgba(16,185,129,0.25) 0%, rgba(11,28,48,0.80) 100%)',
-  'Branding + Design': 'linear-gradient(135deg, rgba(124,58,237,0.25) 0%, rgba(11,28,48,0.80) 100%)',
-  'PPC + Analytics': 'linear-gradient(135deg, rgba(5,150,105,0.25) 0%, rgba(11,28,48,0.80) 100%)',
-  'UI/UX Design':    'linear-gradient(135deg, rgba(8,145,178,0.25) 0%, rgba(11,28,48,0.80) 100%)',
-  'Social Media Marketing': 'linear-gradient(135deg, rgba(219,39,119,0.20) 0%, rgba(11,28,48,0.80) 100%)',
-  'Lead Generation': 'linear-gradient(135deg, rgba(217,119,6,0.25) 0%, rgba(11,28,48,0.80) 100%)',
-  default:           'linear-gradient(135deg, rgba(0,74,198,0.20) 0%, rgba(11,28,48,0.80) 100%)',
+const iconPaths = {
+  revenue: <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />,
+  traffic: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z" />
+    </>
+  ),
+  chart: <path d="M18 20V10M12 20V4M6 20v-6" />,
+  people: (
+    <>
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+    </>
+  ),
+  heart: <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z" />,
+  target: (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1.5" />
+    </>
+  ),
+  search: (
+    <>
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </>
+  ),
+  award: (
+    <>
+      <circle cx="12" cy="8" r="5" />
+      <path d="M8.5 12.5 7 22l5-3 5 3-1.5-9.5" />
+    </>
+  ),
 }
 
-function getCoverGradient(category: string) {
-  return COVER_GRADIENTS[category] ?? COVER_GRADIENTS.default
-}
-
-const featured = caseStudies[0]
+const studies = [
+  {
+    badge: 'E-COMMERCE',
+    filter: 'E-Commerce',
+    image: '/images/case-studies/ecommerce.png',
+    titleLead: 'Boosting Online Sales for',
+    titleAccent: 'Fashion Store',
+    accentColor: '#e63946',
+    desc: 'We implemented a data-driven marketing strategy that increased traffic, improved conversion rate and boosted overall revenue.',
+    href: '/case-studies/fervent-retail-seo',
+    metrics: [
+      { value: '+125%', label: 'Increase in Revenue',        color: '#e63946', chip: '#fde8ea', icon: iconPaths.revenue },
+      { value: '+78%',  label: 'Increase in Website Traffic', color: '#e63946', chip: '#fde8ea', icon: iconPaths.traffic },
+      { value: '+62%',  label: 'Increase in Conversions',     color: '#3b82f6', chip: '#e8f1fd', icon: iconPaths.chart },
+    ],
+  },
+  {
+    badge: 'SOCIAL MEDIA',
+    filter: 'Social Media',
+    image: '/images/case-studies/social-media.png',
+    titleLead: 'Elevating Brand Awareness for',
+    titleAccent: 'Tech Startup',
+    accentColor: '#3b82f6',
+    desc: 'We created and executed a social media strategy that significantly increased brand visibility and audience engagement.',
+    href: '/case-studies/apex-social-media',
+    metrics: [
+      { value: '+210K', label: 'New Followers',       color: '#8b5cf6', chip: '#eee9fd', icon: iconPaths.people },
+      { value: '+85%',  label: 'Engagement Increase', color: '#e63946', chip: '#fde8ea', icon: iconPaths.heart },
+      { value: '+95%',  label: 'Brand Mentions',      color: '#3b82f6', chip: '#e8f1fd', icon: iconPaths.target },
+    ],
+  },
+  {
+    badge: 'SEO',
+    filter: 'SEO',
+    image: '/images/case-studies/seo.png',
+    titleLead: 'Driving Organic Growth for',
+    titleAccent: 'Corporate Website',
+    accentColor: '#3b82f6',
+    desc: 'Our SEO strategy improved search rankings, driving sustainable organic traffic and quality leads.',
+    href: '/case-studies/novabridge-digital-transformation',
+    metrics: [
+      { value: '+150%', label: 'Organic Traffic',   color: '#3b82f6', chip: '#e8f1fd', icon: iconPaths.search },
+      { value: '+120%', label: 'Keyword Rankings',  color: '#f59e0b', chip: '#fdf0dd', icon: iconPaths.award },
+      { value: '+60%',  label: 'Lead Generation',   color: '#3b82f6', chip: '#e8f1fd', icon: iconPaths.chart },
+    ],
+  },
+]
 
 export function CaseStudiesClient() {
-  const [active, setActive] = useState('All')
-
-  const filtered = active === 'All'
-    ? caseStudies
-    : caseStudies.filter(s =>
-        s.category.toLowerCase().includes(active.toLowerCase()) ||
-        s.tags.some(t => t.toLowerCase().includes(active.toLowerCase()))
-      )
+  const [active, setActive] = useState('All Case Studies')
+  const visible = active === 'All Case Studies' ? studies : studies.filter(s => s.filter === active)
 
   return (
-    <>
-      {/* Featured Spotlight */}
-      <section className="w-full bg-[#0b1c30] py-16 md:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
-          <span className="block text-[#c3c6d7]/50 uppercase text-[11px] tracking-widest font-semibold mb-8">
-            FEATURED PROJECT
-          </span>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+    <section className="px-5 md:px-8 pb-16" style={{ background: '#fff8f7' }}>
+      <div className="max-w-[1280px] mx-auto">
 
-            {/* Cover placeholder */}
-            <div
-              className="rounded-2xl overflow-hidden aspect-[4/3] relative"
-              style={{ background: getCoverGradient(featured.category) }}
+        {/* Filter pills */}
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {filters.map(f => {
+            const on = f === active
+            return (
+              <button
+                key={f}
+                type="button"
+                onClick={() => setActive(f)}
+                className="rounded-full px-6 py-2.5 text-[13px] font-bold transition-colors"
+                style={
+                  on
+                    ? { background: '#e63946', color: '#fff' }
+                    : { background: '#fff', color: '#5b403f', border: '1px solid #f0dedd' }
+                }
+              >
+                {f}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Cards */}
+        <div className="space-y-8">
+          {visible.map(s => (
+            <article
+              key={s.badge}
+              className="bg-white rounded-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-12"
+              style={{ boxShadow: '0 20px 60px -25px rgba(0,0,0,0.12)' }}
             >
-              <div className="absolute inset-0 flex flex-col items-start justify-end p-8">
-                <span className="inline-block px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-[12px] font-semibold uppercase tracking-wide mb-3">
-                  {featured.category}
+              <div className="lg:col-span-4 relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={s.image} alt={`${s.titleAccent} case study`} className="w-full h-full object-cover" />
+                <span
+                  className="absolute top-4 left-4 rounded-full bg-white px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.08em]"
+                  style={{ color: '#0d0d0d', boxShadow: '0 6px 18px -8px rgba(0,0,0,0.4)' }}
+                >
+                  {s.badge}
                 </span>
-                <p className="text-white/60 text-[14px]">{featured.client}</p>
               </div>
-            </div>
 
-            {/* Details */}
-            <div>
-              <p className="text-[#c3c6d7]/50 text-[13px] uppercase tracking-widest font-semibold mb-3">
-                {featured.client}
-              </p>
-              <h2 className="text-white font-bold text-[clamp(1.5rem,3vw,2rem)] leading-snug tracking-tight mb-4">
-                {featured.title}
-              </h2>
-              <p className="text-[#c3c6d7]/70 text-[16px] leading-relaxed mb-8">
-                {featured.summary}
-              </p>
+              <div className="lg:col-span-5 p-8">
+                <h2
+                  className="font-display font-extrabold mb-4"
+                  style={{ fontSize: '22px', lineHeight: '1.25', letterSpacing: '-0.02em', color: '#0d0d0d' }}
+                >
+                  {s.titleLead}<br />
+                  <span style={{ color: s.accentColor }}>{s.titleAccent}</span>
+                </h2>
+                <p style={{ fontSize: '14px', lineHeight: '1.65', color: '#5b403f' }}>{s.desc}</p>
+              </div>
 
-              {/* Metrics */}
-              <div className="flex flex-wrap gap-6 mb-8 pb-8 border-b border-white/10">
-                {featured.results.map(r => (
-                  <div key={r.metric}>
-                    <span className="block text-[#004ac6] font-extrabold text-[28px] leading-none mb-1">
-                      {r.value}
+              <div className="lg:col-span-3 p-8 lg:pl-0 flex flex-col justify-center gap-5">
+                {s.metrics.map(m => (
+                  <div key={m.label} className="flex items-center gap-3">
+                    <span className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: m.chip, color: m.color }}>
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        {m.icon}
+                      </svg>
                     </span>
-                    <span className="text-[#c3c6d7]/60 text-[12px] uppercase tracking-wide">
-                      {r.metric}
+                    <span>
+                      <span className="block font-display font-extrabold text-[17px]" style={{ color: m.color }}>{m.value}</span>
+                      <span className="block text-[11px]" style={{ color: '#8f6f6e' }}>{m.label}</span>
                     </span>
                   </div>
                 ))}
-              </div>
 
-              <Link
-                href={`/case-studies/${featured.slug}`}
-                className="inline-flex items-center gap-2 bg-[#004ac6] text-white rounded-full px-7 py-3.5 text-[14px] font-semibold hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(0,74,198,0.35)] transition-all duration-200 group"
-              >
-                View Case Study
-                <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Filter bar */}
-      <div className="bg-white border-b border-[#c3c6d7]/30 sticky top-16 md:top-20 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 py-4">
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-            {CATEGORIES.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActive(cat)}
-                className="flex-shrink-0 px-5 py-2 rounded-full text-[13px] font-semibold transition-all duration-200"
-                style={active === cat
-                  ? { background: '#004ac6', color: '#ffffff' }
-                  : { background: '#ffffff', color: '#434655', border: '1px solid #c3c6d7' }
-                }
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Card grid */}
-      <section className="w-full bg-[#f8f9ff] py-16 md:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
-          {filtered.length === 0 ? (
-            <div className="text-center py-24">
-              <p className="text-[#434655] text-[18px]">No projects in this category yet.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filtered.map(study => (
                 <Link
-                  key={study.slug}
-                  href={`/case-studies/${study.slug}`}
-                  className="group bg-white rounded-2xl border border-[#c3c6d7]/20 overflow-hidden hover:-translate-y-2 hover:shadow-[0_20px_40px_-10px_rgba(0,74,198,0.15)] transition-all duration-300"
-                  style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.04)' }}
+                  href={s.href}
+                  className="inline-flex items-center justify-center gap-2 rounded-full text-white text-[12px] font-bold px-5 py-3 mt-1 transition-transform hover:scale-[1.02]"
+                  style={{ background: '#0a1b3d' }}
                 >
-                  {/* Cover */}
-                  <div
-                    className="aspect-video relative overflow-hidden"
-                    style={{ background: getCoverGradient(study.category) }}
-                  >
-                    {/* Category chip */}
-                    <div className="absolute top-4 left-4">
-                      <span className="inline-block px-3 py-1 rounded-full bg-[#eff4ff] text-[#004ac6] text-[11px] font-semibold uppercase tracking-wide">
-                        {study.category}
-                      </span>
-                    </div>
-                    {/* Client name overlay */}
-                    <div className="absolute bottom-4 left-4">
-                      <span className="text-white/60 text-[12px] font-medium">{study.client}</span>
-                    </div>
-                  </div>
-
-                  {/* Body */}
-                  <div className="p-6">
-                    <h3 className="text-[#0b1c30] font-bold text-[17px] leading-snug mb-2 group-hover:text-[#004ac6] transition-colors duration-200">
-                      {study.title}
-                    </h3>
-                    <p className="text-[#434655] text-[14px] leading-relaxed line-clamp-2 mb-5">
-                      {study.summary}
-                    </p>
-
-                    {/* Metrics row */}
-                    <div className="flex gap-6 pt-4 border-t border-[#c3c6d7]/20">
-                      {study.results.slice(0, 2).map(r => (
-                        <div key={r.metric}>
-                          <span className="block text-[#004ac6] font-extrabold text-[22px] leading-none mb-0.5">
-                            {r.value}
-                          </span>
-                          <span className="text-[#434655]/70 text-[11px] uppercase tracking-wide">
-                            {r.metric}
-                          </span>
-                        </div>
-                      ))}
-                      <div className="ml-auto flex items-end pb-0.5">
-                        <ArrowRight
-                          size={18}
-                          className="text-[#c3c6d7] group-hover:text-[#004ac6] group-hover:translate-x-1 transition-all duration-200"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                  View Case Study
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14m-7-7 7 7-7 7" />
+                  </svg>
                 </Link>
-              ))}
-            </div>
-          )}
+              </div>
+            </article>
+          ))}
         </div>
-      </section>
-    </>
+
+        {visible.length === 0 && (
+          <p className="text-center py-16 text-[14px]" style={{ color: '#8f6f6e' }}>
+            No case studies in this category yet.
+          </p>
+        )}
+      </div>
+    </section>
   )
 }

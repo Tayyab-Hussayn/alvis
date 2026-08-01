@@ -1,78 +1,77 @@
 'use client'
 
+const brands = ['Google', 'Meta', 'HubSpot', 'Canva', 'slack']
+
 export function AboutHero() {
   return (
-    <section className="relative w-full min-h-[700px] flex flex-col items-center justify-center overflow-hidden py-28">
+    <section className="pt-40 pb-24 px-5 md:px-8" style={{ background: '#fff8f7' }}>
+      <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-      {/* Gradient background */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background: 'linear-gradient(135deg, #0b1c30 0%, #004ac6 55%, #1e1b4b 100%)',
-        }}
-      />
-
-      {/* Decorative blobs */}
-      <div className="absolute top-[-80px] left-[-80px] w-[400px] h-[400px] rounded-full z-0 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(0,74,198,0.35) 0%, transparent 70%)', filter: 'blur(60px)' }} />
-      <div className="absolute bottom-[-60px] right-[-60px] w-[350px] h-[350px] rounded-full z-0 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.30) 0%, transparent 70%)', filter: 'blur(70px)' }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full z-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse, rgba(0,74,198,0.20) 0%, transparent 60%)', filter: 'blur(80px)' }} />
-
-      {/* Glass card */}
-      <div className="relative z-10 w-full max-w-3xl mx-auto px-4 sm:px-8 flex flex-col items-center">
-        <div
-          className="w-full rounded-3xl p-10 md:p-12"
-          style={{
-            background: 'rgba(255,255,255,0.08)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.18)',
-            boxShadow: '0 8px 32px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.15)',
-          }}
-        >
-          <span className="block text-[12px] font-semibold uppercase tracking-widest mb-6"
-            style={{ color: 'rgba(255,255,255,0.55)' }}>
-            OUR STORY
+        {/* Left copy */}
+        <div className="lg:col-span-6">
+          <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-5" style={{ color: '#e63946' }}>
+            About Alvis
           </span>
-          <h1 className="font-bold leading-tight tracking-tight text-white mb-6"
-            style={{ fontSize: 'clamp(2rem,5vw,3rem)' }}>
-            Built to ship,<br />not to sell.
+
+          <h1
+            className="font-display font-extrabold mb-6"
+            style={{ fontSize: 'clamp(2.5rem, 5vw, 4.25rem)', lineHeight: '1.08', letterSpacing: '-0.04em', color: '#0d0d0d' }}
+          >
+            We Help Businesses<br />
+            <span style={{ color: '#e63946' }}>Grow Faster.</span>
           </h1>
-          <div className="space-y-4" style={{ color: 'rgba(255,255,255,0.82)', fontSize: '17px', lineHeight: '1.7' }}>
-            <p>
-              Alvis started as a two-person team with one belief: most agencies overpromise because
-              they&apos;re selling before they&apos;re building. We flipped that — every engagement starts
-              with a technical assessment, not a pitch deck.
-            </p>
-            <p>
-              Today we work with founders, startups, and established businesses across 3 continents.
-              The team is small by design. Every client gets senior attention, every project gets
-              shipped.
-            </p>
+
+          <p className="mb-9" style={{ fontSize: '18px', lineHeight: '1.6', color: '#5b403f' }}>
+            Creative strategies. Real results.<br />
+            Long-term growth. Maximum impact.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-4 mb-12">
+            <a
+              href="/contact"
+              className="flex items-center gap-3 rounded-full text-white text-[13px] font-bold pl-7 pr-2 py-2 transition-transform hover:scale-[1.02]"
+              style={{ background: '#e63946', boxShadow: '0 20px 40px -14px rgba(230,57,70,0.45)' }}
+            >
+              Get Free Consultation
+              <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.22)' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14m-7-7 7 7-7 7" />
+                </svg>
+              </span>
+            </a>
+
+            <a
+              href="/case-studies"
+              className="flex items-center gap-3 rounded-full bg-white text-[13px] font-bold pl-7 pr-2 py-2 border transition-transform hover:scale-[1.02]"
+              style={{ borderColor: '#f0dedd', color: '#0d0d0d', boxShadow: '0 10px 30px -18px rgba(0,0,0,0.35)' }}
+            >
+              View Our Work
+              <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: '#0d0d0d' }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="#fff">
+                  <path d="M6 4l14 8-14 8V4z" />
+                </svg>
+              </span>
+            </a>
+          </div>
+
+          <p className="text-[13px] font-bold mb-5" style={{ color: '#271717' }}>Trusted by 100+ brands</p>
+          <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
+            {brands.map(b => (
+              <span key={b} className="font-display font-bold text-xl" style={{ color: '#9b8a89' }}>{b}</span>
+            ))}
           </div>
         </div>
 
-        {/* Frosted stat pills */}
-        <div className="flex flex-wrap justify-center gap-4 mt-6">
-          {['3 Continents', '50+ Clients', '200+ Projects'].map(stat => (
-            <div
-              key={stat}
-              className="px-6 py-3 rounded-full text-[13px] font-semibold text-white"
-              style={{
-                background: 'rgba(255,255,255,0.08)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255,255,255,0.18)',
-              }}
-            >
-              {stat}
-            </div>
-          ))}
+        {/* Right illustration */}
+        <div className="lg:col-span-6">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/about/hero-illustration.png"
+            alt="Alvis marketing growth illustration"
+            className="w-full h-auto"
+          />
         </div>
       </div>
-
     </section>
   )
 }

@@ -1,186 +1,133 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { TrendingUp, Star } from 'lucide-react'
+const logos = [
+  { src: '/images/homepage/logo-airbnb.webp',   alt: 'Airbnb',    cls: 'h-8' },
+  { src: '/images/homepage/logo-google.webp',    alt: 'Google',    cls: 'h-6' },
+  { src: '/images/homepage/logo-amazon.webp',    alt: 'Amazon',    cls: 'h-8' },
+  { src: '/images/homepage/logo-anthropic.webp', alt: 'Anthropic', cls: 'h-7' },
+  { src: '/images/homepage/logo-chatgpt.webp',   alt: 'ChatGPT',   cls: 'h-7' },
+]
 
 export function Hero() {
-  const card1Ref = useRef<HTMLDivElement>(null)
-  const card2Ref = useRef<HTMLDivElement>(null)
-  const card3Ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const centerX = window.innerWidth / 2
-      const centerY = window.innerHeight / 2
-      const moveX = (e.clientX - centerX) / 60
-      const moveY = (e.clientY - centerY) / 60
-
-      ;[card1Ref, card2Ref, card3Ref].forEach((ref, index) => {
-        if (!ref.current) return
-        const factor = (index + 1) * 0.15
-        ref.current.style.transform = `translate(${moveX * factor}px, ${moveY * factor}px)`
-      })
-    }
-
-    document.addEventListener('mousemove', handleMouseMove)
-    return () => document.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
   return (
-    <section className="relative px-4 sm:px-8 lg:px-16 pt-36 pb-20 overflow-hidden bg-bg">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
+    <header
+      className="relative pt-40 pb-[160px] px-5 md:px-8 overflow-hidden"
+      style={{ background: 'radial-gradient(circle at 70% 30%, rgba(183,16,42,0.08), transparent 50%), #fff8f7' }}
+    >
+      <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 
-          {/* ── Left Content Column ── */}
-          <div className="lg:col-span-6 flex flex-col items-start gap-6">
+        {/* Left copy */}
+        <div className="lg:col-span-6 z-10">
+          <span className="inline-block px-4 py-1.5 rounded-full text-[10px] tracking-widest font-bold uppercase mb-6" style={{ background: '#ffe9e8', color: '#b7102a' }}>
+            DIGITAL MARKETING THAT DELIVERS
+          </span>
 
-            {/* Announcement pill */}
-            <div className="inline-flex items-center p-1 pr-4 bg-[#e5eeff] rounded-full text-[#434655] text-[14px] font-medium gap-2">
-              <span className="bg-black text-white px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">New</span>
-              <span>Digital Excellence</span>
-            </div>
+          <h1
+            className="font-display font-extrabold mb-6 max-w-xl"
+            style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)', lineHeight: '1.1', letterSpacing: '-0.04em', color: '#271717' }}
+          >
+            We Don&apos;t Just<br />
+            Market Brands.<br />
+            <span style={{ color: '#b7102a' }}>We Grow Them.</span>
+          </h1>
 
-            {/* Headline */}
-            <h1 className="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-[1.1] tracking-[-0.02em] text-[#0b1c30] max-w-xl">
-              We Build Digital Experiences That Drive{' '}
-              <span className="text-[#004ac6]">Real Results</span>
-            </h1>
+          <p className="mb-10 max-w-lg" style={{ fontSize: '18px', lineHeight: '1.6', color: '#5b403f' }}>
+            Data-driven strategies. Creative content. Real results that scale your business with mathematical precision and creative flair.
+          </p>
 
-            {/* Subtext */}
-            <p className="text-[18px] leading-[1.6] text-[#434655] max-w-lg">
-              Alvis is a full-service digital marketing and IT agency. We help ambitious
-              companies grow through strategy, design, and technology that actually works.
-            </p>
+          <div className="flex flex-wrap gap-4">
+            <a
+              href="/contact"
+              className="flex items-center gap-3 rounded-full text-white text-[12px] font-bold tracking-[0.1em] uppercase pl-8 pr-2 py-2 transition-all hover:scale-[1.02]"
+              style={{ background: '#b7102a', boxShadow: '0 0 0 0 transparent', transition: 'all 0.2s' }}
+              onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 20px 40px -10px rgba(183,16,42,0.3)')}
+              onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 0 0 0 transparent')}
+            >
+              Get Free Consultation
+              <span className="p-2 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </a>
 
-            {/* CTAs */}
-            <div className="flex flex-row flex-wrap items-center gap-4 pt-2">
-              <Link
-                href="/contact"
-                className="px-8 py-3.5 bg-black text-white text-[14px] font-semibold rounded-full hover:opacity-90 active:scale-95 transition-all duration-200"
-              >
-                Start a Project
-              </Link>
-              <Link
-                href="/case-studies"
-                className="px-8 py-3.5 bg-transparent border-2 border-black text-black text-[14px] font-semibold rounded-full hover:bg-black/5 transition-all duration-200"
-              >
-                View Our Work
-              </Link>
-            </div>
-
-            {/* Trust element */}
-            <div className="pt-2 flex items-center gap-4">
-              <div className="flex -space-x-3">
-                <Image
-                  src="/images/avatar-1.jpg"
-                  alt="Client"
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 rounded-full border-2 border-white object-cover"
-                />
-                <Image
-                  src="/images/avatar-2.jpg"
-                  alt="Client"
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 rounded-full border-2 border-white object-cover"
-                />
-                <Image
-                  src="/images/avatar-3.jpg"
-                  alt="Client"
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 rounded-full border-2 border-white object-cover"
-                />
-              </div>
-              <div>
-                <p className="font-bold text-[#0b1c30] text-[14px] leading-snug">12k+</p>
-                <p className="text-[12px] text-[#434655] font-medium leading-none">
-                  Used by teams and professionals
-                </p>
-              </div>
-            </div>
+            <a
+              href="/case-studies"
+              className="flex items-center gap-3 border-2 text-[12px] font-bold tracking-[0.1em] uppercase px-8 py-4 rounded-full transition-all"
+              style={{ borderColor: '#e4bebc', color: '#271717' }}
+              onMouseEnter={e => (e.currentTarget.style.borderColor = '#b7102a')}
+              onMouseLeave={e => (e.currentTarget.style.borderColor = '#e4bebc')}
+            >
+              View Our Work
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+            </a>
           </div>
 
-          {/* ── Right Column Visual ── */}
-          <div className="lg:col-span-6 relative flex justify-center items-center">
-            {/* Glow blob */}
-            <div className="absolute -z-10 w-[500px] h-[500px] bg-blue-200/10 rounded-full blur-[80px]" />
-
-            {/* Main image container */}
-            <div className="relative w-full lg:h-[520px] rounded-xl overflow-visible shadow-2xl bg-white border border-gray-200/30">
-              <Image
-                src="/images/hero-dashboard.jpg"
-                alt="Analytics Dashboard Interface"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover rounded-xl"
-                priority
-              />
-
-              {/* Card 1: Conversion Rate — top left */}
-              <div
-                ref={card1Ref}
-                className="absolute -top-6 left-10 glass-card p-4 rounded-xl shadow-lg border border-white/50 flex flex-col gap-1.5 z-10"
-              >
-                <div className="flex items-center gap-2 text-[#004ac6]">
-                  <TrendingUp size={18} />
-                  <span className="text-[13px] font-bold">+127% Conversion Rate</span>
-                </div>
-                <p className="text-[10px] text-[#434655]/60 font-medium">Optimization Performance</p>
-              </div>
-
-              {/* Card 2: Active Project — right side */}
-              <div
-                ref={card2Ref}
-                className="absolute -right-4 bottom-20 glass-card p-4 rounded-xl shadow-lg border border-white/50 max-w-[220px] z-10"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded bg-[#2563eb] flex items-center justify-center text-white text-[11px] font-bold flex-shrink-0">
-                    MT
-                  </div>
-                  <div>
-                    <p className="text-[13px] font-bold text-[#0b1c30] leading-tight">Meridian Tech</p>
-                    <p className="text-[10px] text-[#004ac6] font-semibold">SEO Campaign</p>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-[11px] text-[#434655] font-medium">Active Project</span>
-                  <span className="text-[11px] text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded">
-                    +340% Traffic
-                  </span>
-                </div>
-              </div>
-
-              {/* Card 3: Rating — bottom pill */}
-              <div
-                ref={card3Ref}
-                className="absolute -bottom-6 left-10 glass-card px-5 py-3 rounded-full shadow-lg border border-white/50 flex items-center gap-3 z-10"
-              >
-                <div className="flex items-center gap-1.5 text-yellow-500">
-                  <Star size={14} fill="currentColor" />
-                  <span className="text-[13px] font-bold text-[#0b1c30]">4.9/5 rating</span>
-                </div>
-                <div className="w-1 h-1 bg-gray-300 rounded-full" />
-                <span className="text-[13px] text-[#434655]">38 verified reviews</span>
+          {/* Logo scroll */}
+          <div className="mt-16">
+            <p className="mb-6 text-[12px] tracking-[0.1em] font-bold uppercase" style={{ color: '#8f6f6e' }}>
+              Trusted by 100+ brands
+            </p>
+            <div
+              className="relative overflow-hidden"
+              style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
+            >
+              <div className="flex gap-16 items-center w-max py-4" style={{ animation: 'logo-scroll 20s linear infinite' }}>
+                {[...logos, ...logos].map((logo, i) => (
+                  <img key={i} src={logo.src} alt={logo.alt} className={`${logo.cls} w-auto grayscale opacity-40`}
+                    style={{ transition: 'filter 0.3s, opacity 0.3s' }}
+                    onMouseEnter={e => { e.currentTarget.style.filter = 'none'; e.currentTarget.style.opacity = '1' }}
+                    onMouseLeave={e => { e.currentTarget.style.filter = 'grayscale(1)'; e.currentTarget.style.opacity = '0.4' }}
+                  />
+                ))}
               </div>
             </div>
           </div>
         </div>
 
-        {/* ── Logo Strip ── */}
-        <div className="mt-20 pt-10 border-t border-gray-200/40">
-          <div className="flex flex-row justify-between items-center w-full grayscale opacity-50">
-            {['Slack', 'Zoom', 'Airbnb', 'Spotify', 'Envato'].map((name) => (
-              <span key={name} className="text-[20px] font-bold text-[#0b1c30] tracking-tight">
-                {name}
-              </span>
-            ))}
+        {/* Right visual */}
+        <div className="lg:col-span-6 relative flex justify-center lg:justify-end">
+          <div className="relative w-full max-w-lg" style={{ animation: 'hero-float 6s ease-in-out infinite' }}>
+            <img
+              src="/images/homepage/hero-phone.webp"
+              alt="Alvis Marketing Dashboard"
+              className="w-full h-auto drop-shadow-2xl"
+            />
+
+            {/* Revenue card */}
+            <div
+              className="absolute -top-6 -left-6 p-4 rounded-2xl shadow-lg flex items-center gap-3"
+              style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.2)', animation: 'pulse 2s cubic-bezier(0.4,0,0.6,1) infinite' }}
+            >
+              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'rgba(119,193,193,0.2)' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#77C1C1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+                </svg>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase" style={{ color: '#8f6f6e' }}>Revenue</p>
+                <p className="text-[16px] font-bold" style={{ color: '#271717' }}>+24.8%</p>
+              </div>
+            </div>
+
+            {/* Engagement card */}
+            <div
+              className="absolute bottom-10 -right-4 p-4 rounded-2xl shadow-lg flex items-center gap-3"
+              style={{ background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.2)' }}
+            >
+              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'rgba(183,16,42,0.1)' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#b7102a">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase" style={{ color: '#8f6f6e' }}>Engagement</p>
+                <p className="text-[16px] font-bold" style={{ color: '#271717' }}>12.5K</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </header>
   )
 }

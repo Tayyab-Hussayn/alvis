@@ -1,70 +1,107 @@
 'use client'
 
-import { Search, Wrench, Rocket } from 'lucide-react'
-
 const steps = [
   {
     num: '01',
-    icon: Search,
-    title: 'Discovery & Scope',
-    desc: 'We learn your business, constraints, and goals in a focused 60-min call. Scoping takes days, not weeks.',
+    title: 'Discover',
+    desc: 'We understand your business, goals and audience.',
+    color: '#e63946',
+    chip: '#fde8ea',
+    icon: (
+      <>
+        <circle cx="11" cy="11" r="7" />
+        <path d="m21 21-4.35-4.35M11 8v6M8 11h6" />
+      </>
+    ),
   },
   {
     num: '02',
-    icon: Wrench,
-    title: 'Build & Iterate',
-    desc: 'We ship working software fast, then refine based on real feedback. You see progress weekly.',
+    title: 'Strategize',
+    desc: 'We create a customized strategy based on data and insights.',
+    color: '#8b5cf6',
+    chip: '#eee9fd',
+    icon: (
+      <>
+        <circle cx="6" cy="6" r="3" />
+        <circle cx="18" cy="6" r="3" />
+        <circle cx="12" cy="18" r="3" />
+        <path d="M8.6 7.6 11 15M15.4 7.6 13 15" />
+      </>
+    ),
   },
   {
     num: '03',
-    icon: Rocket,
-    title: 'Ship & Scale',
-    desc: "Clean handoff with documentation. We stay available for support and scaling when you're ready.",
+    title: 'Execute',
+    desc: 'Our team implements the plan with precision and creativity.',
+    color: '#3b82f6',
+    chip: '#e8f1fd',
+    icon: <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />,
+  },
+  {
+    num: '04',
+    title: 'Grow',
+    desc: 'We optimize, analyze and scale for maximum results.',
+    color: '#16a34a',
+    chip: '#e3f7ec',
+    icon: <path d="M3 17l6-6 4 4 8-8M15 7h6v6" />,
   },
 ]
 
 export function OurProcess() {
   return (
-    <section className="w-full bg-white py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
+    <section className="px-5 md:px-8 pb-20" style={{ background: '#fff8f7' }}>
+      <div className="max-w-[1280px] mx-auto rounded-3xl py-16 px-6 md:px-12 relative overflow-hidden" style={{ background: '#0a1b3d' }}>
+        <span
+          className="absolute inset-0 opacity-[0.07] pointer-events-none"
+          style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '22px 22px' }}
+        />
 
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="block text-[#004ac6] uppercase text-[12px] tracking-widest font-semibold mb-4">
-            OUR PROCESS
+        <div className="relative text-center mb-14">
+          <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-3" style={{ color: '#e63946' }}>
+            Our Process
           </span>
-          <h2 className="text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-tight tracking-tight text-[#0b1c30] mb-4">
-            Simple process, serious execution
+          <h2 className="font-display font-extrabold text-white" style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2.1rem)', letterSpacing: '-0.03em' }}>
+            How <span style={{ color: '#e63946' }}>We</span> Work
           </h2>
-          <p className="text-[18px] text-[#434655] leading-relaxed">
-            No lengthy discovery phases, no scope creep. We move fast without cutting corners.
-          </p>
         </div>
 
-        {/* Steps grid */}
-        <div className="relative">
-          {/* Desktop connector line */}
-          <div className="hidden md:block absolute top-[76px] left-[22%] right-[22%] h-px border-t-2 border-dashed border-[#c3c6d7]/40 z-0" />
+        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* dashed connector on large screens */}
+          <span
+            className="hidden lg:block absolute left-[12%] right-[12%] top-[44px] h-px"
+            style={{ backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.35) 50%, transparent 0%)', backgroundSize: '10px 1px' }}
+          />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-            {steps.map(({ num, icon: Icon, title, desc }) => (
-              <div
-                key={num}
-                className="bg-white rounded-2xl border border-[#c3c6d7]/20 p-6 shadow-lg flex flex-col relative hover:-translate-y-1 transition-all duration-200"
-              >
-                <span className="absolute top-4 right-4 text-[64px] font-bold text-[#004ac6]/10 leading-none select-none">
-                  {num}
+          {steps.map((s, i) => (
+            <div key={s.num} className="relative text-center">
+              {i > 0 && (
+                <span
+                  className="hidden lg:flex absolute -left-[26px] top-[32px] w-6 h-6 rounded-full items-center justify-center"
+                  style={{ background: '#e63946' }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14m-7-7 7 7-7 7" />
+                  </svg>
                 </span>
-                <div className="h-12 w-12 rounded-xl bg-[#e5eeff] flex items-center justify-center mb-6 shadow-sm">
-                  <Icon size={22} className="text-[#004ac6]" />
-                </div>
-                <h3 className="text-[20px] font-semibold text-[#0b1c30] mb-2">{title}</h3>
-                <p className="text-[15px] text-[#434655] leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+              )}
 
+              <span
+                className="relative w-[88px] h-[88px] rounded-full bg-white mx-auto mb-5 flex items-center justify-center"
+                style={{ color: s.color, boxShadow: '0 12px 30px -12px rgba(0,0,0,0.5)' }}
+              >
+                <span className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: s.chip }}>
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    {s.icon}
+                  </svg>
+                </span>
+              </span>
+
+              <div className="font-display font-extrabold text-[22px] mb-1" style={{ color: '#e63946' }}>{s.num}</div>
+              <h3 className="font-bold text-[15px] text-white mb-2">{s.title}</h3>
+              <p className="text-[12.5px] mx-auto max-w-[210px]" style={{ lineHeight: '1.6', color: 'rgba(255,255,255,0.65)' }}>{s.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )

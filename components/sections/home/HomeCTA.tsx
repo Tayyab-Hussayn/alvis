@@ -1,74 +1,70 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { Button } from '@/components/ui/Button'
-import { SectionLabel } from '@/components/ui/SectionLabel'
-import { Container } from '@/components/ui/Container'
-
 export function HomeCTA() {
-  const headlineRef  = useRef<HTMLHeadingElement>(null)
-  const supportRef   = useRef<HTMLParagraphElement>(null)
-  const buttonRef    = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
-
-    const init = async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: headlineRef.current, start: 'top 80%' },
-        defaults: { ease: 'power3.out' },
-      })
-
-      tl.from(headlineRef.current, { opacity: 0, y: 30, duration: 0.8 })
-        .from(supportRef.current,  { opacity: 0, y: 15, duration: 0.6 }, '+=0.5')
-        .from(buttonRef.current,   { opacity: 0, y: 20, duration: 0.5 }, '+=0.3')
-    }
-
-    init()
-  }, [])
-
   return (
-    <section className="relative bg-text py-28 md:py-36 overflow-hidden">
-      {/* Subtle radial glow */}
+    <section className="py-[160px] px-5 md:px-8">
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at 50% 50%, rgba(37,99,235,0.12) 0%, transparent 70%)',
-        }}
-      />
+        className="max-w-[1280px] mx-auto rounded-[48px] overflow-hidden relative border"
+        style={{ background: '#ffe9e8', borderColor: 'rgba(255,255,255,0.5)' }}
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          {/* Left */}
+          <div className="p-12 md:p-20 flex flex-col justify-center">
+            <span className="block mb-6 text-[12px] font-bold tracking-[0.1em] uppercase" style={{ color: '#b7102a' }}>
+              LET&apos;S GROW TOGETHER
+            </span>
+            <h2 className="font-display font-bold mb-8" style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', lineHeight: '1.2', letterSpacing: '-0.02em', color: '#271717' }}>
+              Ready to Take Your Business to the{' '}
+              <span style={{ color: '#b7102a' }}>Next Level?</span>
+            </h2>
+            <p className="mb-12" style={{ fontSize: '18px', lineHeight: '1.6', color: '#5b403f' }}>
+              Book a free consultation call with our experts and let&apos;s discuss how we can grow your business through strategic marketing.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              <a
+                href="/contact"
+                className="w-full sm:w-auto flex items-center justify-center gap-3 text-white text-[12px] font-bold tracking-[0.1em] uppercase pl-10 pr-4 py-4 rounded-full transition-all"
+                style={{ background: '#b7102a' }}
+                onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 20px 40px -10px rgba(183,16,42,0.3)')}
+                onMouseLeave={e => (e.currentTarget.style.boxShadow = 'none')}
+              >
+                Get Free Consultation
+                <span className="p-2 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.2)' }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </span>
+              </a>
+              <a href="tel:+15551234567" className="flex items-center gap-4 group cursor-pointer">
+                <div
+                  className="w-12 h-12 rounded-full text-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-110"
+                  style={{ background: '#485f84' }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.77a16 16 0 006.29 6.29l1.29-1.29a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2.07z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: '#8f6f6e' }}>CALL US NOW</p>
+                  <p className="text-[16px] font-bold" style={{ color: '#271717' }}>+1 (555) 123-4567</p>
+                </div>
+              </a>
+            </div>
+          </div>
 
-      <Container className="relative z-10 text-center">
-        <SectionLabel className="mb-6 justify-center [&>span:first-child]:bg-white [&>span:last-child]:text-white/60">
-          Ready to Grow?
-        </SectionLabel>
-
-        <h2
-          ref={headlineRef}
-          className="text-display-xl font-display font-bold text-white mt-4 mb-6"
-        >
-          Let&apos;s Build Something<br />
-          <span className="text-blue-400">That Lasts.</span>
-        </h2>
-
-        <p
-          ref={supportRef}
-          className="text-body-lg text-white/80 max-w-lg mx-auto mb-10"
-        >
-          Whether you need a new website, a better marketing strategy, or an IT solution
-          — Alvis is ready to make it happen.
-        </p>
-
-        <div ref={buttonRef}>
-          <Button href="/contact" variant="primary" size="lg" withArrow>
-            Start a Conversation
-          </Button>
+          {/* Right */}
+          <div className="flex items-center justify-center p-12 md:p-20 relative" style={{ background: 'rgba(183,16,42,0.05)' }}>
+            <div className="relative w-full max-w-sm" style={{ animation: 'hero-float 6s ease-in-out infinite' }}>
+              <img
+                src="/images/homepage/cta-illustration.webp"
+                alt="Target illustration"
+                className="w-full h-auto drop-shadow-2xl"
+              />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(183,16,42,0.1), transparent)' }}/>
+            </div>
+          </div>
         </div>
-      </Container>
+      </div>
     </section>
   )
 }

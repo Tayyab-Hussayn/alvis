@@ -1,82 +1,100 @@
 'use client'
 
-import { ChevronDown } from 'lucide-react'
-import * as Accordion from '@radix-ui/react-accordion'
+import { useState } from 'react'
 
 const faqs = [
   {
-    q: 'How quickly will you respond?',
-    a: "Within 24 hours on business days. If it's urgent, say so in your message.",
+    q: 'How long does it take to see results?',
+    a: 'Most clients see early movement within 4–6 weeks. Meaningful, compounding results usually land between months three and six, depending on the channel and how competitive your market is.',
   },
   {
-    q: 'Do you work with small businesses or just large companies?',
-    a: 'Both. Our clients range from solo founders to teams of 50+. The right fit is more about ambition than company size.',
+    q: 'Can you manage our social media?',
+    a: 'Yes. We handle strategy, content production, scheduling and community management across the platforms where your audience actually spends time.',
   },
   {
-    q: 'Do you require a long-term contract?',
-    a: "No. Project-based work has no lock-in. Some services like SEO work best with 3–6 month commitments for results to compound, but we don't trap you.",
+    q: 'How much do your services cost?',
+    a: 'Pricing depends on scope and the channels involved. We scope every engagement individually and send a clear proposal before any work starts — no hidden fees.',
   },
   {
-    q: "Can I see more work than what's on the website?",
-    a: 'Yes — NDA-protected case studies are available on request. Just mention it in your message.',
-  },
-  {
-    q: 'Do you work with clients outside your country?',
-    a: 'Entirely remote. We have clients across 12+ countries. Time zones are manageable.',
-  },
-  {
-    q: 'What happens after I send a message?',
-    a: "We review your project, and if it's a good fit, we schedule a 30-minute discovery call — no charge. From there, we'll propose exact next steps.",
+    q: 'Do you offer support after project delivery?',
+    a: 'Always. Every project includes a support window, and most clients continue with us on an ongoing retainer for optimization and reporting.',
   },
 ]
 
-export function ContactFAQ() {
+/* 3D-style question-mark bubble */
+function QuestionArt() {
   return (
-    <section className="w-full bg-[#f8f9ff] py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+    <svg width="220" height="200" viewBox="0 0 220 200" fill="none" className="w-full max-w-[220px]">
+      <rect x="30" y="18" width="140" height="120" rx="34" fill="#8b5cf6" />
+      <path d="M74 132h34l-14 26z" fill="#8b5cf6" />
+      <path
+        d="M100 52c-13 0-22 8-23 19h15c1-4 4-7 8-7 5 0 8 3 8 7 0 6-9 8-12 15-1 3-1 6-1 9h14c0-3 0-5 1-6 3-6 13-9 13-19 0-11-10-18-23-18z"
+        fill="#fff"
+      />
+      <circle cx="100" cy="112" r="7" fill="#fff" />
+      <circle cx="182" cy="150" r="24" fill="#fff" stroke="#efe6fd" strokeWidth="2" />
+      <g fill="#c4b5fd">
+        <circle cx="173" cy="150" r="3" />
+        <circle cx="182" cy="150" r="3" />
+        <circle cx="191" cy="150" r="3" />
+      </g>
+      <g fill="#e63946">
+        <circle cx="16" cy="60" r="3.5" />
+        <circle cx="200" cy="40" r="3" />
+        <circle cx="24" cy="150" r="2.5" />
+      </g>
+      <g fill="#f59e0b">
+        <circle cx="206" cy="98" r="3" />
+        <circle cx="10" cy="110" r="2.5" />
+      </g>
+    </svg>
+  )
+}
 
-          {/* Left sticky header */}
-          <div className="lg:col-span-5">
-            <div className="lg:sticky lg:top-32">
-              <span className="block text-[#004ac6] uppercase text-[12px] tracking-widest font-semibold mb-4">
-                COMMON QUESTIONS
-              </span>
-              <h2 className="text-[clamp(1.75rem,4vw,2.5rem)] font-bold leading-tight tracking-tight text-[#0b1c30] mb-4">
-                Before you<br />reach out
-              </h2>
-              <p className="text-[18px] text-[#434655] leading-relaxed max-w-sm">
-                The questions we hear most often — answered honestly.
-              </p>
-            </div>
-          </div>
+export function ContactFAQ() {
+  const [open, setOpen] = useState<number | null>(null)
 
-          {/* Right: accordion */}
-          <div className="lg:col-span-7">
-            <Accordion.Root type="single" collapsible className="flex flex-col border-t border-[#c3c6d7]/30">
-              {faqs.map((faq, i) => (
-                <Accordion.Item
-                  key={i}
-                  value={`item-${i}`}
-                  className="border-b border-[#c3c6d7]/30"
+  return (
+    <section className="px-5 md:px-8 pb-20" style={{ background: '#fff8f7' }}>
+      <div className="max-w-[1280px] mx-auto">
+        <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-3" style={{ color: '#e63946' }}>
+          FAQ
+        </span>
+        <h2
+          className="font-display font-extrabold mb-10"
+          style={{ fontSize: 'clamp(1.5rem, 2.4vw, 2rem)', letterSpacing: '-0.03em', color: '#0d0d0d' }}
+        >
+          Frequently Asked Questions
+        </h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-4 self-start">
+            {faqs.map((f, i) => (
+              <div key={f.q} className="bg-white rounded-2xl h-fit" style={{ border: '1px solid #f0dedd' }}>
+                <button
+                  type="button"
+                  onClick={() => setOpen(open === i ? null : i)}
+                  aria-expanded={open === i}
+                  className="w-full flex items-center justify-between gap-4 text-left px-5 py-4"
                 >
-                  <Accordion.Trigger className="group flex items-center justify-between w-full text-[17px] font-semibold text-[#0b1c30] py-5 hover:text-[#004ac6] transition-colors duration-200 text-left gap-4">
-                    {faq.q}
-                    <ChevronDown
-                      size={18}
-                      className="shrink-0 text-[#004ac6] transition-transform duration-200 group-data-[state=open]:rotate-180"
-                    />
-                  </Accordion.Trigger>
-                  <Accordion.Content className="overflow-hidden data-[state=open]:animate-[accordion-down_0.2s_ease-out] data-[state=closed]:animate-[accordion-up_0.2s_ease-out]">
-                    <p className="text-[15px] text-[#434655] pb-5 leading-relaxed pr-8">
-                      {faq.a}
-                    </p>
-                  </Accordion.Content>
-                </Accordion.Item>
-              ))}
-            </Accordion.Root>
+                  <span className="font-bold text-[14px]" style={{ color: '#0d0d0d' }}>{f.q}</span>
+                  <span
+                    className="text-[20px] leading-none shrink-0 transition-transform"
+                    style={{ color: '#8f6f6e', transform: open === i ? 'rotate(45deg)' : 'none' }}
+                  >
+                    +
+                  </span>
+                </button>
+                {open === i && (
+                  <p className="px-5 pb-5 text-[13px]" style={{ lineHeight: '1.65', color: '#5b403f' }}>{f.a}</p>
+                )}
+              </div>
+            ))}
           </div>
 
+          <div className="lg:col-span-3 flex justify-center">
+            <QuestionArt />
+          </div>
         </div>
       </div>
     </section>

@@ -1,23 +1,27 @@
 import type { Metadata } from 'next'
-import { AboutHero }   from '@/components/sections/about/AboutHero'
-import { OurValues }   from '@/components/sections/about/OurValues'
-import { TeamSection } from '@/components/sections/about/TeamSection'
-import { Recognition } from '@/components/sections/about/Recognition'
-import { AboutCTA }    from '@/components/sections/about/AboutCTA'
+import { AboutHero }           from '@/components/sections/about/AboutHero'
+import { WhoWeAre }            from '@/components/sections/about/WhoWeAre'
+import { ImpactNumbers }       from '@/components/sections/about/ImpactNumbers'
+import { MissionVisionValues } from '@/components/sections/about/MissionVisionValues'
+import { MeetExperts }         from '@/components/sections/about/MeetExperts'
+import { TrustedBrands }       from '@/components/sections/about/TrustedBrands'
+import { AboutCTA }            from '@/components/sections/about/AboutCTA'
 
 export const metadata: Metadata = {
-  title: 'About Alvis | Digital Agency Built to Ship',
+  title: 'About Alvis | We Help Businesses Grow Faster',
   description:
-    'Meet the Alvis team — a small, senior digital agency building web products, AI automation, and lead generation systems across 3 continents.',
+    'Alvis is a results-driven digital marketing agency committed to helping businesses grow online with creativity, data and technology.',
 }
 
 export default function AboutPage() {
   return (
     <>
       <AboutHero />
-      <OurValues />
-      <TeamSection />
-      <Recognition />
+      <WhoWeAre />
+      <ImpactNumbers />
+      <MissionVisionValues />
+      <MeetExperts />
+      <TrustedBrands />
       <AboutCTA />
     </>
   )

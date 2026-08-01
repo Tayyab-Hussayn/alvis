@@ -22,9 +22,14 @@ export function RelatedStudies({ currentSlug }: Props) {
               href={`/case-studies/${study.slug}`}
               className="group block rounded-3xl overflow-hidden bg-surface border border-border hover:border-accent hover:-translate-y-1 transition-all duration-300"
             >
-              {/* Cover placeholder */}
-              <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-subtle to-border">
-                <div className="absolute inset-0 bg-accent-soft/20 group-hover:scale-105 transition-transform duration-500" />
+              {/* Cover */}
+              <div className="aspect-video relative overflow-hidden bg-subtle">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={study.coverImage}
+                  alt={study.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
                 <div className="absolute top-4 left-4">
                   <Badge>{study.category}</Badge>
                 </div>
