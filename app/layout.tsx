@@ -6,6 +6,7 @@ import { CustomCursor }   from '@/components/ui/CustomCursor'
 import { GSAPProvider }   from '@/components/animations/GSAPProvider'
 import { PageTransition } from '@/components/animations/PageTransition'
 import { Preloader }      from '@/components/ui/Preloader'
+import { ImageProtection } from '@/components/ImageProtection'
 import '@/styles/globals.css'
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alvis.agency'
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-bg text-text antialiased">
         <Preloader />
+        <ImageProtection />
 
         {/* Skip to main content — keyboard accessibility */}
         <a

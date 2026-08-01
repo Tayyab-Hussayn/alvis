@@ -91,7 +91,7 @@ export function Hero() {
             <img
               src="/images/homepage/hero-phone.webp"
               alt="Alvis Marketing Dashboard"
-              className="w-full h-auto drop-shadow-2xl"
+              className="w-full h-auto"
             />
 
             {/* Revenue card */}

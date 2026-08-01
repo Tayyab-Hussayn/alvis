@@ -204,3 +204,13 @@ html.anim-fallback * {
   from { height: var(--radix-accordion-content-height); }
   to   { height: 0; }
 }
+
+/* ── Image protection: prevent dragging and selection ──────────── */
+img {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+}
