@@ -1,6 +1,9 @@
+'use client'
+
 import { Button } from '@/components/ui/Button'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { Container } from '@/components/ui/Container'
+import { useScrollReveal } from '@/components/animations/useScrollReveal'
 
 interface CTABannerProps {
   label: string
@@ -11,6 +14,8 @@ interface CTABannerProps {
 }
 
 export function CTABanner({ label, heading, body, primaryCTA, secondaryCTA }: CTABannerProps) {
+  const headingRef = useScrollReveal<HTMLHeadingElement>()
+
   return (
     <section className="relative py-24 md:py-32 overflow-hidden" style={{ background: '#0a1b3d' }}>
       <div
@@ -23,7 +28,7 @@ export function CTABanner({ label, heading, body, primaryCTA, secondaryCTA }: CT
         <SectionLabel className="mb-6 justify-center [&>span:first-child]:bg-white/30 [&>span:last-child]:text-white/50">
           {label}
         </SectionLabel>
-        <h2 className="text-display-xl font-display font-bold text-white mt-4 mb-5">
+        <h2 ref={headingRef} className="text-display-xl font-display font-bold text-white mt-4 mb-5">
           {heading}
         </h2>
         <p className="text-body-lg text-white/60 max-w-xl mx-auto mb-10">{body}</p>

@@ -14,13 +14,16 @@ export function CaseStudyHero({ study }: Props) {
         src={study.coverImage}
         alt=""
         aria-hidden="true"
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover opacity-30"
       />
 
       {/* Dark overlay gradient */}
       <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,27,61,0.92) 0%, rgba(10,27,61,0.65) 45%, rgba(10,27,61,0.25) 100%)' }} />
 
-      <Container className="relative z-10">
+      <Container className="relative z-10 hero-anim">
         <Badge className="mb-4 bg-white/10 text-white border border-white/20">
           {study.category}
         </Badge>

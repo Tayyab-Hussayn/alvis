@@ -1,5 +1,8 @@
 'use client'
 
+import Link from 'next/link'
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 const cases = [
   {
     label: 'E-Commerce Brand',
@@ -52,6 +55,9 @@ const cases = [
 ]
 
 export function PortfolioPreview() {
+  const leftRef = useScrollReveal<HTMLDivElement>()
+  const gridRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.1 })
+
   return (
     <section className="py-[160px] px-5 md:px-8">
       <div
@@ -59,7 +65,7 @@ export function PortfolioPreview() {
         style={{ background: 'linear-gradient(135deg, #0c0f24, #0a0c1c, #090b18)' }}
       >
         {/* Left */}
-        <div className="lg:w-[320px] text-left z-10">
+        <div ref={leftRef} className="lg:w-[320px] text-left z-10">
           <span className="block mb-4 text-[13px] font-bold tracking-[0.1em] uppercase" style={{ color: '#e63946' }}>
             Recent Work
           </span>
@@ -70,7 +76,7 @@ export function PortfolioPreview() {
           <p className="mb-10" style={{ fontSize: '16px', lineHeight: '1.5', color: 'rgba(255,255,255,0.6)' }}>
             We help businesses grow faster with creative strategies &amp; smart execution.
           </p>
-          <a
+          <Link
             href="/case-studies"
             className="flex items-center gap-3 text-white text-[12px] font-bold tracking-[0.1em] uppercase px-8 py-3 rounded-full transition-all"
             style={{ border: '1px solid rgba(255,255,255,0.2)' }}
@@ -83,11 +89,11 @@ export function PortfolioPreview() {
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </span>
-          </a>
+          </Link>
         </div>
 
         {/* Cards */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-5 w-full z-10">
+        <div ref={gridRef} className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-5 w-full z-10">
           {cases.map((c) => (
             <div
               key={c.label}

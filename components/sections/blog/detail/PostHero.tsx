@@ -12,7 +12,7 @@ export function PostHero({ post }: Props) {
   return (
     <section className="bg-bg pt-36 pb-12">
       <Container>
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center hero-anim">
           <Badge className="mb-4">{post.category}</Badge>
           <h1 className="text-display-xl font-display font-bold text-text mt-4 mb-6">
             {post.title}
@@ -28,9 +28,9 @@ export function PostHero({ post }: Props) {
           </div>
 
           {/* Cover image */}
-          <div className="aspect-video rounded-3xl overflow-hidden mt-12 bg-subtle relative">
+          <div className="aspect-video rounded-3xl overflow-hidden mt-12 bg-subtle relative hero-anim-fade" style={{ animationDelay: '0.15s' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" />
+            <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" loading="eager" fetchPriority="high" decoding="async" />
           </div>
         </div>
       </Container>

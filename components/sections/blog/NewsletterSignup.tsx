@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useScrollReveal } from '@/components/animations/useScrollReveal'
 
 /* 3D-style open envelope with @ badge */
 function EnvelopeArt() {
@@ -31,6 +32,7 @@ function EnvelopeArt() {
 export function NewsletterSignup() {
   const [email, setEmail] = useState('')
   const [done, setDone] = useState(false)
+  const cardRef = useScrollReveal<HTMLDivElement>()
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,7 +50,7 @@ export function NewsletterSignup() {
 
   return (
     <section id="newsletter" className="px-5 md:px-8 pb-24" style={{ background: '#fff8f7' }}>
-      <div className="max-w-[1280px] mx-auto rounded-3xl px-6 md:px-12 py-10" style={{ background: '#0a1b3d' }}>
+      <div ref={cardRef} className="max-w-[1280px] mx-auto rounded-3xl px-6 md:px-12 py-10" style={{ background: '#0a1b3d' }}>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
 
           <div className="md:col-span-3 flex justify-center">

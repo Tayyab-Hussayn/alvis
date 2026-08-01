@@ -1,9 +1,15 @@
 'use client'
 
+import Link from 'next/link'
+import { useScrollReveal } from '@/components/animations/useScrollReveal'
+
 export function HomeCTA() {
+  const cardRef = useScrollReveal<HTMLDivElement>()
+
   return (
     <section className="py-[160px] px-5 md:px-8">
       <div
+        ref={cardRef}
         className="max-w-[1280px] mx-auto rounded-[48px] overflow-hidden relative border"
         style={{ background: '#ffe9e8', borderColor: 'rgba(255,255,255,0.5)' }}
       >
@@ -21,7 +27,7 @@ export function HomeCTA() {
               Book a free consultation call with our experts and let&apos;s discuss how we can grow your business through strategic marketing.
             </p>
             <div className="flex flex-col sm:flex-row items-center gap-6">
-              <a
+              <Link
                 href="/contact"
                 className="w-full sm:w-auto flex items-center justify-center gap-3 text-white text-[12px] font-bold tracking-[0.1em] uppercase pl-10 pr-4 py-4 rounded-full transition-all"
                 style={{ background: '#b7102a' }}
@@ -34,7 +40,7 @@ export function HomeCTA() {
                     <path d="M5 12h14M12 5l7 7-7 7"/>
                   </svg>
                 </span>
-              </a>
+              </Link>
               <a href="tel:+15551234567" className="flex items-center gap-4 group cursor-pointer">
                 <div
                   className="w-12 h-12 rounded-full text-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-110"
@@ -59,6 +65,8 @@ export function HomeCTA() {
                 src="/images/homepage/cta-illustration.webp"
                 alt="Target illustration"
                 className="w-full h-auto drop-shadow-2xl"
+                loading="lazy"
+                decoding="async"
               />
               <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(183,16,42,0.1), transparent)' }}/>
             </div>

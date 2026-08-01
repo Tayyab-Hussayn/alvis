@@ -1,9 +1,14 @@
 'use client'
 
+import { useScrollReveal } from '@/components/animations/useScrollReveal'
+
 export function CaseStudiesTestimonial() {
+  const cardRef = useScrollReveal<HTMLDivElement>()
+
   return (
     <section className="px-5 md:px-8 pb-16" style={{ background: '#fff8f7' }}>
       <div
+        ref={cardRef}
         className="max-w-[1280px] mx-auto bg-white rounded-3xl px-8 py-10"
         style={{ boxShadow: '0 20px 60px -25px rgba(0,0,0,0.12)' }}
       >

@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 const logos = [
   { src: '/images/homepage/logo-airbnb.webp',   alt: 'Airbnb',    cls: 'h-8' },
   { src: '/images/homepage/logo-google.webp',    alt: 'Google',    cls: 'h-6' },
@@ -17,7 +19,7 @@ export function Hero() {
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
 
         {/* Left copy */}
-        <div className="lg:col-span-6 z-10">
+        <div className="lg:col-span-6 z-10 hero-anim">
           <span className="inline-block px-4 py-1.5 rounded-full text-[10px] tracking-widest font-bold uppercase mb-6" style={{ background: '#ffe9e8', color: '#b7102a' }}>
             DIGITAL MARKETING THAT DELIVERS
           </span>
@@ -36,7 +38,7 @@ export function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <a
+            <Link
               href="/contact"
               className="flex items-center gap-3 rounded-full text-white text-[12px] font-bold tracking-[0.1em] uppercase pl-8 pr-2 py-2 transition-all hover:scale-[1.02]"
               style={{ background: '#b7102a', boxShadow: '0 0 0 0 transparent', transition: 'all 0.2s' }}
@@ -49,9 +51,9 @@ export function Hero() {
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </span>
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="/case-studies"
               className="flex items-center gap-3 border-2 text-[12px] font-bold tracking-[0.1em] uppercase px-8 py-4 rounded-full transition-all"
               style={{ borderColor: '#e4bebc', color: '#271717' }}
@@ -60,7 +62,7 @@ export function Hero() {
             >
               View Our Work
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
-            </a>
+            </Link>
           </div>
 
           {/* Logo scroll */}
@@ -75,6 +77,7 @@ export function Hero() {
               <div className="flex gap-16 items-center w-max py-4" style={{ animation: 'logo-scroll 20s linear infinite' }}>
                 {[...logos, ...logos].map((logo, i) => (
                   <img key={i} src={logo.src} alt={logo.alt} className={`${logo.cls} w-auto grayscale opacity-40`}
+                    loading="lazy" decoding="async"
                     style={{ transition: 'filter 0.3s, opacity 0.3s' }}
                     onMouseEnter={e => { e.currentTarget.style.filter = 'none'; e.currentTarget.style.opacity = '1' }}
                     onMouseLeave={e => { e.currentTarget.style.filter = 'grayscale(1)'; e.currentTarget.style.opacity = '0.4' }}
@@ -86,12 +89,15 @@ export function Hero() {
         </div>
 
         {/* Right visual */}
-        <div className="lg:col-span-6 relative flex justify-center lg:justify-end">
+        <div className="lg:col-span-6 relative flex justify-center lg:justify-end hero-anim-fade" style={{ animationDelay: '0.15s' }}>
           <div className="relative w-full max-w-lg" style={{ animation: 'hero-float 6s ease-in-out infinite' }}>
             <img
               src="/images/homepage/hero-phone.webp"
               alt="Alvis Marketing Dashboard"
               className="w-full h-auto"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
             />
 
             {/* Revenue card */}

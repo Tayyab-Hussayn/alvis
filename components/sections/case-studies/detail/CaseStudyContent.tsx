@@ -1,15 +1,20 @@
+'use client'
+
 import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { Container } from '@/components/ui/Container'
 import type { CaseStudy } from '@/data/caseStudies'
+import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 interface Props { study: CaseStudy }
 
 export function CaseStudyContent({ study }: Props) {
+  const contentRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="py-20 bg-bg">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+        <div ref={contentRef} className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           {/* Main content — 2/3 */}
           <div className="lg:col-span-2">
             <h2 className="text-display-md font-display font-semibold text-text mb-4">

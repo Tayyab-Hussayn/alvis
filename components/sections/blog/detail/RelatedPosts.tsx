@@ -1,7 +1,10 @@
+'use client'
+
 import Link from 'next/link'
 import { Badge } from '@/components/ui/Badge'
 import { Container } from '@/components/ui/Container'
 import { blogPosts } from '@/data/blogPosts'
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 interface Props {
   currentSlug: string
@@ -16,14 +19,17 @@ export function RelatedPosts({ currentSlug, category }: Props) {
   const fallback = blogPosts.filter((p) => p.slug !== currentSlug).slice(0, 3)
   const posts = related.length >= 2 ? related : fallback
 
+  const headerRef = useScrollReveal<HTMLHeadingElement>()
+  const postsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="py-20 md:py-28 bg-subtle">
       <Container>
-        <h2 className="text-display-lg font-display font-bold text-text mb-12">
+        <h2 ref={headerRef} className="text-display-lg font-display font-bold text-text mb-12">
           More From the Blog
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div ref={postsRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {posts.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`} className="group flex flex-col">
               <div className="aspect-video rounded-2xl overflow-hidden relative mb-4 bg-subtle">
@@ -31,6 +37,8 @@ export function RelatedPosts({ currentSlug, category }: Props) {
                 <img
                   src={post.coverImage}
                   alt={post.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>

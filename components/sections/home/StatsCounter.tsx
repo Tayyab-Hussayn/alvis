@@ -1,6 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 /* ── Palette ──────────────────────────────────────────────────── */
 const RED       = '#e63946'
@@ -169,7 +170,7 @@ function TeamVisual() {
     <div className="relative h-full">
       <div className="flex -space-x-3.5 absolute left-0 top-1/2 -translate-y-1/2">
         {AVATARS.map(src => (
-          <img key={src} src={src} alt="" className="w-[46px] h-[46px] rounded-full object-cover" style={{ border: '3px solid #fdeeed' }} />
+          <img key={src} src={src} alt="" loading="lazy" decoding="async" className="w-[46px] h-[46px] rounded-full object-cover" style={{ border: '3px solid #fdeeed' }} />
         ))}
         <div
           className="w-[46px] h-[46px] rounded-full flex items-center justify-center text-white text-[13px] font-bold"
@@ -269,12 +270,16 @@ const bottomBar = [
 ]
 
 export function StatsCounter() {
+  const headerRef = useScrollReveal<HTMLDivElement>()
+  const cardsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.1 })
+  const barRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.06 })
+
   return (
     <section className="py-[160px] px-5 md:px-8" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto">
 
         {/* ── Header ── */}
-        <div className="text-center mb-14">
+        <div ref={headerRef} className="text-center mb-14">
           <span className="block mb-5 text-[13px] font-bold tracking-[0.18em] uppercase" style={{ color: RED }}>
             Why Choose Alvis
           </span>
@@ -291,7 +296,7 @@ export function StatsCounter() {
         </div>
 
         {/* ── 2×2 feature cards ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div ref={cardsRef} className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {cards.map(card => (
             <div
               key={card.title}
@@ -318,7 +323,7 @@ export function StatsCounter() {
 
         {/* ── Bottom feature bar ── */}
         <div className="rounded-[24px] px-8 py-8" style={{ background: CARD_BG }}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+          <div ref={barRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
             {bottomBar.map((item, i) => (
               <div
                 key={item.label}

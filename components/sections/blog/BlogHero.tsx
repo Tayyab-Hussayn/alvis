@@ -5,7 +5,7 @@ export function BlogHero() {
     <section className="pt-40 pb-14 px-5 md:px-8" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-        <div className="lg:col-span-5">
+        <div className="lg:col-span-5 hero-anim">
           <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-5" style={{ color: '#e63946' }}>
             Our Blog
           </span>
@@ -50,9 +50,9 @@ export function BlogHero() {
           </div>
         </div>
 
-        <div className="lg:col-span-7">
+        <div className="lg:col-span-7 hero-anim-fade" style={{ animationDelay: '0.15s' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/blog/hero-illustration.png" alt="Alvis blog insights" className="w-full h-auto" />
+          <img src="/images/blog/hero-illustration.png" alt="Alvis blog insights" className="w-full h-auto" loading="eager" fetchPriority="high" decoding="async" />
         </div>
       </div>
     </section>

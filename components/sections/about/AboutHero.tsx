@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 const brands = ['Google', 'Meta', 'HubSpot', 'Canva', 'slack']
 
 export function AboutHero() {
@@ -8,7 +10,7 @@ export function AboutHero() {
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
         {/* Left copy */}
-        <div className="lg:col-span-6">
+        <div className="lg:col-span-6 hero-anim">
           <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-5" style={{ color: '#e63946' }}>
             About Alvis
           </span>
@@ -27,7 +29,7 @@ export function AboutHero() {
           </p>
 
           <div className="flex flex-wrap items-center gap-4 mb-12">
-            <a
+            <Link
               href="/contact"
               className="flex items-center gap-3 rounded-full text-white text-[13px] font-bold pl-7 pr-2 py-2 transition-transform hover:scale-[1.02]"
               style={{ background: '#e63946', boxShadow: '0 20px 40px -14px rgba(230,57,70,0.45)' }}
@@ -38,9 +40,9 @@ export function AboutHero() {
                   <path d="M5 12h14m-7-7 7 7-7 7" />
                 </svg>
               </span>
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="/case-studies"
               className="flex items-center gap-3 rounded-full bg-white text-[13px] font-bold pl-7 pr-2 py-2 border transition-transform hover:scale-[1.02]"
               style={{ borderColor: '#f0dedd', color: '#0d0d0d', boxShadow: '0 10px 30px -18px rgba(0,0,0,0.35)' }}
@@ -51,7 +53,7 @@ export function AboutHero() {
                   <path d="M6 4l14 8-14 8V4z" />
                 </svg>
               </span>
-            </a>
+            </Link>
           </div>
 
           <p className="text-[13px] font-bold mb-5" style={{ color: '#271717' }}>Trusted by 100+ brands</p>
@@ -63,12 +65,15 @@ export function AboutHero() {
         </div>
 
         {/* Right illustration */}
-        <div className="lg:col-span-6">
+        <div className="lg:col-span-6 hero-anim-fade" style={{ animationDelay: '0.15s' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/about/hero-illustration.png"
             alt="Alvis marketing growth illustration"
             className="w-full h-auto"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
           />
         </div>
       </div>

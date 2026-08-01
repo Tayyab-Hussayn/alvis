@@ -1,8 +1,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 interface GSAPProviderProps {
   children: React.ReactNode
@@ -10,8 +8,13 @@ interface GSAPProviderProps {
 
 export function GSAPProvider({ children }: GSAPProviderProps) {
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger)
-    ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true })
+    const init = async () => {
+      const { gsap } = await import('gsap')
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+      gsap.registerPlugin(ScrollTrigger)
+      ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true })
+    }
+    init()
   }, [])
 
   return <>{children}</>

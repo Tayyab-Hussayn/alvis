@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { X } from 'lucide-react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { motion, AnimatePresence } from 'framer-motion'
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/Button'
 
@@ -41,12 +41,13 @@ const linkVariants = {
 
 export function MobileMenu({ open, onClose, links, pathname }: MobileMenuProps) {
   return (
+    <LazyMotion features={domAnimation}>
     <Dialog.Root open={open} onOpenChange={(v) => !v && onClose()}>
       <AnimatePresence>
         {open && (
           <Dialog.Portal forceMount>
             <Dialog.Overlay asChild>
-              <motion.div
+              <m.div
                 className="fixed inset-0 z-[60] bg-black/20"
                 variants={overlayVariants}
                 initial="hidden"
@@ -57,7 +58,7 @@ export function MobileMenu({ open, onClose, links, pathname }: MobileMenuProps) 
             </Dialog.Overlay>
 
             <Dialog.Content asChild>
-              <motion.div
+              <m.div
                 className="fixed inset-0 z-[70] flex flex-col px-6 py-6"
                 style={{ background: '#fff8f7' }}
                 variants={contentVariants}
@@ -79,7 +80,7 @@ export function MobileMenu({ open, onClose, links, pathname }: MobileMenuProps) 
                 {/* Nav links */}
                 <nav className="flex flex-col gap-2 flex-1">
                   {links.map((link, i) => (
-                    <motion.div
+                    <m.div
                       key={link.href}
                       custom={i}
                       variants={linkVariants}
@@ -96,12 +97,12 @@ export function MobileMenu({ open, onClose, links, pathname }: MobileMenuProps) 
                       >
                         {link.label}
                       </Link>
-                    </motion.div>
+                    </m.div>
                   ))}
                 </nav>
 
                 {/* Bottom CTA */}
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0, transition: { delay: 0.35, duration: 0.3 } }}
                   className="pt-8 border-t border-border"
@@ -109,12 +110,13 @@ export function MobileMenu({ open, onClose, links, pathname }: MobileMenuProps) 
                   <Button href="/contact" variant="primary" size="lg" withArrow className="w-full">
                     Let&apos;s Talk
                   </Button>
-                </motion.div>
-              </motion.div>
+                </m.div>
+              </m.div>
             </Dialog.Content>
           </Dialog.Portal>
         )}
       </AnimatePresence>
     </Dialog.Root>
+    </LazyMotion>
   )
 }

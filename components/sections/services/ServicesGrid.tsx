@@ -1,5 +1,8 @@
 'use client'
 
+import Link from 'next/link'
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 const services = [
   {
     title: 'Social Media Marketing',
@@ -81,13 +84,16 @@ const services = [
 ]
 
 export function ServicesGrid() {
+  const headerRef = useScrollReveal<HTMLDivElement>()
+  const gridRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="px-5 md:px-8 pb-20" style={{ background: '#fff8f7' }}>
       <div
         className="max-w-[1280px] mx-auto bg-white rounded-3xl px-6 md:px-10 py-14"
         style={{ boxShadow: '0 20px 60px -25px rgba(0,0,0,0.10)' }}
       >
-        <div className="text-center mb-12">
+        <div ref={headerRef} className="text-center mb-12">
           <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-3" style={{ color: '#e63946' }}>
             What We Do
           </span>
@@ -99,7 +105,7 @@ export function ServicesGrid() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map(s => (
             <div
               key={s.title}
@@ -116,12 +122,12 @@ export function ServicesGrid() {
               </span>
               <h3 className="font-bold text-[14px] mb-3" style={{ color: '#0d0d0d' }}>{s.title}</h3>
               <p className="text-[12.5px] mb-5" style={{ lineHeight: '1.6', color: '#5b403f' }}>{s.desc}</p>
-              <a href="/contact" className="inline-flex items-center gap-2 text-[12px] font-bold" style={{ color: '#e63946' }}>
+              <Link href="/contact" className="inline-flex items-center gap-2 text-[12px] font-bold" style={{ color: '#e63946' }}>
                 Learn More
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14m-7-7 7 7-7 7" />
                 </svg>
-              </a>
+              </Link>
             </div>
           ))}
         </div>

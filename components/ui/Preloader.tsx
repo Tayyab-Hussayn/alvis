@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion'
 
 const ROTATING_WORDS = ['Build.', 'Design.', 'Grow.']
 const COUNTER_DURATION = 2500
@@ -42,7 +42,7 @@ function LoadingOverlay({ onComplete }: { onComplete: () => void }) {
   }, [])
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.55, ease: 'easeInOut' }}
@@ -59,7 +59,7 @@ function LoadingOverlay({ onComplete }: { onComplete: () => void }) {
       />
 
       {/* Top-left brand */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: -14 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
@@ -74,12 +74,12 @@ function LoadingOverlay({ onComplete }: { onComplete: () => void }) {
         >
           Marketing Agency
         </span>
-      </motion.div>
+      </m.div>
 
       {/* Center: rotating words */}
       <div className="flex-1 flex items-center justify-center select-none">
         <AnimatePresence mode="wait">
-          <motion.span
+          <m.span
             key={currentWordIndex}
             initial={{ opacity: 0, y: 28 }}
             animate={{ opacity: 1, y: 0 }}
@@ -93,13 +93,13 @@ function LoadingOverlay({ onComplete }: { onComplete: () => void }) {
             }}
           >
             {ROTATING_WORDS[currentWordIndex]}
-          </motion.span>
+          </m.span>
         </AnimatePresence>
       </div>
 
       {/* Bottom-right: counter */}
       <div className="absolute bottom-10 right-8 md:bottom-14 md:right-12 select-none">
-        <motion.span
+        <m.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.15 }}
@@ -112,7 +112,7 @@ function LoadingOverlay({ onComplete }: { onComplete: () => void }) {
           }}
         >
           {String(count).padStart(3, '0')}
-        </motion.span>
+        </m.span>
       </div>
 
       {/* Bottom progress bar */}
@@ -120,7 +120,7 @@ function LoadingOverlay({ onComplete }: { onComplete: () => void }) {
         className="absolute bottom-0 left-0 right-0 h-[2px]"
         style={{ background: 'rgba(255,255,255,0.06)' }}
       >
-        <motion.div
+        <m.div
           className="h-full"
           style={{
             transformOrigin: 'left',
@@ -132,7 +132,7 @@ function LoadingOverlay({ onComplete }: { onComplete: () => void }) {
           transition={{ duration: 0.08, ease: 'linear' }}
         />
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 
@@ -151,8 +151,10 @@ export function Preloader() {
   }, [])
 
   return (
-    <AnimatePresence>
-      {show && <LoadingOverlay key="preloader" onComplete={handleComplete} />}
-    </AnimatePresence>
+    <LazyMotion features={domAnimation}>
+      <AnimatePresence>
+        {show && <LoadingOverlay key="preloader" onComplete={handleComplete} />}
+      </AnimatePresence>
+    </LazyMotion>
   )
 }

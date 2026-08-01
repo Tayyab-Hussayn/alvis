@@ -1,5 +1,7 @@
 'use client'
 
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 const steps = [
   {
     num: '01',
@@ -48,6 +50,9 @@ const steps = [
 ]
 
 export function OurProcess() {
+  const headerRef = useScrollReveal<HTMLDivElement>()
+  const stepsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="px-5 md:px-8 pb-20" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto rounded-3xl py-16 px-6 md:px-12 relative overflow-hidden" style={{ background: '#0a1b3d' }}>
@@ -56,7 +61,7 @@ export function OurProcess() {
           style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '22px 22px' }}
         />
 
-        <div className="relative text-center mb-14">
+        <div ref={headerRef} className="relative text-center mb-14">
           <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-3" style={{ color: '#e63946' }}>
             Our Process
           </span>
@@ -65,7 +70,7 @@ export function OurProcess() {
           </h2>
         </div>
 
-        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div ref={stepsRef} className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* dashed connector on large screens */}
           <span
             className="hidden lg:block absolute left-[12%] right-[12%] top-[44px] h-px"

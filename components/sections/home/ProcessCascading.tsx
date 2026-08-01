@@ -1,6 +1,7 @@
 'use client'
 
 import type { CSSProperties } from 'react'
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 /* ── Shared coordinate space ──────────────────────────────────────
    Card x/width are percentages of the steps container; y values are
@@ -104,12 +105,15 @@ const features = [
 const DASH = { stroke: '#eec4c4', strokeWidth: 1.5, strokeDasharray: '6 6', fill: 'none' }
 
 export function ProcessCascading() {
+  const headerRef = useScrollReveal<HTMLDivElement>()
+  const barRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="py-[160px] px-5 md:px-8" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto">
 
         {/* ── Header ── */}
-        <div className="flex flex-col lg:flex-row justify-between items-start mb-20 gap-8">
+        <div ref={headerRef} className="flex flex-col lg:flex-row justify-between items-start mb-20 gap-8">
           <div className="max-w-xl">
             <span className="block mb-4 text-[12px] font-bold tracking-[0.15em] uppercase" style={{ color: '#b7102a' }}>
               Our Process
@@ -221,7 +225,7 @@ export function ProcessCascading() {
 
         {/* ── Bottom feature bar ── */}
         <div className="mt-16 lg:mt-20 rounded-[22px] px-8 py-9" style={{ background: '#fdeeed' }}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 items-center">
+          <div ref={barRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 items-center">
             <div className="flex items-center gap-4">
               <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: '#fbdedd' }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" {...iconStroke}>

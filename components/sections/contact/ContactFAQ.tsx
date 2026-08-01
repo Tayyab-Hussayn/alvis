@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 const faqs = [
   {
@@ -53,6 +54,7 @@ function QuestionArt() {
 
 export function ContactFAQ() {
   const [open, setOpen] = useState<number | null>(null)
+  const faqsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
 
   return (
     <section className="px-5 md:px-8 pb-20" style={{ background: '#fff8f7' }}>
@@ -68,7 +70,7 @@ export function ContactFAQ() {
         </h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-4 self-start">
+          <div ref={faqsRef} className="lg:col-span-9 grid grid-cols-1 md:grid-cols-2 gap-4 self-start">
             {faqs.map((f, i) => (
               <div key={f.q} className="bg-white rounded-2xl h-fit" style={{ border: '1px solid #f0dedd' }}>
                 <button

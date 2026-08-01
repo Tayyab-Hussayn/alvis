@@ -1,5 +1,7 @@
 'use client'
 
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 const stats = [
   {
     value: '120+',
@@ -48,10 +50,13 @@ const stats = [
 ]
 
 export function ImpactNumbers() {
+  const headerRef = useScrollReveal<HTMLDivElement>()
+  const statsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="px-5 md:px-8 pb-24" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto rounded-3xl py-16 px-6 md:px-12" style={{ background: '#0a1b3d' }}>
-        <div className="text-center mb-14">
+        <div ref={headerRef} className="text-center mb-14">
           <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-3" style={{ color: '#e63946' }}>
             Our Impact
           </span>
@@ -63,7 +68,7 @@ export function ImpactNumbers() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {stats.map(s => (
             <div key={s.label} className="relative bg-white rounded-2xl pt-12 pb-8 px-6 mt-6 text-center">
               <span

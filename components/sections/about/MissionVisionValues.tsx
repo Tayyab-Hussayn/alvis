@@ -1,5 +1,7 @@
 'use client'
 
+import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 const values = [
   {
     title: 'Integrity',
@@ -78,9 +80,11 @@ function Card({ art, word, body }: { art: React.ReactNode; word: string; body: s
 }
 
 export function MissionVisionValues() {
+  const gridRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.1 })
+
   return (
     <section className="px-5 md:px-8 pb-24" style={{ background: '#fff8f7' }}>
-      <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div ref={gridRef} className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         <Card
           art={<TargetArt />}
           word="Mission"

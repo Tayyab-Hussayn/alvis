@@ -1,5 +1,7 @@
 'use client'
 
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 const services = [
   {
     icon: (
@@ -59,9 +61,12 @@ const services = [
 ]
 
 export function ServicesBento() {
+  const headerRef = useScrollReveal<HTMLDivElement>()
+  const gridRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="pb-[160px] px-5 md:px-8 max-w-[1280px] mx-auto">
-      <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+      <div ref={headerRef} className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
         <div className="max-w-xl">
           <span className="block mb-4 text-[12px] font-bold tracking-[0.1em] uppercase" style={{ color: '#b7102a' }}>
             OUR SERVICES
@@ -78,7 +83,7 @@ export function ServicesBento() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {services.map((s) => (
           <div
             key={s.title}

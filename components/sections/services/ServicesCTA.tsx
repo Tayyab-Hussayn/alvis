@@ -1,5 +1,8 @@
 'use client'
 
+import Link from 'next/link'
+import { useScrollReveal } from '@/components/animations/useScrollReveal'
+
 function RocketArt() {
   return (
     <svg width="180" height="170" viewBox="0 0 200 180" fill="none" className="w-full max-w-[180px]">
@@ -31,9 +34,11 @@ function RocketArt() {
 }
 
 export function ServicesCTA() {
+  const cardRef = useScrollReveal<HTMLDivElement>()
+
   return (
     <section className="px-5 md:px-8 pb-24" style={{ background: '#fff8f7' }}>
-      <div className="max-w-[1280px] mx-auto rounded-3xl px-6 md:px-12 py-8" style={{ background: '#fdeeed' }}>
+      <div ref={cardRef} className="max-w-[1280px] mx-auto rounded-3xl px-6 md:px-12 py-8" style={{ background: '#fdeeed' }}>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           <div className="md:col-span-3 flex justify-center">
             <RocketArt />
@@ -52,7 +57,7 @@ export function ServicesCTA() {
           </div>
 
           <div className="md:col-span-4 flex justify-center md:justify-end">
-            <a
+            <Link
               href="/contact"
               className="flex items-center gap-3 rounded-full text-white text-[13px] font-bold pl-7 pr-2 py-2 transition-transform hover:scale-[1.02]"
               style={{ background: '#e63946', boxShadow: '0 20px 40px -14px rgba(230,57,70,0.45)' }}
@@ -63,7 +68,7 @@ export function ServicesCTA() {
                   <path d="M5 12h14m-7-7 7 7-7 7" />
                 </svg>
               </span>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,5 +1,7 @@
 'use client'
 
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 const reasons = [
   {
     title: 'Experienced Team',
@@ -49,10 +51,13 @@ const reasons = [
 ]
 
 export function WhyAlvis() {
+  const headerRef = useScrollReveal<HTMLDivElement>()
+  const reasonsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="px-5 md:px-8 pb-20" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto">
-        <div className="text-center mb-12">
+        <div ref={headerRef} className="text-center mb-12">
           <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-3" style={{ color: '#e63946' }}>
             Why Choose Us
           </span>
@@ -64,7 +69,7 @@ export function WhyAlvis() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        <div ref={reasonsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {reasons.map((r, i) => (
             <div
               key={r.title}

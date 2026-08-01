@@ -1,5 +1,7 @@
 'use client'
 
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 const testimonials = [
   {
     quote: 'Alvis Marketing transformed our online presence. Their strategy brought us 3x more leads within just 60 days.',
@@ -28,9 +30,12 @@ const testimonials = [
 ]
 
 export function Testimonials() {
+  const headerRef = useScrollReveal<HTMLDivElement>()
+  const gridRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="py-[160px] px-5 md:px-8 max-w-[1280px] mx-auto overflow-hidden">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
+      <div ref={headerRef} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
         <div>
           <span className="block mb-4 text-[11px] font-bold tracking-[0.2em] uppercase" style={{ color: '#e63946' }}>
             Testimonials
@@ -64,7 +69,7 @@ export function Testimonials() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {testimonials.map((t) => (
           <div
             key={t.name}
@@ -82,7 +87,7 @@ export function Testimonials() {
             </div>
             <div className="flex items-center gap-4 mt-auto">
               <div className="w-12 h-12 rounded-full overflow-hidden" style={{ background: '#f1d3d2' }}>
-                <img src={t.avatar} alt={t.name} className="w-full h-full object-cover" />
+                <img src={t.avatar} alt={t.name} loading="lazy" decoding="async" className="w-full h-full object-cover" />
               </div>
               <div>
                 <h4 className="font-bold text-sm" style={{ color: '#271717' }}>{t.name}</h4>

@@ -4,6 +4,7 @@ import { Linkedin, Twitter, Link2 } from 'lucide-react'
 import { Container } from '@/components/ui/Container'
 import { extractToc, renderMarkdown } from '@/lib/markdown'
 import type { BlogPost } from '@/data/blogPosts'
+import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 interface Props { post: BlogPost }
 
@@ -17,10 +18,12 @@ export function PostContent({ post }: Props) {
     }
   }
 
+  const contentRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="bg-bg py-16">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
+        <div ref={contentRef} className="grid grid-cols-1 lg:grid-cols-4 gap-12">
           {/* Main content */}
           <article
             className="lg:col-span-3"

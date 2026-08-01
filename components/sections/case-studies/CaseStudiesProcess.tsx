@@ -1,5 +1,7 @@
 'use client'
 
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 const steps = [
   {
     num: '01',
@@ -60,11 +62,14 @@ const steps = [
 ]
 
 export function CaseStudiesProcess() {
+  const headerRef = useScrollReveal<HTMLDivElement>()
+  const stepsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="px-5 md:px-8 pb-16" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
-        <div className="lg:col-span-3">
+        <div ref={headerRef} className="lg:col-span-3">
           <span className="block text-[12px] font-bold uppercase tracking-[0.1em] mb-3" style={{ color: '#e63946' }}>
             Our Proven Process
           </span>
@@ -76,7 +81,7 @@ export function CaseStudiesProcess() {
           </h2>
         </div>
 
-        <div className="lg:col-span-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div ref={stepsRef} className="lg:col-span-9 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {steps.map((s, i) => (
             <div key={s.num} className="relative text-center">
               {i > 0 && (

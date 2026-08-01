@@ -1,3 +1,7 @@
+'use client'
+
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 interface LegalSection {
   heading: string
   body: string[]
@@ -13,6 +17,9 @@ interface LegalPageProps {
 
 /** Shared shell for the Privacy Policy and Terms pages — red theme. */
 export function LegalPage({ label, title, updated, intro, sections }: LegalPageProps) {
+  const sectionsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+  const contactRef = useScrollReveal<HTMLDivElement>()
+
   return (
     <section className="pt-40 pb-24 px-5 md:px-8" style={{ background: '#fff8f7' }}>
       <div className="max-w-[820px] mx-auto">
@@ -32,6 +39,7 @@ export function LegalPage({ label, title, updated, intro, sections }: LegalPageP
         <p className="mb-12" style={{ fontSize: '17px', lineHeight: '1.7', color: '#5b403f' }}>{intro}</p>
 
         <div
+          ref={sectionsRef}
           className="bg-white rounded-3xl p-8 md:p-10 space-y-9"
           style={{ boxShadow: '0 20px 60px -25px rgba(0,0,0,0.12)' }}
         >
@@ -49,7 +57,7 @@ export function LegalPage({ label, title, updated, intro, sections }: LegalPageP
           ))}
         </div>
 
-        <div className="mt-10 rounded-2xl p-6" style={{ background: '#fdeeed', border: '1px solid #f8e0df' }}>
+        <div ref={contactRef} className="mt-10 rounded-2xl p-6" style={{ background: '#fdeeed', border: '1px solid #f8e0df' }}>
           <p style={{ fontSize: '14px', lineHeight: '1.7', color: '#5b403f' }}>
             Questions about this page? Email us at{' '}
             <a href="mailto:hello@alvisagency.com" className="font-bold" style={{ color: '#e63946' }}>

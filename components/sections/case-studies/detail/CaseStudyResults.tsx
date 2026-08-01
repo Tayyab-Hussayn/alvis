@@ -1,10 +1,15 @@
+'use client'
+
 import { Container } from '@/components/ui/Container'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import type { CaseStudy } from '@/data/caseStudies'
+import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 interface Props { study: CaseStudy }
 
 export function CaseStudyResults({ study }: Props) {
+  const resultsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="py-20 md:py-28" style={{ background: '#0a1b3d' }}>
       <Container>
@@ -12,7 +17,7 @@ export function CaseStudyResults({ study }: Props) {
           By the Numbers
         </SectionLabel>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div ref={resultsRef} className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {study.results.map((r) => (
             <div key={r.metric} className="text-center sm:text-left">
               <div className="w-8 h-0.5 bg-accent mx-auto sm:mx-0 mb-6" />

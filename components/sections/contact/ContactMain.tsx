@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { contactSchema, type ContactFormData } from '@/lib/validations'
+import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 const details = [
   {
@@ -90,6 +91,8 @@ export function ContactMain() {
     resolver: zodResolver(contactSchema),
   })
 
+  const mainRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.1 })
+
   const onSubmit = async (data: ContactFormData) => {
     setApiError(false)
     try {
@@ -107,7 +110,7 @@ export function ContactMain() {
 
   return (
     <section className="px-5 md:px-8 pb-16" style={{ background: '#fff8f7' }}>
-      <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div ref={mainRef} className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
 
         {/* Get In Touch */}
         <div

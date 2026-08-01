@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 const filters = ['All Case Studies', 'SEO', 'Social Media', 'Paid Advertising', 'E-Commerce', 'Branding']
 
@@ -94,6 +95,7 @@ const studies = [
 export function CaseStudiesClient() {
   const [active, setActive] = useState('All Case Studies')
   const visible = active === 'All Case Studies' ? studies : studies.filter(s => s.filter === active)
+  const cardsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
 
   return (
     <section className="px-5 md:px-8 pb-16" style={{ background: '#fff8f7' }}>
@@ -122,7 +124,7 @@ export function CaseStudiesClient() {
         </div>
 
         {/* Cards */}
-        <div className="space-y-8">
+        <div ref={cardsRef} className="space-y-8">
           {visible.map(s => (
             <article
               key={s.badge}
@@ -131,7 +133,7 @@ export function CaseStudiesClient() {
             >
               <div className="lg:col-span-4 relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.image} alt={`${s.titleAccent} case study`} className="w-full h-full object-cover" />
+                <img src={s.image} alt={`${s.titleAccent} case study`} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                 <span
                   className="absolute top-4 left-4 rounded-full bg-white px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.08em]"
                   style={{ color: '#0d0d0d', boxShadow: '0 6px 18px -8px rgba(0,0,0,0.4)' }}

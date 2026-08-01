@@ -1,5 +1,7 @@
 'use client'
 
+import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+
 const stats = [
   {
     value: '10+',
@@ -40,6 +42,8 @@ const stats = [
 ]
 
 export function WhoWeAre() {
+  const statsRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="px-5 md:px-8 pb-24" style={{ background: '#fff8f7' }}>
       <div
@@ -51,6 +55,8 @@ export function WhoWeAre() {
           <img
             src="/images/about/office-reception.png"
             alt="Alvis office reception"
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover rounded-2xl"
           />
 
@@ -71,7 +77,7 @@ export function WhoWeAre() {
               We combine creativity, data and technology to build strategies that deliver real, measurable results.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {stats.map(s => (
                 <div
                   key={s.label}

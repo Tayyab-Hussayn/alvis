@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { blogPosts } from '@/data/blogPosts'
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 const pills = [
   { label: 'All Posts',   icon: <><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></> },
@@ -54,6 +55,9 @@ export function BlogClient() {
     return list
   }, [active, query, rest])
 
+  const featuredRef = useScrollReveal<HTMLAnchorElement>()
+  const gridRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section id="posts" className="px-5 md:px-8 pb-16" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto">
@@ -85,12 +89,13 @@ export function BlogClient() {
           <div className="lg:col-span-8">
             {/* Featured */}
             <Link
+              ref={featuredRef}
               href={`/blog/${featured.slug}`}
               className="grid grid-cols-1 md:grid-cols-2 bg-white rounded-3xl overflow-hidden mb-8 transition-transform hover:-translate-y-1"
               style={{ boxShadow: '0 20px 60px -25px rgba(0,0,0,0.12)' }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={featured.coverImage} alt={featured.title} className="w-full h-full object-cover" />
+              <img src={featured.coverImage} alt={featured.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
               <div className="p-7">
                 <span className="block text-[11px] font-bold uppercase tracking-[0.08em] mb-3" style={{ color: '#e63946' }}>
                   {featured.category}
@@ -113,7 +118,7 @@ export function BlogClient() {
             </Link>
 
             {/* Post grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {visible.map(p => (
                 <Link
                   key={p.slug}
@@ -122,7 +127,7 @@ export function BlogClient() {
                   style={{ boxShadow: '0 20px 60px -25px rgba(0,0,0,0.12)' }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.coverImage} alt={p.title} className="w-full h-[150px] object-cover" />
+                  <img src={p.coverImage} alt={p.title} loading="lazy" decoding="async" className="w-full h-[150px] object-cover" />
                   <div className="p-5 flex flex-col flex-1">
                     <span className="block text-[10.5px] font-bold uppercase tracking-[0.08em] mb-2" style={{ color: '#e63946' }}>
                       {p.category}
@@ -177,7 +182,7 @@ export function BlogClient() {
                     <Link href={`/blog/${p.slug}`} className="flex items-start gap-3 group">
                       <span className="relative shrink-0">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={p.coverImage} alt="" className="w-14 h-14 rounded-lg object-cover" />
+                        <img src={p.coverImage} alt="" loading="lazy" decoding="async" className="w-14 h-14 rounded-lg object-cover" />
                         <span
                           className="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
                           style={{ background: '#e63946' }}

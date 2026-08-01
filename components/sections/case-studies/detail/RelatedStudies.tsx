@@ -1,21 +1,27 @@
+'use client'
+
 import Link from 'next/link'
 import { Badge } from '@/components/ui/Badge'
 import { Container } from '@/components/ui/Container'
 import { caseStudies } from '@/data/caseStudies'
+import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 interface Props { currentSlug: string }
 
 export function RelatedStudies({ currentSlug }: Props) {
   const related = caseStudies.filter((s) => s.slug !== currentSlug).slice(0, 3)
 
+  const headerRef = useScrollReveal<HTMLHeadingElement>()
+  const studiesRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+
   return (
     <section className="py-20 md:py-28 bg-subtle">
       <Container>
-        <h2 className="text-display-lg font-display font-bold text-text mb-12">
+        <h2 ref={headerRef} className="text-display-lg font-display font-bold text-text mb-12">
           More Work Like This
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div ref={studiesRef} className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {related.map((study) => (
             <Link
               key={study.slug}
@@ -28,6 +34,8 @@ export function RelatedStudies({ currentSlug }: Props) {
                 <img
                   src={study.coverImage}
                   alt={study.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-4 left-4">

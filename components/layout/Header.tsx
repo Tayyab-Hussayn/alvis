@@ -44,6 +44,10 @@ export function Header() {
           <img
             src="/images/alvisLogo.jpg"
             alt="ALVIS"
+            width={98}
+            height={34}
+            loading="eager"
+            decoding="async"
             style={{ height: '33.6px', width: 'auto' }}
           />
         </Link>
@@ -72,13 +76,13 @@ export function Header() {
 
         {/* CTA + hamburger */}
         <div className="flex items-center gap-4">
-          <a
+          <Link
             href="/contact"
             className="hidden lg:flex items-center text-white text-[12px] font-bold tracking-[0.1em] uppercase px-6 py-2.5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-md"
             style={{ background: '#b7102a' }}
           >
             Get Free Consultation
-          </a>
+          </Link>
           <button
             className="md:hidden"
             onClick={() => setMobileOpen(true)}
