@@ -48,14 +48,14 @@ const contact = [
 
 function LogoMark() {
   return (
-    <span className="flex items-center gap-2">
-      <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+    <span className="flex items-center gap-3">
+      <svg width="40" height="40" viewBox="0 0 32 32" fill="none">
         <path d="M16 2 2 26h9l5-8.5 5 8.5h9L16 2z" fill="#e63946" />
         <path d="M11 26l5-8.5 5 8.5H11z" fill="#0a1b3d" />
       </svg>
       <span className="flex flex-col leading-none">
-        <span className="font-display font-black tracking-[0.16em] text-[20px]" style={{ color: '#0d0d0d' }}>ALVIS</span>
-        <span className="text-[7px] font-bold tracking-[0.22em] uppercase mt-1" style={{ color: '#8f6f6e' }}>Marketing Agency</span>
+        <span className="font-display font-black tracking-[0.16em] text-[24px]" style={{ color: '#0d0d0d' }}>ALVIS</span>
+        <span className="text-[8px] font-bold tracking-[0.22em] uppercase mt-1" style={{ color: '#8f6f6e' }}>Marketing Agency</span>
       </span>
     </span>
   )
