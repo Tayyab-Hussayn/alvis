@@ -44,11 +44,11 @@ export function Header() {
           <img
             src="/images/alvisLogo.jpg"
             alt="ALVIS"
-            width={130}
-            height={45}
+            width={170}
+            height={60}
             loading="eager"
             decoding="async"
-            style={{ height: '45px', width: 'auto' }}
+            style={{ height: '60px', width: 'auto' }}
           />
         </Link>
 
