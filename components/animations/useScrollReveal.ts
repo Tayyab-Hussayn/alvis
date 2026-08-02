@@ -11,6 +11,44 @@ interface ScrollRevealOptions {
   start?: string
 }
 
+// Content must never depend on a background script succeeding in order to
+// become visible. GSAP's ScrollTrigger hides elements the instant a tween is
+// created and only reveals them once its own async-loaded plugin fires a
+// trigger — any hiccup in that chain (slow dynamic import, throttled rAF in a
+// backgrounded tab, a stale/duplicate registration) leaves the section stuck
+// invisible. IntersectionObserver has no such dependency chain, and any
+// element already in view at mount skips the hide/reveal choreography
+// entirely instead of gambling on the animation succeeding in time.
+
+function revealElement(el: HTMLElement, { y = 30, duration = 0.7, delay = 0 }: ScrollRevealOptions) {
+  let cancelled = false
+
+  const rect = el.getBoundingClientRect()
+  const alreadyVisible = rect.top < window.innerHeight * 0.8 && rect.bottom > 0
+  if (alreadyVisible) return () => {}
+
+  el.style.opacity = '0'
+  el.style.transform = `translateY(${y}px)`
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry.isIntersecting) return
+      observer.disconnect()
+      import('gsap').then(({ gsap }) => {
+        if (cancelled) return
+        gsap.to(el, { opacity: 1, y: 0, duration, delay, ease: 'power3.out' })
+      })
+    },
+    { rootMargin: '0px 0px -20% 0px' }
+  )
+  observer.observe(el)
+
+  return () => {
+    cancelled = true
+    observer.disconnect()
+  }
+}
+
 export function useScrollReveal<T extends HTMLElement>(options: ScrollRevealOptions = {}) {
   const ref = useRef<T>(null)
 
@@ -18,27 +56,7 @@ export function useScrollReveal<T extends HTMLElement>(options: ScrollRevealOpti
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced || !ref.current) return
 
-    const { y = 30, opacity = 0, duration = 0.7, delay = 0, start = 'top 80%' } = options
-
-    const init = async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      gsap.from(ref.current, {
-        y,
-        opacity,
-        duration,
-        delay,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: ref.current,
-          start,
-        },
-      })
-    }
-
-    init()
+    return revealElement(ref.current, options)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -52,31 +70,13 @@ export function useScrollRevealGroup<T extends HTMLElement>(options: ScrollRevea
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced || !ref.current) return
 
-    const { y = 30, opacity = 0, duration = 0.7, delay = 0, stagger = 0.1, start = 'top 80%' } = options
+    const { stagger = 0.1, ...rest } = options
+    const children = Array.from(ref.current.children) as HTMLElement[]
+    const cleanups = children.map((child, i) =>
+      revealElement(child, { ...rest, delay: (rest.delay ?? 0) + i * stagger })
+    )
 
-    const init = async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      const children = ref.current?.children
-      if (!children) return
-
-      gsap.from(Array.from(children), {
-        y,
-        opacity,
-        duration,
-        delay,
-        stagger,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: ref.current,
-          start,
-        },
-      })
-    }
-
-    init()
+    return () => cleanups.forEach((fn) => fn())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
