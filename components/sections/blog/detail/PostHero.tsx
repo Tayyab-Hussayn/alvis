@@ -26,12 +26,6 @@ export function PostHero({ post }: Props) {
             <span>·</span>
             <span>{post.readTime} read</span>
           </div>
-
-          {/* Cover image */}
-          <div className="aspect-video rounded-3xl overflow-hidden mt-12 bg-subtle relative hero-anim-fade" style={{ animationDelay: '0.15s' }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={post.coverImage} alt={post.title} className="w-full h-full object-cover" loading="eager" fetchPriority="high" decoding="async" />
-          </div>
         </div>
       </Container>
     </section>
