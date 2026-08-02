@@ -89,7 +89,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<void> {
           </p>
         </div>
         <p style="color: #a1a1aa; font-size: 12px; text-align: center; margin-top: 24px;">
-          Alvis · hello@alvisagency.com · ${siteUrl}
+          Alvis · hello@alvis.agency · ${siteUrl}
         </p>
       </div>
     `,

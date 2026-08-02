@@ -11,7 +11,7 @@ export function ContactMap() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/contact/map.png"
-          alt="Map showing the Alvis office at 123 Marketing Street, New York"
+          alt="World map showing Alvis serves clients globally"
           loading="lazy"
           decoding="async"
           className="w-full h-auto block"

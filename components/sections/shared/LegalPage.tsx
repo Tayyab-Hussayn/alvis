@@ -60,10 +60,10 @@ export function LegalPage({ label, title, updated, intro, sections }: LegalPageP
         <div ref={contactRef} className="mt-10 rounded-2xl p-6" style={{ background: '#fdeeed', border: '1px solid #f8e0df' }}>
           <p style={{ fontSize: '14px', lineHeight: '1.7', color: '#5b403f' }}>
             Questions about this page? Email us at{' '}
-            <a href="mailto:hello@alvisagency.com" className="font-bold" style={{ color: '#e63946' }}>
-              hello@alvisagency.com
+            <a href="mailto:hello@alvis.agency" className="font-bold" style={{ color: '#e63946' }}>
+              hello@alvis.agency
             </a>{' '}
-            or write to 123 Marketing Street, New York, NY 10001.
+            and we&apos;ll get back to you within 24 hours.
           </p>
         </div>
       </div>

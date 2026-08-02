@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error('[Contact API] Email send failed:', err)
     return NextResponse.json(
-      { error: 'Failed to send message. Please email us directly at hello@alvisagency.com.' },
+      { error: 'Failed to send message. Please email us directly at hello@alvis.agency.' },
       { status: 500 },
     )
   }

@@ -70,8 +70,8 @@ const organizationSchema = {
   name:        'Alvis',
   url:         siteUrl,
   logo:        `${siteUrl}/images/alvisLogo.jpg`,
-  description: 'Full-service digital marketing and IT agency.',
-  email:       'hello@alvisagency.com',
+  description: 'Full-service digital marketing and IT agency specializing in growth strategies, branding, and technology solutions.',
+  email:       'hello@alvis.agency',
   sameAs: [
     'https://www.linkedin.com/company/alvis-agency',
     'https://www.instagram.com/alvisagency',

@@ -41,20 +41,6 @@ export function HomeCTA() {
                   </svg>
                 </span>
               </Link>
-              <a href="tel:+15551234567" className="flex items-center gap-4 group cursor-pointer">
-                <div
-                  className="w-12 h-12 rounded-full text-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-110"
-                  style={{ background: '#485f84' }}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.77a16 16 0 006.29 6.29l1.29-1.29a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2.07z"/>
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: '#8f6f6e' }}>CALL US NOW</p>
-                  <p className="text-[16px] font-bold" style={{ color: '#271717' }}>+1 (555) 123-4567</p>
-                </div>
-              </a>
             </div>
           </div>
 
