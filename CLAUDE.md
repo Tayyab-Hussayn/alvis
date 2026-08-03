@@ -12,6 +12,27 @@ npm run lint     # next lint
 npm run serve    # NODE_ENV=production node server.js  ← cPanel deploy, not npm start
 ```
 
+## Deployment to Namecheap cPanel
+
+**One-line deploy:** `python3 deploy.py`
+
+The `deploy.py` script automates the entire production workflow:
+
+1. **Local build** — Runs `npm run build` and verifies the `.next` output directory exists.
+2. **Package artifacts** — Zips `.next`, `public`, `server.js`, `package.json`, `package-lock.json`, `next.config.mjs` (~12 MB). Excludes `.next/cache`, `node_modules`, `.git`, source files.
+3. **SSH/SFTP upload** — Connects to Namecheap cPanel via paramiko using credentials from `AGENTS/cpanel-ssh.md` (gitignored). Uploads the zip.
+4. **Extract and install** — Extracts on the server at `~/alvis`, runs `npm install --omit=dev` for production dependencies only.
+5. **Restart app** — Signals Node.js via `cloudlinux-selector restart` (cPanel's process manager).
+6. **Health check** — Waits 6 seconds and verifies `https://alvismarketing.com/` responds 200 OK.
+
+**SSH details** (stored in `AGENTS/cpanel-ssh.md`):
+- Host: `198.187.29.21:21098`
+- User: `alvigohn`
+- App root: `~/alvis`
+- Node binary: `/opt/alt/alt-nodejs20/root/usr/bin/node`
+
+**Do not commit `AGENTS/cpanel-ssh.md`** — it holds plaintext credentials and is in `.gitignore`.
+
 ## Architecture
 - **Routing:** `app/` directory. Each route is a `page.tsx`. Root layout: `app/layout.tsx`.
 - **Home sections:** `components/sections/home/` — one file per section, all `'use client'`.
@@ -181,8 +202,7 @@ screen id (**`edit_screens` mints a new screen id every pass**).
   Watch the crop height so you don't catch the next section's pills/cards in the bleed.
 
 ## Known gotchas
-- **cPanel deploy:** Run `npm run build` then `npm run serve` (not `npm start`). `server.js` is
-  the production entry point for the Node.js app on Namecheap.
+- **cPanel deploy:** Use `python3 deploy.py` to push to production. It handles the full build → zip → upload → extract → restart cycle. The `server.js` file is the production entry point (not `npm start`).
 - **`speech-bubble::after`** in `styles/globals.css` is hardcoded `border-top: 15px solid #ffffff`.
   If the testimonials Card 7 background changes from white, this triangle will be the wrong color.
 - **`ProcessCascading.tsx` zigzag layout is coordinate-coupled.** On `lg+` the four step cards
