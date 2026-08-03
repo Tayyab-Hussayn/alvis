@@ -29,7 +29,7 @@ export function Header() {
   return (
     <>
       <nav
-        className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] z-50 flex justify-between items-center px-8 py-3 rounded-full transition-all duration-300"
+        className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] z-50 flex justify-between items-center px-8 py-2 rounded-full transition-all duration-300"
         style={{
           maxWidth: '1280px',
           background: scrolled ? '#ffffff' : 'rgba(255,255,255,0.7)',
@@ -44,11 +44,11 @@ export function Header() {
           <img
             src="/images/alvisLogo.jpg"
             alt="ALVIS"
-            width={220}
-            height={80}
+            width={165}
+            height={60}
             loading="eager"
             decoding="async"
-            style={{ height: '80px', width: 'auto' }}
+            style={{ height: '60px', width: 'auto' }}
           />
         </Link>
 
