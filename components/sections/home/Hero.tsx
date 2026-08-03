@@ -8,11 +8,9 @@ const logos = [
   { src: '/images/homepage/logo-eagleview-1.png',  alt: 'EagleView',       cls: 'h-8' },
   { src: '/images/homepage/logo-grailed.png',      alt: 'Grailed',        cls: 'h-7' },
   { src: '/images/homepage/logo-phorest.png',      alt: 'Phorest',        cls: 'h-7' },
-  { src: '/images/homepage/logo-quoteiq.png',      alt: 'QuoteIQ',        cls: 'h-8' },
   { src: '/images/homepage/logo-retool.png',       alt: 'Retool',         cls: 'h-7' },
   { src: '/images/homepage/logo-servicetitan_logo_black_2.png', alt: 'ServiceTitan', cls: 'h-8' },
   { src: '/images/homepage/logo-simpro.png',       alt: 'Simpro',         cls: 'h-7' },
-  { src: '/images/homepage/logo-images.png',       alt: 'Brand',          cls: 'h-8' },
 ]
 
 export function Hero() {
