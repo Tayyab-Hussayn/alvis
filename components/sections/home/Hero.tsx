@@ -3,14 +3,14 @@
 import Link from 'next/link'
 
 const logos = [
-  { src: '/images/homepage/logo-boulevard.png',    alt: 'Boulevard',      cls: 'h-8' },
-  { src: '/images/homepage/logo-depop.png',        alt: 'Depop',          cls: 'h-7' },
-  { src: '/images/homepage/logo-eagleview-1.png',  alt: 'EagleView',       cls: 'h-8' },
-  { src: '/images/homepage/logo-grailed.png',      alt: 'Grailed',        cls: 'h-7' },
-  { src: '/images/homepage/logo-phorest.png',      alt: 'Phorest',        cls: 'h-7' },
-  { src: '/images/homepage/logo-retool.png',       alt: 'Retool',         cls: 'h-7' },
-  { src: '/images/homepage/logo-servicetitan_logo_black_2.png', alt: 'ServiceTitan', cls: 'h-8' },
-  { src: '/images/homepage/logo-simpro.png',       alt: 'Simpro',         cls: 'h-7' },
+  { src: '/images/homepage/logo-boulevard.png',    alt: 'Boulevard',      cls: 'h-10' },
+  { src: '/images/homepage/logo-depop.png',        alt: 'Depop',          cls: 'h-9' },
+  { src: '/images/homepage/logo-eagleview-1.png',  alt: 'EagleView',       cls: 'h-10' },
+  { src: '/images/homepage/logo-grailed.png',      alt: 'Grailed',        cls: 'h-9' },
+  { src: '/images/homepage/logo-phorest.png',      alt: 'Phorest',        cls: 'h-9' },
+  { src: '/images/homepage/logo-retool.png',       alt: 'Retool',         cls: 'h-9' },
+  { src: '/images/homepage/logo-servicetitan_logo_black_2.png', alt: 'ServiceTitan', cls: 'h-10' },
+  { src: '/images/homepage/logo-simpro.png',       alt: 'Simpro',         cls: 'h-9' },
 ]
 
 export function Hero() {
