@@ -59,7 +59,7 @@ function LogoMark() {
     <img
       src="/images/alvisLogo.jpg"
       alt="Alvis Marketing Agency"
-      className="w-auto h-20"
+      className="w-auto h-28"
       loading="lazy"
       decoding="async"
     />
