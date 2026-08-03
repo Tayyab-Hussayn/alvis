@@ -24,7 +24,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Karahi Boys Ajax',
     category: 'Local SEO + Social Media Marketing',
     tags: ['Local SEO', 'Social Media', 'Restaurant Marketing'],
-    coverImage: '/images/case-studies/karahi-boys-ajax.png',
+    coverImage: '/images/case-studies/karahi-boys-ajax.avif',
     summary: 'Helped a Pakistani restaurant franchise expand into a new Ontario market by building brand awareness and driving customer acquisition through integrated digital marketing.',
     results: [
       { metric: 'Customer Footfall', value: '+150%' },
@@ -41,7 +41,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Osmows Shawarma',
     category: 'Influencer Marketing + Social Media',
     tags: ['Influencer Marketing', 'Viral Marketing', 'Franchise Growth'],
-    coverImage: '/images/case-studies/social-media.png',
+    coverImage: '/images/case-studies/osmows-shawarma-expansion.avif',
     summary: 'Scaled a Mediterranean food franchise from niche to mainstream across North America with influencer partnerships and viral social media campaigns.',
     results: [
       { metric: 'Locations Expansion', value: '160 → 230+' },
@@ -58,7 +58,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Rici Melion',
     category: 'E-Commerce + Digital Marketing',
     tags: ['E-Commerce', 'Luxury Marketing', 'Influencer Partnerships'],
-    coverImage: '/images/case-studies/ecommerce.png',
+    coverImage: '/images/case-studies/rici-melion-luxury-fashion.avif',
     summary: 'Transformed a traditional luxury fashion retailer into a direct-to-consumer powerhouse through premium digital positioning and influencer partnerships.',
     results: [
       { metric: 'Online Revenue', value: '15% → 45%' },
