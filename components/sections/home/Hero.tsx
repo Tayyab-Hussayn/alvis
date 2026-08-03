@@ -3,11 +3,16 @@
 import Link from 'next/link'
 
 const logos = [
-  { src: '/images/homepage/logo-airbnb.webp',   alt: 'Airbnb',    cls: 'h-8' },
-  { src: '/images/homepage/logo-google.webp',    alt: 'Google',    cls: 'h-6' },
-  { src: '/images/homepage/logo-amazon.webp',    alt: 'Amazon',    cls: 'h-8' },
-  { src: '/images/homepage/logo-anthropic.webp', alt: 'Anthropic', cls: 'h-7' },
-  { src: '/images/homepage/logo-chatgpt.webp',   alt: 'ChatGPT',   cls: 'h-7' },
+  { src: '/images/homepage/logo-boulevard.png',    alt: 'Boulevard',      cls: 'h-8' },
+  { src: '/images/homepage/logo-depop.png',        alt: 'Depop',          cls: 'h-7' },
+  { src: '/images/homepage/logo-eagleview-1.png',  alt: 'EagleView',       cls: 'h-8' },
+  { src: '/images/homepage/logo-grailed.png',      alt: 'Grailed',        cls: 'h-7' },
+  { src: '/images/homepage/logo-phorest.png',      alt: 'Phorest',        cls: 'h-7' },
+  { src: '/images/homepage/logo-quoteiq.png',      alt: 'QuoteIQ',        cls: 'h-8' },
+  { src: '/images/homepage/logo-retool.png',       alt: 'Retool',         cls: 'h-7' },
+  { src: '/images/homepage/logo-servicetitan_logo_black_2.png', alt: 'ServiceTitan', cls: 'h-8' },
+  { src: '/images/homepage/logo-simpro.png',       alt: 'Simpro',         cls: 'h-7' },
+  { src: '/images/homepage/logo-images.png',       alt: 'Brand',          cls: 'h-8' },
 ]
 
 export function Hero() {
@@ -68,7 +73,7 @@ export function Hero() {
           {/* Logo scroll */}
           <div className="mt-16">
             <p className="mb-6 text-[12px] tracking-[0.1em] font-bold uppercase" style={{ color: '#8f6f6e' }}>
-              Trusted by 100+ brands
+              Trusted by 20+ brands
             </p>
             <div
               className="relative overflow-hidden"
@@ -76,11 +81,11 @@ export function Hero() {
             >
               <div className="flex gap-16 items-center w-max py-4" style={{ animation: 'logo-scroll 20s linear infinite' }}>
                 {[...logos, ...logos].map((logo, i) => (
-                  <img key={i} src={logo.src} alt={logo.alt} className={`${logo.cls} w-auto grayscale opacity-40`}
+                  <img key={i} src={logo.src} alt={logo.alt} className={`${logo.cls} w-auto`}
                     loading="lazy" decoding="async"
-                    style={{ transition: 'filter 0.3s, opacity 0.3s' }}
-                    onMouseEnter={e => { e.currentTarget.style.filter = 'none'; e.currentTarget.style.opacity = '1' }}
-                    onMouseLeave={e => { e.currentTarget.style.filter = 'grayscale(1)'; e.currentTarget.style.opacity = '0.4' }}
+                    style={{ transition: 'transform 0.3s, filter 0.3s' }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.filter = 'brightness(1.2)' }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.filter = 'brightness(1)' }}
                   />
                 ))}
               </div>
