@@ -9,7 +9,7 @@ import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 const details = [
   {
     title: 'Email Us',
-    lines: ['hello@alvis.agency', 'info@alvismarketing.com'],
+    lines: ['Team@alvismarketing.com', 'info@alvismarketing.com'],
     icon: (
       <>
         <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -200,7 +200,7 @@ export function ContactMain() {
 
               {apiError && (
                 <p className="rounded-xl p-4 text-[13px]" style={{ background: '#fde8ea', color: '#b7102a' }}>
-                  Something went wrong. Please try again or email us at hello@alvis.agency.
+                  Something went wrong. Please try again or email us at Team@alvismarketing.com.
                 </p>
               )}
 
