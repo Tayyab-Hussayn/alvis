@@ -296,7 +296,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'TechSpirex',
     category: 'Web Development',
     tags: ['Next.js', 'TypeScript', 'Full Stack'],
-    coverImage: '/images/case-studies/social-media.png',
+    coverImage: '/images/case-studies/techspirex-web-platform.webp',
     summary: 'Built a complete web platform from scratch — marketing site, client portal, and service delivery dashboard — that replaced a legacy WordPress setup.',
     results: [
       { metric: 'Page Load Speed', value: '0.8s' },
