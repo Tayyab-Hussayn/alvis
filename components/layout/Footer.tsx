@@ -27,7 +27,7 @@ const socials = [
 
 const contact = [
   {
-    lines: ['hello@alvis.agency', 'info@alvismarketing.com'],
+    lines: ['Team@alvismarketing.com', 'info@alvismarketing.com'],
     icon: (
       <>
         <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -56,16 +56,13 @@ const contact = [
 
 function LogoMark() {
   return (
-    <span className="flex items-center gap-4">
-      <svg width="52" height="52" viewBox="0 0 32 32" fill="none">
-        <path d="M16 2 2 26h9l5-8.5 5 8.5h9L16 2z" fill="#e63946" />
-        <path d="M11 26l5-8.5 5 8.5H11z" fill="#0a1b3d" />
-      </svg>
-      <span className="flex flex-col leading-none">
-        <span className="font-display font-black tracking-[0.16em] text-[28px]" style={{ color: '#0d0d0d' }}>ALVIS</span>
-        <span className="text-[9px] font-bold tracking-[0.22em] uppercase mt-1" style={{ color: '#8f6f6e' }}>Marketing Agency</span>
-      </span>
-    </span>
+    <img
+      src="/images/alvisLogo.jpg"
+      alt="Alvis Marketing Agency"
+      className="w-auto h-20"
+      loading="lazy"
+      decoding="async"
+    />
   )
 }
 
