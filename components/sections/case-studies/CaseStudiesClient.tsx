@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+import { caseStudies } from '@/data/caseStudies'
 
-const filters = ['All Case Studies', 'SEO', 'Social Media', 'Paid Advertising', 'E-Commerce', 'Branding']
+const filters = ['All Case Studies', 'SEO', 'Social Media', 'Paid Advertising', 'E-Commerce', 'Branding', 'Local SEO', 'Influencer Marketing', 'Niche SEO + Community Marketing', 'Omnichannel + E-Commerce']
 
 const iconPaths = {
   revenue: <path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />,
@@ -44,53 +45,35 @@ const iconPaths = {
   ),
 }
 
-const studies = [
-  {
-    badge: 'E-COMMERCE',
-    filter: 'E-Commerce',
-    image: '/images/case-studies/ecommerce.png',
-    titleLead: 'Boosting Online Sales for',
-    titleAccent: 'Fashion Store',
-    accentColor: '#e63946',
-    desc: 'We implemented a data-driven marketing strategy that increased traffic, improved conversion rate and boosted overall revenue.',
-    href: '/case-studies/fervent-retail-seo',
-    metrics: [
-      { value: '+125%', label: 'Increase in Revenue',        color: '#e63946', chip: '#fde8ea', icon: iconPaths.revenue },
-      { value: '+78%',  label: 'Increase in Website Traffic', color: '#e63946', chip: '#fde8ea', icon: iconPaths.traffic },
-      { value: '+62%',  label: 'Increase in Conversions',     color: '#3b82f6', chip: '#e8f1fd', icon: iconPaths.chart },
-    ],
-  },
-  {
-    badge: 'SOCIAL MEDIA',
-    filter: 'Social Media',
-    image: '/images/case-studies/social-media.png',
-    titleLead: 'Elevating Brand Awareness for',
-    titleAccent: 'Tech Startup',
-    accentColor: '#3b82f6',
-    desc: 'We created and executed a social media strategy that significantly increased brand visibility and audience engagement.',
-    href: '/case-studies/apex-social-media',
-    metrics: [
-      { value: '+210K', label: 'New Followers',       color: '#8b5cf6', chip: '#eee9fd', icon: iconPaths.people },
-      { value: '+85%',  label: 'Engagement Increase', color: '#e63946', chip: '#fde8ea', icon: iconPaths.heart },
-      { value: '+95%',  label: 'Brand Mentions',      color: '#3b82f6', chip: '#e8f1fd', icon: iconPaths.target },
-    ],
-  },
-  {
-    badge: 'SEO',
-    filter: 'SEO',
-    image: '/images/case-studies/seo.png',
-    titleLead: 'Driving Organic Growth for',
-    titleAccent: 'Corporate Website',
-    accentColor: '#3b82f6',
-    desc: 'Our SEO strategy improved search rankings, driving sustainable organic traffic and quality leads.',
-    href: '/case-studies/novabridge-digital-transformation',
-    metrics: [
-      { value: '+150%', label: 'Organic Traffic',   color: '#3b82f6', chip: '#e8f1fd', icon: iconPaths.search },
-      { value: '+120%', label: 'Keyword Rankings',  color: '#f59e0b', chip: '#fdf0dd', icon: iconPaths.award },
-      { value: '+60%',  label: 'Lead Generation',   color: '#3b82f6', chip: '#e8f1fd', icon: iconPaths.chart },
-    ],
-  },
-]
+const colorMap: Record<string, { accent: string; chip: string; colors: string[] }> = {
+  'Local SEO + Social Media Marketing': { accent: '#e63946', chip: '#fde8ea', colors: ['#e63946', '#f59e0b'] },
+  'Influencer Marketing + Social Media': { accent: '#8b5cf6', chip: '#eee9fd', colors: ['#8b5cf6', '#e63946'] },
+  'E-Commerce + Digital Marketing': { accent: '#3b82f6', chip: '#e8f1fd', colors: ['#3b82f6', '#e63946'] },
+  'SEO + Performance Marketing': { accent: '#f59e0b', chip: '#fdf0dd', colors: ['#f59e0b', '#3b82f6'] },
+  'B2B Marketing + Paid Advertising': { accent: '#06b6d4', chip: '#ecf9fc', colors: ['#06b6d4', '#e63946'] },
+  'Niche SEO + Community Marketing': { accent: '#8b5cf6', chip: '#eee9fd', colors: ['#8b5cf6', '#3b82f6'] },
+  'Local SEO + Reputation Marketing': { accent: '#10b981', chip: '#ecfdf5', colors: ['#10b981', '#e63946'] },
+  'Launch Marketing + Social Media': { accent: '#e63946', chip: '#fde8ea', colors: ['#e63946', '#f59e0b'] },
+  'Omnichannel + E-Commerce': { accent: '#3b82f6', chip: '#e8f1fd', colors: ['#3b82f6', '#e63946'] },
+}
+
+const studies = caseStudies.map(cs => ({
+  badge: cs.tags[0]?.toUpperCase() || 'MARKETING',
+  filter: cs.category.split(' + ')[0] || cs.category,
+  image: cs.coverImage,
+  titleLead: cs.title.split(' ').slice(0, -1).join(' '),
+  titleAccent: cs.title.split(' ').pop() || 'Project',
+  accentColor: colorMap[cs.category]?.accent || '#e63946',
+  desc: cs.summary,
+  href: `/case-studies/${cs.slug}`,
+  metrics: cs.results.slice(0, 3).map((r, i) => {
+    const colors = colorMap[cs.category]?.colors || ['#e63946', '#3b82f6']
+    const color = colors[i % colors.length]
+    const chipColor = color === '#e63946' ? '#fde8ea' : color === '#3b82f6' ? '#e8f1fd' : '#eee9fd'
+    const iconPath = [iconPaths.revenue, iconPaths.traffic, iconPaths.chart][i % 3]
+    return { value: r.value, label: r.metric, color, chip: chipColor, icon: iconPath }
+  }),
+}))
 
 export function CaseStudiesClient() {
   const [active, setActive] = useState('All Case Studies')
@@ -127,7 +110,7 @@ export function CaseStudiesClient() {
         <div ref={cardsRef} className="space-y-8">
           {visible.map(s => (
             <article
-              key={s.badge}
+              key={s.href}
               className="bg-white rounded-3xl overflow-hidden grid grid-cols-1 lg:grid-cols-12"
               style={{ boxShadow: '0 20px 60px -25px rgba(0,0,0,0.12)' }}
             >
