@@ -75,7 +75,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Linens Factory',
     category: 'SEO + Performance Marketing',
     tags: ['SEO', 'E-Commerce', 'Content Marketing'],
-    coverImage: '/images/case-studies/ecommerce.png',
+    coverImage: '/images/case-studies/linens-factory-ecommerce.avif',
     summary: 'Accelerated an emerging e-commerce bedding company to market leadership through aggressive SEO and performance marketing.',
     results: [
       { metric: 'Monthly Revenue', value: '$85K → $480K' },
@@ -92,7 +92,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Prestige Ride',
     category: 'B2B Marketing + Paid Advertising',
     tags: ['B2B Marketing', 'LinkedIn Advertising', 'Corporate Growth'],
-    coverImage: '/images/case-studies/seo.png',
+    coverImage: '/images/case-studies/prestige-ride-expansion.avif',
     summary: 'Scaled a premium transportation service across major US cities through targeted B2B marketing and corporate partnerships.',
     results: [
       { metric: 'Corporate Accounts', value: '12 → 145+' },
@@ -109,7 +109,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Efone',
     category: 'Niche SEO + Community Marketing',
     tags: ['SEO', 'Community Marketing', 'SaaS Growth'],
-    coverImage: '/images/case-studies/ecommerce.png',
+    coverImage: '/images/case-studies/efone-voip-market.avif',
     summary: 'Penetrated a fragmented telecom market by targeting niche communities and building authentic community presence.',
     results: [
       { metric: 'Customer Base', value: '2.5K → 18K' },
@@ -126,7 +126,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Onvision Security',
     category: 'Local SEO + Reputation Marketing',
     tags: ['Local SEO', 'Reputation Management', 'Service Marketing'],
-    coverImage: '/images/case-studies/seo.png',
+    coverImage: '/images/case-studies/onvision-security-growth.avif',
     summary: 'Scaled a local security company from single market to multi-market leader through local SEO and reputation marketing.',
     results: [
       { metric: 'Service Areas', value: '1 → 5' },
@@ -143,7 +143,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Lazzat Grill & Shakes',
     category: 'Launch Marketing + Social Media',
     tags: ['Launch Marketing', 'Social Media', 'Restaurant Growth'],
-    coverImage: '/images/case-studies/karahi-boys-ajax.png',
+    coverImage: '/images/case-studies/lazzat-grill-launch.webp',
     summary: 'Successfully launched a new restaurant concept with zero brand awareness and scaled to multi-unit through influencer partnerships and viral content.',
     results: [
       { metric: 'Month 1 Traffic', value: '450+ customers/day' },
@@ -160,7 +160,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Wegmans Food Markets',
     category: 'Omnichannel + E-Commerce',
     tags: ['E-Commerce', 'Grocery', 'Omnichannel Strategy'],
-    coverImage: '/images/case-studies/ecommerce.png',
+    coverImage: '/images/case-studies/wegmans-ecommerce.webp',
     summary: 'Modernized a traditional supermarket chain into an omnichannel e-commerce powerhouse competing with Amazon Fresh and online grocery leaders.',
     results: [
       { metric: 'Online Sales', value: '$65M → $283M' },
@@ -262,7 +262,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Apex Fitness',
     category: 'Social Media Marketing',
     tags: ['Social Media', 'Content', 'Instagram'],
-    coverImage: '/images/case-studies/seo.png',
+    coverImage: '/images/case-studies/apex-social-media.webp',
     summary: 'Built a content strategy and posting system from scratch that grew Apex\'s Instagram from 2K to 28K followers in 8 months and drove measurable revenue.',
     results: [
       { metric: 'Instagram Followers', value: '2K → 28K' },
