@@ -24,7 +24,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Karahi Boys Ajax',
     category: 'Local SEO + Social Media Marketing',
     tags: ['Local SEO', 'Social Media', 'Restaurant Marketing'],
-    coverImage: '/images/case-studies/restaurant.png',
+    coverImage: '/images/case-studies/karahi-boys-ajax.png',
     summary: 'Helped a Pakistani restaurant franchise expand into a new Ontario market by building brand awareness and driving customer acquisition through integrated digital marketing.',
     results: [
       { metric: 'Customer Footfall', value: '+150%' },
@@ -41,7 +41,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Osmows Shawarma',
     category: 'Influencer Marketing + Social Media',
     tags: ['Influencer Marketing', 'Viral Marketing', 'Franchise Growth'],
-    coverImage: '/images/case-studies/franchise.png',
+    coverImage: '/images/case-studies/social-media.png',
     summary: 'Scaled a Mediterranean food franchise from niche to mainstream across North America with influencer partnerships and viral social media campaigns.',
     results: [
       { metric: 'Locations Expansion', value: '160 → 230+' },
@@ -92,7 +92,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Prestige Ride',
     category: 'B2B Marketing + Paid Advertising',
     tags: ['B2B Marketing', 'LinkedIn Advertising', 'Corporate Growth'],
-    coverImage: '/images/case-studies/corporate.png',
+    coverImage: '/images/case-studies/seo.png',
     summary: 'Scaled a premium transportation service across major US cities through targeted B2B marketing and corporate partnerships.',
     results: [
       { metric: 'Corporate Accounts', value: '12 → 145+' },
@@ -109,7 +109,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Efone',
     category: 'Niche SEO + Community Marketing',
     tags: ['SEO', 'Community Marketing', 'SaaS Growth'],
-    coverImage: '/images/case-studies/telecom.png',
+    coverImage: '/images/case-studies/ecommerce.png',
     summary: 'Penetrated a fragmented telecom market by targeting niche communities and building authentic community presence.',
     results: [
       { metric: 'Customer Base', value: '2.5K → 18K' },
@@ -126,7 +126,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Onvision Security',
     category: 'Local SEO + Reputation Marketing',
     tags: ['Local SEO', 'Reputation Management', 'Service Marketing'],
-    coverImage: '/images/case-studies/security.png',
+    coverImage: '/images/case-studies/seo.png',
     summary: 'Scaled a local security company from single market to multi-market leader through local SEO and reputation marketing.',
     results: [
       { metric: 'Service Areas', value: '1 → 5' },
@@ -143,7 +143,7 @@ export const caseStudies: CaseStudy[] = [
     client: 'Lazzat Grill & Shakes',
     category: 'Launch Marketing + Social Media',
     tags: ['Launch Marketing', 'Social Media', 'Restaurant Growth'],
-    coverImage: '/images/case-studies/restaurant.png',
+    coverImage: '/images/case-studies/karahi-boys-ajax.png',
     summary: 'Successfully launched a new restaurant concept with zero brand awareness and scaled to multi-unit through influencer partnerships and viral content.',
     results: [
       { metric: 'Month 1 Traffic', value: '450+ customers/day' },
