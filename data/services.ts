@@ -13,7 +13,7 @@ export const services: Service[] = [
     slug: 'seo',
     title: 'SEO',
     icon: 'TrendingUp',
-    shortDesc: 'Ranking aur visibility behtar karna',
+    shortDesc: 'Rank higher on Google and drive qualified organic traffic that converts into customers',
     category: 'marketing',
     longDescription:
       'We optimize your website to rank higher on Google and drive qualified organic traffic. Technical SEO, keyword research, content strategy, and link building — everything you need to own your search results.',
@@ -30,7 +30,7 @@ export const services: Service[] = [
     slug: 'social-media-marketing',
     title: 'Social Media Marketing',
     icon: 'Share2',
-    shortDesc: 'Content, posting, paid ads',
+    shortDesc: 'Build engaged communities, create viral content, and convert followers into loyal customers',
     category: 'marketing',
     longDescription:
       'We build your social media presence from the ground up. Content creation, posting strategy, paid ad management, and community engagement — turning followers into customers.',
@@ -47,7 +47,7 @@ export const services: Service[] = [
     slug: 'orm',
     title: 'ORM',
     icon: 'Shield',
-    shortDesc: 'Online reputation aur reviews manage karna',
+    shortDesc: 'Manage reviews, build trust, and protect your brand reputation across all platforms',
     category: 'marketing',
     longDescription:
       'We manage your online reputation across Google, Yelp, and industry-specific review sites. Monitor reviews, respond to customers, and build a strong positive presence online.',
@@ -64,7 +64,7 @@ export const services: Service[] = [
     slug: 'digital-marketing',
     title: 'Digital Marketing',
     icon: 'Target',
-    shortDesc: 'Google Ads, email marketing, analytics',
+    shortDesc: 'Strategic campaigns combining paid ads, email, and analytics for measurable ROI',
     category: 'marketing',
     longDescription:
       'Full-funnel digital marketing including Google Ads, email campaigns, and detailed analytics. We track everything, optimize relentlessly, and deliver measurable ROI.',
@@ -81,7 +81,7 @@ export const services: Service[] = [
     slug: 'web-development',
     title: 'Web Development',
     icon: 'Monitor',
-    shortDesc: 'Websites aur landing pages banana',
+    shortDesc: 'Fast, responsive websites and landing pages built to convert visitors into customers',
     category: 'development',
     longDescription:
       'We build fast, secure, conversion-focused websites and landing pages. Responsive design, modern tech stack, and performance optimization included.',
@@ -98,7 +98,7 @@ export const services: Service[] = [
     slug: 'app-development',
     title: 'App Development',
     icon: 'Smartphone',
-    shortDesc: 'Android/iOS apps',
+    shortDesc: 'Native iOS and Android apps that users love, optimized for engagement and growth',
     category: 'development',
     longDescription:
       'We develop native and cross-platform mobile apps for iOS and Android. User-centric design, robust functionality, and app store optimization included.',
@@ -115,7 +115,7 @@ export const services: Service[] = [
     slug: 'ai-automation',
     title: 'AI Automation',
     icon: 'Zap',
-    shortDesc: 'Chatbots aur business automation',
+    shortDesc: 'Intelligent chatbots and automation that handle customer service 24/7 at scale',
     category: 'development',
     longDescription:
       'We automate your business processes with AI-powered chatbots, customer service bots, and workflow automation. Save time, improve customer experience, and scale without hiring.',
@@ -132,7 +132,7 @@ export const services: Service[] = [
     slug: 'graphic-design',
     title: 'Graphic Design',
     icon: 'Palette',
-    shortDesc: 'Professional design for all your needs',
+    shortDesc: 'Stunning visual content from logos to social graphics that leave lasting impressions',
     category: 'design',
     longDescription:
       'From logos to social media graphics to marketing materials — we create stunning, on-brand visual content that stands out and converts.',
@@ -149,7 +149,7 @@ export const services: Service[] = [
     slug: 'video-production',
     title: 'Video Editing & Animation',
     icon: 'Video',
-    shortDesc: 'Professional video production',
+    shortDesc: 'Professional videos and animations that captivate, engage, and drive results',
     category: 'design',
     longDescription:
       'We produce, edit, and animate professional videos for marketing, social media, and training. From concept to final delivery, we handle it all.',
