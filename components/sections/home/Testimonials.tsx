@@ -1,40 +1,37 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+import { testimonials as testimonialsData } from '@/data/testimonials'
 
-const testimonials = [
-  {
-    quote: 'Alvis Marketing transformed our online presence. Their strategy brought us 3x more leads within just 60 days.',
-    name: 'Jason Miller',
-    role: 'CEO, Nexora',
-    avatar: '/images/homepage/avatar-jason.webp',
-  },
-  {
-    quote: 'The team is incredibly creative and results-driven. Our brand engagement has never been higher.',
-    name: 'Sarah Thompson',
-    role: 'Marketing Director, Brightly',
-    avatar: '/images/homepage/avatar-sarah.webp',
-  },
-  {
-    quote: 'Professional, responsive, and focused on growth. Alvis truly feels like an extension of our team.',
-    name: 'Daniel Carter',
-    role: 'Founder, Workly',
-    avatar: '/images/homepage/avatar-daniel.webp',
-  },
-  {
-    quote: 'From SEO to content, everything they do is top-notch. Highly recommended for any serious business.',
-    name: 'Emily Watson',
-    role: 'COO, Healora',
-    avatar: '/images/homepage/avatar-emily.webp',
-  },
-]
+const testimonialsDisplay = testimonialsData.map((t, i) => ({
+  quote: t.quote,
+  name: t.name,
+  role: `${t.title}, ${t.company}`,
+  avatar: `/images/homepage/avatar-${i % 4 === 0 ? 'jason' : i % 4 === 1 ? 'sarah' : i % 4 === 2 ? 'daniel' : 'emily'}.webp`,
+}))
 
 export function Testimonials() {
   const headerRef = useScrollReveal<HTMLDivElement>()
   const gridRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
+  const [currentIndex, setCurrentIndex] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex(prev => (prev + 1) % testimonialsDisplay.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const handlePrev = () => setCurrentIndex(prev => (prev - 1 + testimonialsDisplay.length) % testimonialsDisplay.length)
+  const handleNext = () => setCurrentIndex(prev => (prev + 1) % testimonialsDisplay.length)
+
+  const visibleTestimonials = testimonialsDisplay.slice(currentIndex, currentIndex + 4).concat(
+    currentIndex + 4 > testimonialsDisplay.length ? testimonialsDisplay.slice(0, (currentIndex + 4) % testimonialsDisplay.length) : []
+  )
 
   return (
-    <section className="py-[160px] px-5 md:px-8 max-w-[1280px] mx-auto overflow-hidden">
+    <section className="py-[100px] px-5 md:px-8 max-w-[1280px] mx-auto overflow-hidden">
       <div ref={headerRef} className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
         <div>
           <span className="block mb-4 text-[11px] font-bold tracking-[0.2em] uppercase" style={{ color: '#e63946' }}>
@@ -49,7 +46,8 @@ export function Testimonials() {
         </div>
         <div className="flex gap-4">
           <button
-            className="w-12 h-12 rounded-full border flex items-center justify-center transition-colors"
+            onClick={handlePrev}
+            className="w-12 h-12 rounded-full border flex items-center justify-center transition-colors hover:bg-opacity-10"
             style={{ borderColor: '#e4bebc', color: '#271717' }}
             aria-label="Previous"
           >
@@ -58,7 +56,8 @@ export function Testimonials() {
             </svg>
           </button>
           <button
-            className="w-12 h-12 rounded-full border flex items-center justify-center transition-colors"
+            onClick={handleNext}
+            className="w-12 h-12 rounded-full border flex items-center justify-center transition-colors hover:bg-opacity-10"
             style={{ borderColor: '#e63946', color: '#e63946' }}
             aria-label="Next"
           >
@@ -70,7 +69,7 @@ export function Testimonials() {
       </div>
 
       <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {testimonials.map((t) => (
+        {visibleTestimonials.map((t) => (
           <div
             key={t.name}
             className="p-8 rounded-3xl flex flex-col justify-between transition-all"

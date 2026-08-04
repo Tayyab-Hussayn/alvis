@@ -2,86 +2,39 @@
 
 import Link from 'next/link'
 import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+import { services as servicesData } from '@/data/services'
 
-const services = [
-  {
-    title: 'Social Media Marketing',
-    desc: 'Build your brand presence, engage your audience and drive more conversions.',
-    chip: '#fde8ea',
-    color: '#e63946',
-    icon: <path d="m3 11 18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6" />,
-  },
-  {
-    title: 'SEO Optimization',
-    desc: 'Rank higher on Google and increase organic traffic with our proven SEO strategies.',
-    chip: '#e8f1fd',
-    color: '#3b82f6',
-    icon: (
-      <>
-        <circle cx="11" cy="11" r="8" />
-        <path d="m21 21-4.35-4.35" />
-      </>
-    ),
-  },
-  {
-    title: 'Branding & Design',
-    desc: 'Create a strong brand identity that leaves a lasting impression on your audience.',
-    chip: '#eee9fd',
-    color: '#8b5cf6',
-    icon: <path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l7.586 7.586M11 11a2 2 0 1 0 4 0 2 2 0 0 0-4 0z" />,
-  },
-  {
-    title: 'Content Marketing',
-    desc: 'Engaging content that attracts, educates and converts your target audience.',
-    chip: '#e3f7ec',
-    color: '#16a34a',
-    icon: (
-      <>
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-        <path d="M14 2v6h6M8 13h5M8 17h8" />
-      </>
-    ),
-  },
-  {
-    title: 'Paid Advertising',
-    desc: 'Target the right audience and get maximum ROI with our paid ad campaigns.',
-    chip: '#e8f1fd',
-    color: '#3b82f6',
-    icon: <path d="m3 11 18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6" />,
-  },
-  {
-    title: 'E-Commerce Marketing',
-    desc: 'Boost your online store sales with conversion-focused marketing strategies.',
-    chip: '#fdf0dd',
-    color: '#f59e0b',
-    icon: (
-      <>
-        <circle cx="9" cy="21" r="1" />
-        <circle cx="20" cy="21" r="1" />
-        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-      </>
-    ),
-  },
-  {
-    title: 'Email Marketing',
-    desc: 'Nurture leads and build strong customer relationships through email campaigns.',
-    chip: '#e3f7ec',
-    color: '#16a34a',
-    icon: (
-      <>
-        <rect x="2" y="4" width="20" height="16" rx="2" />
-        <path d="m22 6-10 7L2 6" />
-      </>
-    ),
-  },
-  {
-    title: 'Analytics & Reporting',
-    desc: 'Track performance, measure results and optimize strategies for better growth.',
-    chip: '#eee9fd',
-    color: '#8b5cf6',
-    icon: <path d="M18 20V10M12 20V4M6 20v-6" />,
-  },
-]
+const iconMap: { [key: string]: React.ReactNode } = {
+  'SEO': <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></>,
+  'Social Media Marketing': <path d="m3 11 18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6" />,
+  'ORM': <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />,
+  'Digital Marketing': <><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" /><polyline points="13 2 13 9 20 9" /></>,
+  'Web Development': <><rect x="2" y="3" width="20" height="14" rx="2" ry="2" /><line x1="2" y1="17" x2="22" y2="17" /></>,
+  'App Development': <><rect x="2" y="5" width="8" height="12" rx="1" ry="1" /><path d="M13 5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2z" /></>,
+  'AI Automation': <><circle cx="12" cy="12" r="1" /><path d="M8 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0" /><path d="M12 2v4m0 8v4M2 12h4m8 0h4" /></>,
+  'Graphic Design': <path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l7.586 7.586M11 11a2 2 0 1 0 4 0 2 2 0 0 0-4 0z" />,
+  'Video Editing & Animation': <><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></>,
+}
+
+const colorMap: { [key: string]: { chip: string; color: string } } = {
+  'SEO': { chip: '#e8f1fd', color: '#3b82f6' },
+  'Social Media Marketing': { chip: '#fde8ea', color: '#e63946' },
+  'ORM': { chip: '#eee9fd', color: '#8b5cf6' },
+  'Digital Marketing': { chip: '#e3f7ec', color: '#16a34a' },
+  'Web Development': { chip: '#fdf0dd', color: '#f59e0b' },
+  'App Development': { chip: '#e8f1fd', color: '#3b82f6' },
+  'AI Automation': { chip: '#eee9fd', color: '#8b5cf6' },
+  'Graphic Design': { chip: '#e3f7ec', color: '#16a34a' },
+  'Video Editing & Animation': { chip: '#fde8ea', color: '#e63946' },
+}
+
+const services = servicesData.map(s => ({
+  title: s.title,
+  desc: s.shortDesc,
+  chip: colorMap[s.title]?.chip || '#fde8ea',
+  color: colorMap[s.title]?.color || '#e63946',
+  icon: iconMap[s.title] || <circle cx="12" cy="12" r="1" />,
+}))
 
 export function ServicesGrid() {
   const headerRef = useScrollReveal<HTMLDivElement>()

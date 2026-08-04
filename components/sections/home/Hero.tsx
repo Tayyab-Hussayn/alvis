@@ -16,7 +16,7 @@ const logos = [
 export function Hero() {
   return (
     <header
-      className="relative pt-40 pb-[160px] px-5 md:px-8 overflow-hidden"
+      className="relative pt-40 pb-[100px] px-5 md:px-8 overflow-hidden"
       style={{ background: 'radial-gradient(circle at 70% 30%, rgba(183,16,42,0.08), transparent 50%), #fff8f7' }}
     >
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">

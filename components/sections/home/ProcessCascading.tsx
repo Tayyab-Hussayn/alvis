@@ -109,7 +109,7 @@ export function ProcessCascading() {
   const barRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
 
   return (
-    <section className="py-[160px] px-5 md:px-8" style={{ background: '#fff8f7' }}>
+    <section className="py-[100px] px-5 md:px-8" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto">
 
         {/* ── Header ── */}

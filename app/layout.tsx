@@ -73,8 +73,8 @@ const organizationSchema = {
   description: 'Full-service digital marketing and IT agency specializing in growth strategies, branding, and technology solutions.',
   email:       'hello@alvis.agency',
   sameAs: [
-    'https://www.linkedin.com/company/alvis-agency',
-    'https://www.instagram.com/alvisagency',
+    'https://www.facebook.com/share/1Bwx3RM7pc/',
+    'https://www.instagram.com/alvisdigital?igsh=MWVhbWY4dXd6Y2Z5OA==',
   ],
   offers: {
     '@type':   'AggregateOffer',

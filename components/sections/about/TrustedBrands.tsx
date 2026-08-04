@@ -21,7 +21,7 @@ export function TrustedBrands() {
     <section className="px-5 md:px-8 pb-20" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto">
         <p ref={labelRef} className="text-center text-[12px] font-bold uppercase tracking-[0.1em] mb-12" style={{ color: '#e63946' }}>
-          Trusted by Top Brands
+          Trusted by 20+ brands
         </p>
         <div ref={brandsRef} className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8">
           {brands.map(b => (

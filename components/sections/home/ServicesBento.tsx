@@ -5,57 +5,101 @@ import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/u
 const services = [
   {
     icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#b7102a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-      </svg>
-    ),
-    iconBg: 'rgba(183,16,42,0.05)',
-    title: 'Social Media Marketing',
-    desc: 'Build your brand and engage the right audience across all platforms.',
-    href: '/services',
-  },
-  {
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#485f84" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-      </svg>
-    ),
-    iconBg: 'rgba(72,95,132,0.08)',
-    title: 'Paid Advertising',
-    desc: 'Get high-quality leads with targeted ad campaigns that convert.',
-    href: '/services',
-  },
-  {
-    icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#286182" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
       </svg>
     ),
     iconBg: 'rgba(40,97,130,0.06)',
-    title: 'SEO Optimization',
-    desc: 'Rank higher on Google and drive organic traffic that stays.',
+    title: 'SEO',
+    desc: 'Ranking aur visibility behtar karna',
+    href: '/services',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#b7102a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+    ),
+    iconBg: 'rgba(183,16,42,0.05)',
+    title: 'Social Media Marketing',
+    desc: 'Content, posting, paid ads',
+    href: '/services',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#485f84" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/>
+      </svg>
+    ),
+    iconBg: 'rgba(72,95,132,0.08)',
+    title: 'ORM',
+    desc: 'Online reputation aur reviews manage karna',
     href: '/services',
   },
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#00B4FF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/>
       </svg>
     ),
     iconBg: 'rgba(0,180,255,0.08)',
-    title: 'Branding & Design',
-    desc: 'Create a brand identity that leaves a lasting impression on your clients.',
+    title: 'Digital Marketing',
+    desc: 'Google Ads, email marketing, analytics',
     href: '/services',
   },
   {
     icon: (
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#77C1C1" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="17" x2="22" y2="17"/><polyline points="6 21 6 17 18 21 18 17"/>
       </svg>
     ),
     iconBg: 'rgba(119,193,193,0.08)',
-    title: 'Content Marketing',
-    desc: 'Content that connects, converts and builds customer loyalty.',
+    title: 'Web Development',
+    desc: 'Websites aur landing pages banana',
+    href: '/services',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e63946" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="5" width="8" height="12" rx="1" ry="1"/><path d="M13 5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2z"/><circle cx="6" cy="14" r=".5" fill="currentColor"/>
+      </svg>
+    ),
+    iconBg: 'rgba(230,57,70,0.08)',
+    title: 'App Development',
+    desc: 'Android/iOS apps',
+    href: '/services',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="1"/><path d="M8 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0"/><path d="M12 2v4m0 8v4M2 12h4m8 0h4"/>
+      </svg>
+    ),
+    iconBg: 'rgba(139,92,246,0.08)',
+    title: 'AI Automation',
+    desc: 'Chatbots aur business automation',
+    href: '/services',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/>
+      </svg>
+    ),
+    iconBg: 'rgba(22,163,74,0.08)',
+    title: 'Graphic Design',
+    desc: 'Professional design for all your needs',
+    href: '/services',
+  },
+  {
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d97706" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+      </svg>
+    ),
+    iconBg: 'rgba(217,119,6,0.08)',
+    title: 'Video Editing & Animation',
+    desc: 'Professional video production',
     href: '/services',
   },
 ]
@@ -65,7 +109,7 @@ export function ServicesBento() {
   const gridRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.08 })
 
   return (
-    <section className="pb-[160px] px-5 md:px-8 max-w-[1280px] mx-auto">
+    <section className="pb-[100px] px-5 md:px-8 max-w-[1280px] mx-auto">
       <div ref={headerRef} className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
         <div className="max-w-xl">
           <span className="block mb-4 text-[12px] font-bold tracking-[0.1em] uppercase" style={{ color: '#b7102a' }}>
@@ -83,7 +127,7 @@ export function ServicesBento() {
         </div>
       </div>
 
-      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {services.map((s) => (
           <div
             key={s.title}

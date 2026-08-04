@@ -59,7 +59,7 @@ export function PortfolioPreview() {
   const gridRef = useScrollRevealGroup<HTMLDivElement>({ stagger: 0.1 })
 
   return (
-    <section className="py-[160px] px-5 md:px-8">
+    <section className="py-[100px] px-5 md:px-8">
       <div
         className="max-w-[1280px] mx-auto rounded-[28px] p-8 md:p-14 flex flex-col lg:flex-row items-center gap-10 md:gap-16 overflow-hidden relative shadow-2xl"
         style={{ background: 'linear-gradient(135deg, #0c0f24, #0a0c1c, #090b18)' }}

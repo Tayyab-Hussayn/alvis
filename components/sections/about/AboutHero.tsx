@@ -2,7 +2,16 @@
 
 import Link from 'next/link'
 
-const brands = ['Google', 'Meta', 'HubSpot', 'Canva', 'slack']
+const logos = [
+  { src: '/images/homepage/logo-boulevard.png',    alt: 'Boulevard',      cls: 'h-10' },
+  { src: '/images/homepage/logo-depop.png',        alt: 'Depop',          cls: 'h-9' },
+  { src: '/images/homepage/logo-eagleview-1.png',  alt: 'EagleView',       cls: 'h-10' },
+  { src: '/images/homepage/logo-grailed.png',      alt: 'Grailed',        cls: 'h-9' },
+  { src: '/images/homepage/logo-phorest.png',      alt: 'Phorest',        cls: 'h-9' },
+  { src: '/images/homepage/logo-retool.png',       alt: 'Retool',         cls: 'h-9' },
+  { src: '/images/homepage/logo-servicetitan_logo_black_2.png', alt: 'ServiceTitan', cls: 'h-10' },
+  { src: '/images/homepage/logo-simpro.png',       alt: 'Simpro',         cls: 'h-9' },
+]
 
 export function AboutHero() {
   return (
@@ -56,10 +65,20 @@ export function AboutHero() {
             </Link>
           </div>
 
-          <p className="text-[13px] font-bold mb-5" style={{ color: '#271717' }}>Trusted by 100+ brands</p>
+          <p className="text-[13px] font-bold mb-5" style={{ color: '#271717' }}>Trusted by 20+ brands</p>
           <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
-            {brands.map(b => (
-              <span key={b} className="font-display font-bold text-xl" style={{ color: '#9b8a89' }}>{b}</span>
+            {logos.map(logo => (
+              <img
+                key={logo.alt}
+                src={logo.src}
+                alt={logo.alt}
+                className={`${logo.cls} w-auto`}
+                loading="lazy"
+                decoding="async"
+                style={{ transition: 'transform 0.3s, filter 0.3s' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.filter = 'brightness(1.2)' }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.filter = 'brightness(1)' }}
+              />
             ))}
           </div>
         </div>

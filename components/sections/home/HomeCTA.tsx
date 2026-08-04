@@ -7,7 +7,7 @@ export function HomeCTA() {
   const cardRef = useScrollReveal<HTMLDivElement>()
 
   return (
-    <section className="py-[160px] px-5 md:px-8">
+    <section className="py-[100px] px-5 md:px-8">
       <div
         ref={cardRef}
         className="max-w-[1280px] mx-auto rounded-[48px] overflow-hidden relative border"

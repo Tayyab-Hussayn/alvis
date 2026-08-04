@@ -9,7 +9,7 @@ import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 const details = [
   {
     title: 'Email Us',
-    lines: ['Team@alvismarketing.com', 'info@alvismarketing.com'],
+    lines: ['info@alvismarketing.com'],
     icon: (
       <>
         <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -39,11 +39,8 @@ const details = [
 ]
 
 const socials = [
-  { label: 'Facebook',  color: '#1877F2', path: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' },
-  { label: 'Instagram', color: '#E1306C', path: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zM17.8 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z' },
-  { label: 'LinkedIn',  color: '#0A66C2', path: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z' },
-  { label: 'X',         color: '#0d0d0d', path: 'M18.24 2.25h3.31l-7.23 8.26 8.5 11.24H16.17l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z' },
-  { label: 'YouTube',   color: '#FF0000', path: 'M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33zM9.75 15.02V8.48l5.75 3.27z' },
+  { label: 'Facebook',  color: '#1877F2', path: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z', href: 'https://www.facebook.com/share/1Bwx3RM7pc/' },
+  { label: 'Instagram', color: '#E1306C', path: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zM17.8 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z', href: 'https://www.instagram.com/alvisdigital?igsh=MWVhbWY4dXd6Y2Z5OA==' },
 ]
 
 const inputStyle: React.CSSProperties = {
@@ -137,7 +134,9 @@ export function ContactMain() {
             {socials.map(s => (
               <a
                 key={s.label}
-                href="#"
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={s.label}
                 className="w-10 h-10 rounded-xl flex items-center justify-center transition-transform hover:-translate-y-0.5"
                 style={{ border: '1px solid #f0dedd', color: s.color }}
@@ -200,7 +199,7 @@ export function ContactMain() {
 
               {apiError && (
                 <p className="rounded-xl p-4 text-[13px]" style={{ background: '#fde8ea', color: '#b7102a' }}>
-                  Something went wrong. Please try again or email us at Team@alvismarketing.com.
+                  Something went wrong. Please try again or email us at info@alvismarketing.com.
                 </p>
               )}
 
