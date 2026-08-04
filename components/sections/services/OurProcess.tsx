@@ -1,6 +1,5 @@
 'use client'
 
-import { Lightbulb, Target, Zap, TrendingUp } from 'lucide-react'
 import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
 
 const steps = [
@@ -10,7 +9,12 @@ const steps = [
     desc: 'We understand your business, goals and audience.',
     color: '#e63946',
     chip: '#fde8ea',
-    icon: Lightbulb,
+    icon: (
+      <>
+        <circle cx="11" cy="11" r="7" />
+        <path d="m21 21-4.35-4.35M11 8v6M8 11h6" />
+      </>
+    ),
   },
   {
     num: '02',
@@ -18,7 +22,14 @@ const steps = [
     desc: 'We create a customized strategy based on data and insights.',
     color: '#8b5cf6',
     chip: '#eee9fd',
-    icon: Target,
+    icon: (
+      <>
+        <circle cx="6" cy="6" r="3" />
+        <circle cx="18" cy="6" r="3" />
+        <circle cx="12" cy="18" r="3" />
+        <path d="M8.6 7.6 11 15M15.4 7.6 13 15" />
+      </>
+    ),
   },
   {
     num: '03',
@@ -26,7 +37,7 @@ const steps = [
     desc: 'Our team implements the plan with precision and creativity.',
     color: '#3b82f6',
     chip: '#e8f1fd',
-    icon: Zap,
+    icon: <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />,
   },
   {
     num: '04',
@@ -34,7 +45,7 @@ const steps = [
     desc: 'We optimize, analyze and scale for maximum results.',
     color: '#16a34a',
     chip: '#e3f7ec',
-    icon: TrendingUp,
+    icon: <path d="M3 17l6-6 4 4 8-8M15 7h6v6" />,
   },
 ]
 
@@ -84,7 +95,9 @@ export function OurProcess() {
                 style={{ color: s.color, boxShadow: '0 12px 30px -12px rgba(0,0,0,0.5)' }}
               >
                 <span className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: s.chip }}>
-                  <s.icon size={56} strokeWidth={1.8} />
+                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    {s.icon}
+                  </svg>
                 </span>
               </span>
 
