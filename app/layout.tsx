@@ -75,6 +75,7 @@ const organizationSchema = {
   sameAs: [
     'https://www.facebook.com/share/1Bwx3RM7pc/',
     'https://www.instagram.com/alvisdigital?igsh=MWVhbWY4dXd6Y2Z5OA==',
+    'https://www.linkedin.com/company/alvis-marketing-agency',
   ],
   offers: {
     '@type':   'AggregateOffer',
