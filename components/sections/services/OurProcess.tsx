@@ -94,8 +94,8 @@ export function OurProcess() {
                 className="relative w-[88px] h-[88px] rounded-full bg-white mx-auto mb-5 flex items-center justify-center"
                 style={{ color: s.color, boxShadow: '0 12px 30px -12px rgba(0,0,0,0.5)' }}
               >
-                <span className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: s.chip }}>
-                  <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <span className="w-16 h-16 rounded-full flex items-center justify-center" style={{ background: s.chip }}>
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                     {s.icon}
                   </svg>
                 </span>
