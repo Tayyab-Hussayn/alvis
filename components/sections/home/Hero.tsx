@@ -11,6 +11,8 @@ const logos = [
   { src: '/images/homepage/logo-retool.png',       alt: 'Retool',         cls: 'h-9' },
   { src: '/images/homepage/logo-servicetitan_logo_black_2.png', alt: 'ServiceTitan', cls: 'h-10' },
   { src: '/images/homepage/logo-simpro.png',       alt: 'Simpro',         cls: 'h-9' },
+  { src: '/images/homepage/logo-quoteiq.png',      alt: 'QuoteIQ',        cls: 'h-9' },
+  { src: '/images/homepage/logo-images.png',       alt: 'Images',         cls: 'h-9' },
 ]
 
 export function Hero() {
