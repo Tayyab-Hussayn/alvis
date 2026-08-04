@@ -66,20 +66,25 @@ export function AboutHero() {
           </div>
 
           <p className="text-[13px] font-bold mb-5" style={{ color: '#271717' }}>Trusted by 20+ brands</p>
-          <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
-            {logos.map(logo => (
-              <img
-                key={logo.alt}
-                src={logo.src}
-                alt={logo.alt}
-                className={`${logo.cls} w-auto`}
-                loading="lazy"
-                decoding="async"
-                style={{ transition: 'transform 0.3s, filter 0.3s' }}
-                onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.filter = 'brightness(1.2)' }}
-                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.filter = 'brightness(1)' }}
-              />
-            ))}
+          <div
+            className="relative overflow-hidden"
+            style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
+          >
+            <div className="flex gap-16 items-center w-max py-2" style={{ animation: 'logo-scroll 20s linear infinite' }}>
+              {[...logos, ...logos].map((logo, i) => (
+                <img
+                  key={i}
+                  src={logo.src}
+                  alt={logo.alt}
+                  className={`${logo.cls} w-auto`}
+                  loading="lazy"
+                  decoding="async"
+                  style={{ transition: 'transform 0.3s, filter 0.3s' }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.filter = 'brightness(1.2)' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.filter = 'brightness(1)' }}
+                />
+              ))}
+            </div>
           </div>
         </div>
 

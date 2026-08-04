@@ -10,11 +10,15 @@ const quickLinks = [
 ]
 
 const serviceLinks = [
+  'SEO',
   'Social Media Marketing',
-  'SEO Services',
-  'Paid Advertising',
-  'Branding & Design',
-  'Content Marketing',
+  'ORM',
+  'Digital Marketing',
+  'Web Development',
+  'App Development',
+  'AI Automation',
+  'Graphic Design',
+  'Video Editing & Animation',
 ]
 
 const socials = [

@@ -17,27 +17,27 @@ const serviceColors = [
 ]
 
 const iconSvgs: { [key: string]: string } = {
-  'seo': '<circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>',
-  'social-media-marketing': '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
-  'orm': '<path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/><path d="M12 6v6l4 2"/>',
-  'digital-marketing': '<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/>',
-  'web-development': '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="2" y1="17" x2="22" y2="17"/>',
-  'app-development': '<rect x="2" y="5" width="8" height="12" rx="1" ry="1"/><path d="M13 5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2z"/>',
-  'ai-automation': '<circle cx="12" cy="12" r="1"/><path d="M8 12a4 4 0 1 0 8 0 4 4 0 0 0-8 0"/><path d="M12 2v4m0 8v4M2 12h4m8 0h4"/>',
-  'graphic-design': '<path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>',
-  'video-production': '<polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>',
+  'seo': '<path d="M11 5a6 6 0 1 0 0 12 6 6 0 0 0 0-12zM21 21l-4.35-4.35M3 3l18 18"/><circle cx="11" cy="11" r="5"/>',
+  'social-media-marketing': '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14 7a3 3 0 0 1 3 3"/>',
+  'orm': '<path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><path d="M7 12h10M9 9h6M9 15h6"/>',
+  'digital-marketing': '<path d="M3 12c0-1.657.895-3.1 2.228-3.887M21 12c0 1.657-.895 3.1-2.228 3.887M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l3 2"/>',
+  'web-development': '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="15" x2="15" y2="15"/><line x1="3" y1="9" x2="3" y2="9.01"/><circle cx="19" cy="9" r="1"/>',
+  'app-development': '<rect x="6" y="2" width="12" height="20" rx="2" ry="2"/><path d="M12 18h.01M12 5h0M8 5h8"/><line x1="12" y1="21" x2="12" y2="21.01"/>',
+  'ai-automation': '<circle cx="12" cy="12" r="9"/><path d="M12 6v6m3-3H9M5.64 5.64l3.54 3.54M18.36 5.64l-3.54 3.54M5.64 18.36l3.54-3.54M18.36 18.36l-3.54-3.54"/>',
+  'graphic-design': '<circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="3"/><path d="M11 8v1M11 14v1M8 11h1M14 11h1"/>',
+  'video-production': '<path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/><path d="M4 8l3 3-3 3M12 8l-3 3 3 3"/>',
 }
 
 const accentSvgs: { [key: string]: string } = {
-  'seo': '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>',
-  'social-media-marketing': '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
-  'orm': '<circle cx="12" cy="12" r="10"/>',
-  'digital-marketing': '<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>',
-  'web-development': '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="15" x2="15" y2="15"/>',
-  'app-development': '<rect x="7" y="2" width="10" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18.01"/>',
-  'ai-automation': '<circle cx="12" cy="12" r="9"/><path d="M12 6v6m3-3H9"/>',
-  'graphic-design': '<circle cx="12" cy="12" r="1"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0 1 18 0z"/>',
-  'video-production': '<path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>',
+  'seo': '<path d="M13 2l-1 6h7v6h-7l1 8M3 9h3M8 6l-2 2M20 15l2 2"/>',
+  'social-media-marketing': '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M9 10h6M9 14h4"/>',
+  'orm': '<path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9 12l2 2 4-4"/>',
+  'digital-marketing': '<path d="M22 12l-4-4-4 4-4-4-4 4M6 12v8h12v-8"/><circle cx="12" cy="8" r="2"/>',
+  'web-development': '<path d="M3 9l3 3-3 3M21 9l-3 3 3 3M8 21h8M12 3v18"/>',
+  'app-development': '<path d="M17 9V7a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2M7 13v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4M9 17h6"/>',
+  'ai-automation': '<circle cx="12" cy="12" r="1"/><path d="M4.22 4.22l2.12 2.12M19.78 4.22l-2.12 2.12M4.22 19.78l2.12-2.12M19.78 19.78l-2.12-2.12M12 2v2M12 20v2M2 12h2M20 12h2"/>',
+  'graphic-design': '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12l2-2 2 2 2-2 2 2"/>',
+  'video-production': '<path d="M5 3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5z"/><path d="M10 9l4 2.5-4 2.5V9z"/>',
 }
 
 export function ServicesBento() {
