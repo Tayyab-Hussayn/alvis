@@ -34,3 +34,4 @@ AGENTS
 state.json
 alvis-deploy.zip
 specs/
+__pycache__/

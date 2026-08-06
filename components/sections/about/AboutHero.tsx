@@ -67,7 +67,7 @@ export function AboutHero() {
             </Link>
           </div>
 
-          <p className="text-[13px] font-bold mb-5" style={{ color: '#271717' }}>Trusted by 20+ brands</p>
+          <p className="text-[13px] font-bold mb-5" style={{ color: '#271717' }}>Trusted by leading brands</p>
           <div
             className="relative overflow-hidden"
             style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}

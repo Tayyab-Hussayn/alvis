@@ -1,8 +1,10 @@
 import type { MetadataRoute } from 'next'
+import { absoluteUrl, siteUrl } from '@/lib/site'
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: '*', allow: '/', disallow: ['/api/'] },
-    sitemap: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alvis.agency'}/sitemap.xml`,
+    sitemap: absoluteUrl('/sitemap.xml'),
+    host: siteUrl,
   }
 }

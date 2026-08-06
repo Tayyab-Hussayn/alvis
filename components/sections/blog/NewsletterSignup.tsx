@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import { useScrollReveal } from '@/components/animations/useScrollReveal'
+import { useNewsletterSubscribe } from '@/components/hooks/useNewsletterSubscribe'
 
 /* 3D-style open envelope with @ badge */
 function EnvelopeArt() {
@@ -30,23 +30,9 @@ function EnvelopeArt() {
 }
 
 export function NewsletterSignup() {
-  const [email, setEmail] = useState('')
-  const [done, setDone] = useState(false)
   const cardRef = useScrollReveal<HTMLDivElement>()
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    try {
-      await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'newsletter', email }),
-      })
-    } catch {
-      /* non-blocking — still show confirmation */
-    }
-    setDone(true)
-  }
+  const { email, setEmail, state, error, subscribe } = useNewsletterSubscribe('blog-cta')
+  const done = state === 'done'
 
   return (
     <section id="newsletter" className="px-5 md:px-8 pb-24" style={{ background: '#fff8f7' }}>
@@ -79,7 +65,7 @@ export function NewsletterSignup() {
                 You&apos;re subscribed. Watch your inbox.
               </p>
             ) : (
-              <form onSubmit={submit} className="flex flex-col gap-3 items-center md:items-stretch">
+              <form onSubmit={subscribe} noValidate className="flex flex-col gap-3 items-center md:items-stretch">
                 <label htmlFor="newsletter-email" className="sr-only">Email address</label>
                 <input
                   id="newsletter-email"
@@ -93,14 +79,18 @@ export function NewsletterSignup() {
                 />
                 <button
                   type="submit"
-                  className="flex items-center justify-center gap-2 rounded-full text-white text-[13px] font-bold px-7 py-3.5 transition-transform hover:scale-[1.02]"
+                  disabled={state === 'sending'}
+                  className="flex items-center justify-center gap-2 rounded-full text-white text-[13px] font-bold px-7 py-3.5 transition-transform hover:scale-[1.02] disabled:opacity-60"
                   style={{ background: '#e63946' }}
                 >
-                  Subscribe Now
+                  {state === 'sending' ? 'Subscribing…' : 'Subscribe Now'}
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14m-7-7 7 7-7 7" />
                   </svg>
                 </button>
+                {state === 'error' && (
+                  <p className="text-[12px] text-center" style={{ color: '#ffb3b8' }} role="alert">{error}</p>
+                )}
               </form>
             )}
           </div>

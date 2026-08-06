@@ -1,17 +1,18 @@
 'use client'
 
 import { useScrollReveal, useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+import { companyStats } from '@/lib/site'
 
 const stats = [
   {
-    value: '120+',
+    value: companyStats.projectsCompleted,
     label: 'Projects Completed',
     chip: '#fde8ea',
     color: '#e63946',
     icon: <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4" />,
   },
   {
-    value: '95%',
+    value: companyStats.clientSatisfaction,
     label: 'Client Satisfaction',
     chip: '#fdf0dd',
     color: '#f59e0b',
@@ -23,7 +24,7 @@ const stats = [
     ),
   },
   {
-    value: '10+',
+    value: companyStats.yearsExperience,
     label: 'Years of Experience',
     chip: '#e8f1fd',
     color: '#3b82f6',
@@ -35,7 +36,7 @@ const stats = [
     ),
   },
   {
-    value: '30+',
+    value: companyStats.teamExperts,
     label: 'Experts in Team',
     chip: '#eee9fd',
     color: '#8b5cf6',

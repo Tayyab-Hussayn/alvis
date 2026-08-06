@@ -12,11 +12,157 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'what-to-automate-first',
+    title: 'What to Automate First (And What to Leave Alone)',
+    excerpt:
+      "Most automation projects fail because they start with the wrong task. Here's the filter we use to decide what's worth automating and what should stay human.",
+    category: 'AI Automation',
+    author: 'Alvis Team',
+    date: '2026-07-22',
+    readTime: '7 min',
+    coverImage: '/images/blog/post-7.png',
+    content: `Every business that comes to us about automation asks the same question in the first meeting: what should we automate? Usually they already have an answer in mind, and usually it's the wrong one.
+
+The instinct is to automate whatever annoys you most. That's rarely the thing that pays back fastest.
+
+## Start With Frequency, Not Frustration
+
+A task that takes two hours and happens once a quarter costs you eight hours a year. A task that takes four minutes and happens forty times a day costs you more than 600 hours a year. The four-minute task feels trivial. It isn't.
+
+Before you automate anything, count. How often does this happen, and how long does it take? That number tells you where to start, not your irritation level.
+
+We ask clients to track this for two weeks before we build anything. It almost always changes what we build.
+
+## The Three Filters
+
+A task is worth automating when it passes all three:
+
+- **It's repetitive.** The steps are the same every time. If the process changes depending on who's asking, automation will break on the exceptions.
+- **It's rule-based.** You can write the decision logic down. "If the invoice is over $5,000, route to finance" works. "Use your judgment on whether this client is a good fit" doesn't.
+- **The input is structured.** Data arriving in a consistent format is automatable. Data arriving as free text in a WhatsApp message is a much harder problem, though no longer an impossible one.
+
+Fail one of these and you'll spend more time maintaining the automation than you ever saved building it.
+
+## What Usually Pays Back First
+
+In our experience the fastest wins are boring ones:
+
+- Lead routing and first response. Someone fills in a form at 11pm and waits until morning. An automated acknowledgment plus routing to the right person cuts that to seconds, and response time is one of the strongest predictors of whether a lead converts at all.
+- Appointment reminders and rescheduling. No-shows cost real money, and the fix is a well-timed message rather than anything clever.
+- Moving data between systems. If someone is copying information from one tool into another, that's an integration waiting to happen.
+- Report assembly. Pulling numbers from four dashboards into one summary every Monday is a job nobody enjoys and software does perfectly.
+
+None of these are exciting. All of them return hours within the first month.
+
+## What to Leave Alone
+
+Some things should stay human, at least for now.
+
+Anything where being wrong is expensive and hard to reverse. Pricing calls, contract terms, hiring decisions. Automate the paperwork around them. Don't automate the judgment inside them.
+
+Anything that is the relationship. A customer with a problem wants a person. Automating the apology is how a small complaint becomes a public one.
+
+Anything you don't already understand. Automating a broken process just gives you a broken process that runs faster. Fix it on paper first. If you can't explain it clearly to a new hire, you can't explain it to software either.
+
+## Build Small, Then Widen
+
+The most common mistake we see is scope. A company decides to automate its entire sales pipeline, spends four months on it, and ships nothing.
+
+Pick one step. Ship it. Let it run for two weeks. See what breaks, because something will. Then take the next step.
+
+That isn't caution for its own sake. Every automation makes assumptions about how work actually flows, and those assumptions are always slightly wrong the first time. Small pieces let you find that out cheaply.
+
+## Measure the Thing You Meant to Fix
+
+Before you build, write down the number you expect to move. Hours saved per week. Response time. Error rate. Cost per ticket.
+
+Check it 30 days later. If the number hasn't moved, the automation isn't working, however impressive the workflow diagram looks.
+
+We've switched off automations we built ourselves because the measurement said they weren't earning their keep. That's a good outcome. The bad one is running something for two years that nobody ever checks.
+
+## Where to Start This Week
+
+Pick the task your team complains about that also happens daily. Track how long it takes for five days. Write the decision rules on a single page.
+
+If the rules fit on that page, it's automatable. If they don't, you've learned something more useful: the process needs work before any software can help it.`,
+  },
+  {
+    slug: 'responding-to-negative-reviews',
+    title: 'How to Respond to a Bad Review Without Making It Worse',
+    excerpt:
+      'Most of the damage from a bad review comes from the reply, not the review. Here is how to answer one in a way that wins back the customer and everyone reading over their shoulder.',
+    category: 'Online Reputation Management',
+    author: 'Alvis Team',
+    date: '2026-06-18',
+    readTime: '6 min',
+    coverImage: '/images/blog/post-8.png',
+    content: `Nobody gets only good reviews forever. Eventually the one-star arrives, and how you answer it matters more than the review itself.
+
+Here's the part most owners miss. You aren't really writing to the angry customer. You're writing to the next fifty people who read that thread while deciding whether to buy from you.
+
+## Wait Before You Type
+
+The first draft you write within ten minutes of reading a bad review should never be posted. Write it if it helps. Then delete it.
+
+Anger reads as anger, even dressed up in polite language. Reviewers can tell. So can everyone else.
+
+Give it a few hours. A day if it really stung. The reply will be better and the delay costs you almost nothing.
+
+## Answer the Reader, Not Just the Reviewer
+
+A future customer scanning your reviews is running one test: if something goes wrong for me, will this business handle it well?
+
+Every reply is evidence one way or the other. A defensive reply answers no. A reply that takes the problem seriously answers yes, and that's worth more than the star rating.
+
+This is why arguing costs so much. You might be completely right about what happened. You still lose, because winning an argument with a customer in public makes you look like a business that argues with customers in public.
+
+## The Structure That Works
+
+Most effective replies do four things, in this order:
+
+- **Thank them, briefly.** One line, not effusive.
+- **Name the specific problem.** "You waited 40 minutes for a table you had booked" shows you read the review. "We're sorry you had a negative experience" shows you didn't.
+- **Explain without excusing.** If there's context, give it plainly and without blaming the customer. If you were simply wrong, say so and stop.
+- **Move it offline.** Offer a direct email or phone number and a name, not a generic support address.
+
+Keep the whole thing under 100 words. Long replies read as defensive whatever they actually say.
+
+## Things That Reliably Backfire
+
+- Pasting the same reply under every review. People scroll. They notice.
+- Disputing the facts point by point. Even when you're right, it reads badly.
+- Mentioning that the reviewer was rude to your staff. It may be true and relevant. It still makes readers uncomfortable.
+- Offering compensation in public. You'll start getting reviews written specifically to collect it.
+- Opening with a request to take the review down. Fix the problem first. A fair number of people remove it themselves.
+
+## Fix the Pattern, Not Just the Review
+
+One review about a slow kitchen is a bad night. Six in three months is a kitchen problem, and no amount of good writing will fix it.
+
+Sort your negative reviews by theme every quarter. Whatever comes up most is your real operational issue. Reputation work that stops at replying is decoration over something still broken underneath.
+
+## Outweigh It With Volume
+
+The most reliable defence against a bad review is a steady supply of recent good ones.
+
+Most happy customers never think to write anything. They will if you ask at the right moment with a link that takes two taps. A business collecting eight reviews a month barely feels a bad one. A business with eleven reviews in total feels it for a year.
+
+Ask right after the moment the customer is happiest, not in a monthly newsletter.
+
+## When to Let It Go
+
+Some reviews aren't worth answering. Obvious competitors. People who've confused you with another business. Anyone whose review is abusive rather than critical.
+
+Report those to the platform and move on. You won't win, and trying in public only makes it worse.
+
+For everything else: reply, keep it short, take it offline, and fix whatever caused it.`,
+  },
+  {
     slug: 'why-your-website-is-losing-leads',
     title: 'Why Your Website Is Losing Leads (And What to Fix First)',
     excerpt:
       'Most websites are built to look good. Very few are built to convert. Here are the structural reasons your site is bleeding leads — and the fixes that actually matter.',
-    category: 'Web Dev',
+    category: 'Web Development',
     author: 'Alvis Team',
     date: '2025-07-15',
     readTime: '6 min',
@@ -77,7 +223,7 @@ Each of these is a lever that compounds. A faster site with a clearer headline a
   },
   {
     slug: 'seo-strategy-that-works-in-2025',
-    title: 'The SEO Strategy That Actually Works in 2025',
+    title: 'The SEO Strategy That Actually Works',
     excerpt:
       "After Google's AI overviews and multiple core updates, the old playbook is dead. Here's what the data actually shows is moving rankings right now.",
     category: 'SEO',
@@ -85,7 +231,7 @@ Each of these is a lever that compounds. A faster site with a clearer headline a
     date: '2025-06-28',
     readTime: '8 min',
     coverImage: '/images/blog/post-1.png',
-    content: `The agencies still selling "keyword density" and "500 backlinks a month" are selling you a strategy from 2015. Google's algorithm in 2025 is fundamentally different, and the gap between what works and what's outdated has never been wider.
+    content: `The agencies still selling "keyword density" and "500 backlinks a month" are selling you a strategy from 2015. Google's algorithm today is fundamentally different, and the gap between what works and what's outdated has never been wider.
 
 ## What Changed
 
@@ -131,7 +277,7 @@ Stop optimizing for keywords before topics. Topics first, keywords second. Alway
 
 ## The Practical Playbook
 
-If you're starting or restarting an SEO effort in 2025, do it in this order:
+If you're starting or restarting an SEO effort, do it in this order:
 
 1. Fix all technical issues first (crawl errors, Core Web Vitals, site architecture)
 2. Choose 3 core topics your business genuinely has authority on
@@ -147,7 +293,7 @@ SEO is still one of the highest-ROI channels available. But only if you're doing
     title: 'What a Strong Brand Identity Actually Does for Your Revenue',
     excerpt:
       "Everyone knows branding matters. Almost nobody knows why it moves numbers. Here's the direct line from visual identity to revenue that most businesses miss.",
-    category: 'Branding',
+    category: 'Graphic Design',
     author: 'Alvis Team',
     date: '2025-06-10',
     readTime: '5 min',
@@ -203,7 +349,7 @@ The question is not whether brand matters. It does. The question is when the inv
     title: 'Google Ads vs Meta Ads: Which One Is Right for Your Business?',
     excerpt:
       "The honest answer isn't 'both.' Here's how to actually decide between search and social advertising based on your business model, margins, and sales cycle.",
-    category: 'Marketing',
+    category: 'Digital Marketing',
     author: 'Alvis Team',
     date: '2025-05-20',
     readTime: '7 min',
@@ -265,7 +411,7 @@ The right channel is the one that matches how your customer buys, not the one yo
     title: 'How to Build a Content Strategy That Generates Real Traffic',
     excerpt:
       "Most content strategies fail because they optimize for publishing volume, not topical authority. Here's the framework that actually compounds over time.",
-    category: 'Marketing',
+    category: 'SEO',
     author: 'Alvis Team',
     date: '2025-04-30',
     readTime: '7 min',
@@ -331,21 +477,21 @@ Traffic that doesn't convert to something — a lead, a subscriber, a follow —
   },
   {
     slug: 'signs-your-business-needs-it-consulting',
-    title: '5 Signs Your Business Needs IT Consulting (Not Just a Developer)',
+    title: '5 Signs Your Business Needs a Technology Partner (Not Just a Developer)',
     excerpt:
       "Hiring a developer to fix a technology strategy problem is like hiring a plumber to fix a flood caused by bad building architecture. Here's how to tell the difference.",
-    category: 'IT',
+    category: 'Web Development',
     author: 'Alvis Team',
     date: '2025-04-05',
     readTime: '6 min',
     coverImage: '/images/blog/post-5.png',
-    content: `Most businesses know when they need a developer: something is broken, needs building, or needs maintaining. IT consulting is different. It's not about building things — it's about making sure you're building the right things, in the right order, on the right foundation. And most businesses wait far too long to bring it in.
+    content: `Most businesses know when they need a developer: something is broken, needs building, or needs maintaining. Technology strategy is a different job. It exists to make sure you're building the right things, in the right order, on the right foundation. And most businesses wait far too long to bring it in.
 
-## The Difference Between a Developer and an IT Consultant
+## The Difference Between a Developer and a Technology Partner
 
 A developer executes. They take a specification and build it. A great developer is invaluable — but they're optimized for delivery, not strategy.
 
-An IT consultant asks the uncomfortable questions before the delivery starts: Should you build this at all? Is there an existing tool that does this for $200/month? Is the architecture you're proposing going to scale, or will you need to rebuild it in 18 months? Is this vendor the right long-term partner, or are you about to lock yourself into a contract you'll regret?
+A technology partner asks the uncomfortable questions before the delivery starts: Should you build this at all? Is there an existing tool that does this for $200/month? Is the architecture you're proposing going to scale, or will you need to rebuild it in 18 months? Is this vendor the right long-term partner, or are you about to lock yourself into a contract you'll regret?
 
 The cost of wrong technology decisions compounds. A poorly chosen CRM at 20 employees is an inconvenience. At 200 employees, it's a crisis.
 
@@ -359,11 +505,11 @@ If your team is spending significant time managing workarounds, syncing data man
 
 A CRM. An ERP. A cloud migration. A new payment infrastructure. These are decisions with 3–5 year consequences and significant switching costs. Making them without independent technical advice is a risk that most companies underestimate.
 
-The vendor's sales team will tell you their product is the right fit. An IT consultant will tell you the truth — including whether this purchase is necessary at all.
+The vendor's sales team will tell you their product is the right fit. A technology partner will tell you the truth, including whether the purchase is necessary at all.
 
 ## Sign 3: You've Had a Security Incident (or Nearly Had One)
 
-A data breach, a ransomware attack, an employee clicking a phishing link — these are symptoms of systemic security gaps, not one-off bad luck. A developer can patch the specific vulnerability. An IT consultant can assess the full exposure and build a framework that actually reduces risk.
+A data breach, a ransomware attack, an employee clicking a phishing link — these are symptoms of systemic security gaps, not one-off bad luck. A developer can patch the specific vulnerability. A technology partner can assess the full exposure and build a framework that actually reduces risk.
 
 If you're handling customer data, processing payments, or operating in a regulated industry, security strategy is not optional. It's a liability question.
 
@@ -379,9 +525,9 @@ A new product. A new market. A new line of business with its own technical requi
 
 Getting the architecture right at the start costs a fraction of refactoring it 12 months later. And the wrong technology choice at the foundation level affects everything built on top of it.
 
-## What Good IT Consulting Actually Looks Like
+## What Good Technology Guidance Actually Looks Like
 
-A good IT consultant starts by listening, not proposing. The first conversations should be about your business objectives, your team's capabilities, your growth trajectory, and your budget constraints — not about technology.
+A good technology partner starts by listening, not proposing. The first conversations should be about your business objectives, your team's capabilities, your growth trajectory, and your budget constraints — not about technology.
 
 Technology recommendations should follow from those constraints, not precede them. Any consultant who shows up with a preferred stack before understanding your business is selling, not advising.
 

@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer'
 import type { ContactFormData } from './validations'
+import { siteUrl, siteName, contactEmail } from './site'
 
 function escapeHtml(str: string): string {
   return str
@@ -20,9 +21,40 @@ const transporter = nodemailer.createTransport({
   },
 })
 
+/**
+ * Newsletter signup → agency inbox.
+ *
+ * Signups were previously only `console.log`-ed by the API route, which meant
+ * every subscriber was silently dropped on a server nobody reads. Forwarding to
+ * the contact inbox keeps them until a real ESP (Mailchimp/ConvertKit) is wired up.
+ */
+export async function sendNewsletterSignup(email: string, source = 'website'): Promise<void> {
+  await transporter.sendMail({
+    from:    `"Alvis Website" <${process.env.SMTP_USER}>`,
+    to:      process.env.CONTACT_EMAIL ?? contactEmail,
+    replyTo: email,
+    subject: `New newsletter subscriber — ${email}`,
+    html: `
+      <div style="font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; background: #f9f9f7;">
+        <div style="background: #0a1b3d; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+          <h1 style="color: white; font-size: 22px; margin: 0;">New Newsletter Subscriber</h1>
+        </div>
+        <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid #e5e5e3;">
+          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px;">Email</p>
+          <p style="margin: 0 0 20px;"><a href="mailto:${escapeHtml(email)}" style="color: #e63946; font-weight: 600;">${escapeHtml(email)}</a></p>
+          <p style="margin: 0 0 10px; color: #6b7280; font-size: 14px;">Signed up from</p>
+          <p style="margin: 0; color: #0d0d0d;">${escapeHtml(source)}</p>
+        </div>
+        <p style="color: #a1a1aa; font-size: 12px; text-align: center; margin-top: 24px;">
+          Sent from ${siteUrl}
+        </p>
+      </div>
+    `,
+  })
+}
+
 export async function sendContactEmail(data: ContactFormData): Promise<void> {
   const { name, email, phone, subject, message } = data
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alvis.agency'
 
   // Notification email → agency inbox
   await transporter.sendMail({
@@ -89,7 +121,7 @@ export async function sendContactEmail(data: ContactFormData): Promise<void> {
           </p>
         </div>
         <p style="color: #a1a1aa; font-size: 12px; text-align: center; margin-top: 24px;">
-          Alvis · hello@alvis.agency · ${siteUrl}
+          ${siteName} · <a href="mailto:${contactEmail}" style="color: #a1a1aa;">${contactEmail}</a> · ${siteUrl}
         </p>
       </div>
     `,

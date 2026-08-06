@@ -73,7 +73,7 @@ export function Hero() {
           {/* Logo scroll */}
           <div className="mt-16">
             <p className="mb-6 text-[12px] tracking-[0.1em] font-bold uppercase" style={{ color: '#8f6f6e' }}>
-              Trusted by 20+ brands
+              Trusted by leading brands
             </p>
             <div
               className="relative overflow-hidden"

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { contactSchema } from '@/lib/validations'
-import { sendContactEmail } from '@/lib/mail'
+import { sendContactEmail, sendNewsletterSignup } from '@/lib/mail'
+import { contactEmail } from '@/lib/site'
 
 // Simple in-memory rate limiter — sufficient for shared hosting traffic
 const rateLimit = new Map<string, { count: number; resetAt: number }>()
@@ -50,16 +51,26 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true }) // silently succeed
   }
 
-  // 4. Newsletter signup shortcut (no Zod, just store/forward email)
+  // 4. Newsletter signup shortcut (no Zod — single field)
   const bodyRecord = body as Record<string, unknown>
   if (bodyRecord.type === 'newsletter') {
     const email = bodyRecord.email
-    if (typeof email !== 'string' || !email.includes('@')) {
-      return NextResponse.json({ error: 'Invalid email.' }, { status: 422 })
+    if (typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 422 })
     }
-    // Log to console — integrate with Mailchimp/ConvertKit later
-    console.log('[Newsletter signup]', email)
-    return NextResponse.json({ success: true })
+
+    const source = typeof bodyRecord.source === 'string' ? bodyRecord.source : 'website'
+
+    try {
+      await sendNewsletterSignup(email.trim(), source)
+      return NextResponse.json({ success: true })
+    } catch (err) {
+      console.error('[Newsletter] Signup delivery failed:', email, err)
+      return NextResponse.json(
+        { error: 'Could not complete signup. Please try again shortly.' },
+        { status: 500 },
+      )
+    }
   }
 
   // 5. Validate contact form with Zod
@@ -78,7 +89,7 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     console.error('[Contact API] Email send failed:', err)
     return NextResponse.json(
-      { error: 'Failed to send message. Please email us directly at hello@alvis.agency.' },
+      { error: `Failed to send message. Please email us directly at ${contactEmail}.` },
       { status: 500 },
     )
   }

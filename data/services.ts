@@ -1,7 +1,6 @@
 export interface Service {
   slug: string
   title: string
-  icon: string
   shortDesc: string
   category: 'development' | 'marketing' | 'design' | 'it'
   longDescription: string
@@ -12,7 +11,6 @@ export const services: Service[] = [
   {
     slug: 'seo',
     title: 'SEO',
-    icon: 'TrendingUp',
     shortDesc: 'Rank higher on Google and drive qualified organic traffic that converts into customers',
     category: 'marketing',
     longDescription:
@@ -29,7 +27,6 @@ export const services: Service[] = [
   {
     slug: 'social-media-marketing',
     title: 'Social Media Marketing',
-    icon: 'Share2',
     shortDesc: 'Build engaged communities, create viral content, and convert followers into loyal customers',
     category: 'marketing',
     longDescription:
@@ -45,8 +42,7 @@ export const services: Service[] = [
   },
   {
     slug: 'orm',
-    title: 'ORM',
-    icon: 'Shield',
+    title: 'Online Reputation Management',
     shortDesc: 'Manage reviews, build trust, and protect your brand reputation across all platforms',
     category: 'marketing',
     longDescription:
@@ -63,7 +59,6 @@ export const services: Service[] = [
   {
     slug: 'digital-marketing',
     title: 'Digital Marketing',
-    icon: 'Target',
     shortDesc: 'Strategic campaigns combining paid ads, email, and analytics for measurable ROI',
     category: 'marketing',
     longDescription:
@@ -80,7 +75,6 @@ export const services: Service[] = [
   {
     slug: 'web-development',
     title: 'Web Development',
-    icon: 'Monitor',
     shortDesc: 'Fast, responsive websites and landing pages built to convert visitors into customers',
     category: 'development',
     longDescription:
@@ -97,7 +91,6 @@ export const services: Service[] = [
   {
     slug: 'app-development',
     title: 'App Development',
-    icon: 'Smartphone',
     shortDesc: 'Native iOS and Android apps that users love, optimized for engagement and growth',
     category: 'development',
     longDescription:
@@ -114,7 +107,6 @@ export const services: Service[] = [
   {
     slug: 'ai-automation',
     title: 'AI Automation',
-    icon: 'Zap',
     shortDesc: 'Intelligent chatbots and automation that handle customer service 24/7 at scale',
     category: 'development',
     longDescription:
@@ -131,7 +123,6 @@ export const services: Service[] = [
   {
     slug: 'graphic-design',
     title: 'Graphic Design',
-    icon: 'Palette',
     shortDesc: 'Stunning visual content from logos to social graphics that leave lasting impressions',
     category: 'design',
     longDescription:
@@ -148,7 +139,6 @@ export const services: Service[] = [
   {
     slug: 'video-production',
     title: 'Video Editing & Animation',
-    icon: 'Video',
     shortDesc: 'Professional videos and animations that captivate, engage, and drive results',
     category: 'design',
     longDescription:

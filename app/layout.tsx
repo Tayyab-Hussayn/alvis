@@ -7,27 +7,32 @@ import { GSAPProvider }   from '@/components/animations/GSAPProvider'
 import { PageTransition } from '@/components/animations/PageTransition'
 import { Preloader }      from '@/components/ui/Preloader'
 import { ImageProtection } from '@/components/ImageProtection'
+import {
+  siteUrl, siteName, contactEmail, contactPhone, address, socialLinks,
+} from '@/lib/site'
+import { services } from '@/data/services'
 import '@/styles/globals.css'
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://alvis.agency'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default:  'Alvis | Digital Marketing & IT Services Agency',
+    default:  'Alvis | Digital Marketing & Technology Agency',
     template: '%s | Alvis',
   },
   description:
-    'Alvis is a full-service digital marketing and IT agency. Web design, SEO, PPC, branding, social media, and IT consulting for ambitious businesses.',
+    'Alvis is a full-service digital marketing and technology agency. SEO, social media, reputation management, web and app development, AI automation, design and video for growing businesses.',
   keywords: [
     'digital marketing agency',
-    'IT services',
-    'web design',
-    'SEO',
-    'branding',
+    'SEO agency',
     'social media marketing',
+    'online reputation management',
+    'web development',
+    'app development',
+    'AI automation',
+    'graphic design',
+    'video editing and animation',
     'Google Ads',
-    'UI UX design',
+    'digital marketing agency New Jersey',
   ],
   authors:  [{ name: 'Alvis Agency' }],
   creator:  'Alvis',
@@ -44,42 +49,68 @@ export const metadata: Metadata = {
     locale:      'en_US',
     url:         siteUrl,
     siteName:    'Alvis',
-    title:       'Alvis | Digital Marketing & IT Services Agency',
+    title:       'Alvis | Digital Marketing & Technology Agency',
     description: 'Strategy, design, and technology for ambitious businesses.',
     images: [{
-      url:    '/images/alvisLogo.jpg',
-      width:  1024,
-      height: 1024,
+      url:    '/images/og-image.png',
+      width:  1200,
+      height: 630,
       alt:    'Alvis Marketing Agency',
     }],
   },
   twitter: {
-    card:        'summary',
-    title:       'Alvis | Digital Marketing & IT Services Agency',
+    card:        'summary_large_image',
+    title:       'Alvis | Digital Marketing & Technology Agency',
     description: 'Strategy, design, and technology for ambitious businesses.',
-    images:      ['/images/alvisLogo.jpg'],
+    images:      ['/images/og-image.png'],
   },
   icons: {
     icon: [{ url: '/logo.svg', type: 'image/svg+xml' }],
   },
 }
 
+/**
+ * ProfessionalService extends LocalBusiness, so this carries the NAP (name,
+ * address, phone) that Google needs to associate the site with a real US
+ * business. The previous Organization node had no address or phone at all.
+ */
 const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type':    'Organization',
-  name:        'Alvis',
+  '@type':    'ProfessionalService',
+  '@id':      `${siteUrl}/#organization`,
+  name:        siteName,
+  alternateName: 'Alvis',
   url:         siteUrl,
   logo:        `${siteUrl}/images/alvisLogo.jpg`,
-  description: 'Full-service digital marketing and IT agency specializing in growth strategies, branding, and technology solutions.',
-  email:       'hello@alvis.agency',
-  sameAs: [
-    'https://www.facebook.com/share/1Bwx3RM7pc/',
-    'https://www.instagram.com/alvisdigital?igsh=MWVhbWY4dXd6Y2Z5OA==',
-    'https://www.linkedin.com/company/alvis-marketing-agency',
+  image:       `${siteUrl}/images/alvisLogo.jpg`,
+  description: 'Full-service digital marketing and technology agency specializing in SEO, social media, reputation management, web and app development, AI automation and creative production.',
+  email:       contactEmail,
+  telephone:   contactPhone,
+  priceRange:  '$$',
+  address: {
+    '@type':          'PostalAddress',
+    addressLocality:  address.locality,
+    addressRegion:    address.region,
+    postalCode:       address.postalCode,
+    addressCountry:   address.countryCode,
+  },
+  areaServed: [
+    { '@type': 'Country', name: 'United States' },
+    { '@type': 'Country', name: 'Canada' },
   ],
-  offers: {
-    '@type':   'AggregateOffer',
-    category:  'Digital Marketing & IT Services',
+  sameAs: [socialLinks.facebook, socialLinks.instagram, socialLinks.linkedin],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name:    'Digital Marketing & Technology Services',
+    itemListElement: services.map(s => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type':      'Service',
+        name:         s.title,
+        description:  s.shortDesc,
+        url:          `${siteUrl}/services`,
+      },
+    })),
   },
 }
 

@@ -11,7 +11,7 @@ export default function PrivacyPage() {
     <LegalPage
       label="Legal"
       title="Privacy Policy"
-      updated="1 January 2024"
+      updated="6 August 2026"
       intro="This policy explains what information Alvis Marketing Agency collects when you use our website or work with us, why we collect it, and what control you have over it."
       sections={[
         {

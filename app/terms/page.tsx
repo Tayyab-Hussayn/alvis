@@ -11,7 +11,7 @@ export default function TermsPage() {
     <LegalPage
       label="Legal"
       title="Terms & Conditions"
-      updated="1 January 2024"
+      updated="6 August 2026"
       intro="These terms apply when you browse this website or engage Alvis Marketing Agency for work. By using the site you accept them."
       sections={[
         {

@@ -5,11 +5,15 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { contactSchema, type ContactFormData } from '@/lib/validations'
 import { useScrollRevealGroup } from '@/components/animations/useScrollReveal'
+import {
+  contactEmail, contactPhone, contactPhoneHref, addressLine, address, mapsUrl, socialLinks,
+} from '@/lib/site'
 
 const details = [
   {
     title: 'Email Us',
-    lines: ['info@alvismarketing.com'],
+    lines: [contactEmail],
+    href: `mailto:${contactEmail}`,
     icon: (
       <>
         <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -19,7 +23,8 @@ const details = [
   },
   {
     title: 'Call Us',
-    lines: ['(571) 207-8314'],
+    lines: [contactPhone],
+    href: `tel:${contactPhoneHref}`,
     icon: (
       <>
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
@@ -28,7 +33,9 @@ const details = [
   },
   {
     title: 'Visit Us',
-    lines: ['South Plainfield, NJ 07080', 'United States'],
+    lines: [addressLine, address.country],
+    href: mapsUrl,
+    external: true,
     icon: (
       <>
         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
@@ -39,9 +46,9 @@ const details = [
 ]
 
 const socials = [
-  { label: 'Facebook',  color: '#1877F2', path: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z', href: 'https://www.facebook.com/share/1Bwx3RM7pc/' },
-  { label: 'Instagram', color: '#E1306C', path: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zM17.8 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z', href: 'https://www.instagram.com/alvisdigital?igsh=MWVhbWY4dXd6Y2Z5OA==' },
-  { label: 'LinkedIn',  color: '#0A66C2', path: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z', href: 'https://www.linkedin.com/company/alvis-marketing-agency' },
+  { label: 'Facebook',  color: '#1877F2', path: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z', href: socialLinks.facebook },
+  { label: 'Instagram', color: '#E1306C', path: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9zM17.8 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z', href: socialLinks.instagram },
+  { label: 'LinkedIn',  color: '#0A66C2', path: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z', href: socialLinks.linkedin },
 ]
 
 const inputStyle: React.CSSProperties = {
@@ -122,9 +129,16 @@ export function ContactMain() {
                 </span>
                 <span>
                   <span className="block font-bold text-[14px] mb-1" style={{ color: '#0d0d0d' }}>{d.title}</span>
-                  {d.lines.map(l => (
-                    <span key={l} className="block text-[13px]" style={{ lineHeight: '1.5', color: '#5b403f' }}>{l}</span>
-                  ))}
+                  <a
+                    href={d.href}
+                    {...(d.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    className="transition-colors hover:text-[#e63946]"
+                    style={{ color: '#5b403f' }}
+                  >
+                    {d.lines.map(l => (
+                      <span key={l} className="block text-[13px]" style={{ lineHeight: '1.5' }}>{l}</span>
+                    ))}
+                  </a>
                 </span>
               </li>
             ))}
@@ -200,7 +214,8 @@ export function ContactMain() {
 
               {apiError && (
                 <p className="rounded-xl p-4 text-[13px]" style={{ background: '#fde8ea', color: '#b7102a' }}>
-                  Something went wrong. Please try again or email us at info@alvismarketing.com.
+                  Something went wrong. Please try again or email us at{' '}
+                  <a href={`mailto:${contactEmail}`} className="font-bold underline">{contactEmail}</a>.
                 </p>
               )}
 

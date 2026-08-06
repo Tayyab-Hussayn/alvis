@@ -22,7 +22,7 @@ export function TrustedBrands() {
     <section className="px-5 md:px-8 pb-20" style={{ background: '#fff8f7' }}>
       <div className="max-w-[1280px] mx-auto">
         <p ref={headerRef} className="text-center text-[12px] font-bold uppercase tracking-[0.1em] mb-12" style={{ color: '#e63946' }}>
-          Trusted by 20+ brands
+          Trusted by leading brands
         </p>
 
         {/* Horizontal scrolling logos */}

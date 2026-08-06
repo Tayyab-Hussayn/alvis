@@ -39,7 +39,11 @@ The `deploy.py` script automates the entire production workflow:
 - **Other page sections:** `components/sections/{about,blog,contact,case-studies,services}/`.
 - **UI primitives:** `components/ui/` — Button, Badge, Container, SectionLabel, CustomCursor, Preloader.
 - **Layout:** `components/layout/` — Header, Footer, MobileMenu. Footer is in root layout, not pages.
-- **Static data:** `data/` — blogPosts.ts, caseStudies.ts, services.ts, team.ts, testimonials.ts.
+- **Static data:** `data/` — blogPosts.ts, caseStudies.ts, services.ts, testimonials.ts.
+- **Site identity:** `lib/site.ts` is the single source of truth for the canonical URL,
+  contact email, phone, NAP, Google Maps link, social URLs **and company stats**.
+  Never hardcode any of these in a component. `siteUrl` strips a trailing slash from
+  `NEXT_PUBLIC_SITE_URL`; use `absoluteUrl('/path')` to build absolute links.
 - **Design tokens:** CSS vars in `styles/globals.css` `:root` (legacy blue) **plus** hardcoded
   red-theme hex registered directly in `tailwind.config.ts`. See Design system.
 - **Homepage section order** (`app/page.tsx`): Hero → ServicesBento → ProcessCascading →
@@ -48,6 +52,12 @@ The `deploy.py` script automates the entire production workflow:
   `BlogPreview.tsx` still exists but is **not** rendered on the homepage.
 - **Fonts:** loaded via `next/font/google` in `lib/fonts.ts`, injected as `--font-display/body/mono` vars.
 - **Contact API:** `app/api/contact/route.ts` (nodemailer). No other API routes.
+  Handles two payloads: the Zod-validated contact form, and `{ type: 'newsletter' }`
+  signups. Both send real mail via `lib/mail.ts` — newsletter signups used to be
+  `console.log`-ed and silently dropped.
+- **Newsletter forms** (footer, blog sidebar, blog CTA) all share
+  `components/hooks/useNewsletterSubscribe.ts`. Markup differs per placement, behaviour
+  does not. Two of the three previously had no submit handler at all.
 - **No global state.** All state is local React or URL params.
 
 ## Design system
