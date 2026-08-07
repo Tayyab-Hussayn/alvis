@@ -2,8 +2,19 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { RetellWebClient } from 'retell-client-js-sdk'
+import { Ringtone, playConnectChime } from '@/lib/ringtone'
 
-type Phase = 'idle' | 'connecting' | 'live' | 'ended' | 'error'
+type Phase = 'idle' | 'ringing' | 'connecting' | 'live' | 'ended' | 'error'
+
+/**
+ * Minimum time the ringback plays before we connect.
+ *
+ * The ring runs first and the agent connects after, rather than both at once.
+ * Retell speaks its greeting the moment it joins, so connecting during the ring
+ * would mean either talking over the ringtone or clipping the opening line.
+ * Ringing first gives a clean "ring → pickup → hello", exactly like a real call.
+ */
+const RING_MIN_MS = 3000
 
 interface Turn {
   role: string
@@ -124,6 +135,9 @@ export function VoiceAgent() {
   const clientRef = useRef<RetellWebClient | null>(null)
   const rafRef = useRef<number | null>(null)
   const logRef = useRef<HTMLDivElement>(null)
+  const ringRef = useRef<Ringtone | null>(null)
+  /** Flipped when the visitor cancels mid-ring, so the deferred connect aborts. */
+  const abortRef = useRef(false)
 
   useEffect(() => {
     try {
@@ -141,10 +155,19 @@ export function VoiceAgent() {
     setLevel(0)
   }, [])
 
+  const stopRing = useCallback(() => {
+    try { ringRef.current?.stop() } catch { /* noop */ }
+    ringRef.current = null
+  }, [])
+
   const endCall = useCallback(() => {
+    abortRef.current = true
+    stopRing()
     try { clientRef.current?.stopCall() } catch { /* already closed */ }
     stopMeter()
-  }, [stopMeter])
+    // A cancel during the ring never reaches call_ended, so settle the UI here.
+    setPhase(p => (p === 'ringing' ? 'ended' : p))
+  }, [stopMeter, stopRing])
 
   useEffect(() => () => { endCall() }, [endCall])
 
@@ -164,26 +187,51 @@ export function VoiceAgent() {
   const startCall = useCallback(async () => {
     setError('')
     setTurns([])
-    setPhase('connecting')
+    abortRef.current = false
+    setPhase('ringing')
+
+    // Ring immediately — this click is the user gesture that unlocks audio.
+    const ring = new Ringtone()
+    ringRef.current = ring
+    void ring.start()
+
+    const ringStartedAt = Date.now()
 
     try {
-      // Lazy: the SDK touches browser-only APIs and must not run during SSR.
-      const { RetellWebClient } = await import('retell-client-js-sdk')
+      // Both happen during the ring so the connect feels instant once it ends.
+      // The SDK is imported lazily: it touches browser-only APIs, so it must not
+      // run during SSR.
+      const [{ RetellWebClient }, res] = await Promise.all([
+        import('retell-client-js-sdk'),
+        fetch('/api/retell/web-call', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pagePath: window.location.pathname, referrer: document.referrer }),
+        }),
+      ])
 
-      const res = await fetch('/api/retell/web-call', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pagePath: window.location.pathname, referrer: document.referrer }),
-      })
+      if (abortRef.current) return
 
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
+        stopRing()
         setError(data.error ?? 'Could not start the call.')
         setPhase('error')
         return
       }
 
       const { accessToken } = await res.json()
+
+      // Hold the ring for its full minimum even when the token came back fast.
+      const elapsed = Date.now() - ringStartedAt
+      if (elapsed < RING_MIN_MS) {
+        await new Promise(r => setTimeout(r, RING_MIN_MS - elapsed))
+      }
+      if (abortRef.current) return
+
+      stopRing()
+      playConnectChime()
+      setPhase('connecting')
 
       const client = new RetellWebClient()
       clientRef.current = client
@@ -223,10 +271,11 @@ export function VoiceAgent() {
         try { client.stopCall() } catch { /* noop */ }
       })
 
-      // Token expires after 30s — start immediately.
+      // Well inside the token's 30s validity — the ring only consumes 3s.
       await client.startCall({ accessToken })
     } catch (err) {
       console.error('[VoiceAgent] start failed', err)
+      stopRing()
       setError(
         err instanceof DOMException && err.name === 'NotAllowedError'
           ? 'Microphone access was blocked. Allow it in your browser settings and try again.'
@@ -234,7 +283,7 @@ export function VoiceAgent() {
       )
       setPhase('error')
     }
-  }, [stopMeter])
+  }, [stopMeter, stopRing])
 
   const toggleMute = useCallback(() => {
     const c = clientRef.current
@@ -243,17 +292,20 @@ export function VoiceAgent() {
   }, [muted])
 
   const statusLabel =
-    phase === 'connecting' ? 'Connecting'
+    phase === 'ringing' ? 'Calling…'
+    : phase === 'connecting' ? 'Connecting'
     : phase === 'live' ? (speaking ? 'Speaking' : muted ? 'Muted' : 'Listening')
     : phase === 'ended' ? 'Call ended'
     : phase === 'error' ? 'Not connected'
     : 'Ready'
 
   const dotColor =
-    phase === 'live' ? '#34c759' : phase === 'connecting' ? '#ff9f0a'
+    phase === 'live' ? '#34c759'
+    : phase === 'connecting' || phase === 'ringing' ? '#ff9f0a'
     : phase === 'error' ? RED : 'rgba(60,60,67,0.3)'
 
   const lastTurns = turns.slice(-10)
+  const ringing = phase === 'ringing'
   const inCall = phase === 'connecting' || phase === 'live'
 
   return (
@@ -274,12 +326,20 @@ export function VoiceAgent() {
           )}
           <span
             className="relative flex items-center justify-center rounded-full shrink-0"
-            style={{ width: 30, height: 30, color: RED_DEEP }}
+            style={{
+              width: 34, height: 34,
+              background: `linear-gradient(150deg, ${RED}, ${RED_DEEP})`,
+              color: '#fff',
+              boxShadow: '0 4px 12px -3px rgba(230,57,70,0.55)',
+            }}
           >
-            <MicIcon size={21} strokeWidth={1.9} />
+            <MicIcon size={17} strokeWidth={2} />
           </span>
-          <span className="va-launcher-label overflow-hidden whitespace-nowrap text-[14px] font-semibold" style={{ color: LABEL, letterSpacing: '-0.01em' }}>
-            <span className="block pl-2.5 pr-1.5">Talk to us</span>
+          <span
+            className="whitespace-nowrap text-[14px] font-semibold pl-2.5 pr-2"
+            style={{ color: LABEL, letterSpacing: '-0.01em' }}
+          >
+            Talk to expert
           </span>
         </button>
       )}
@@ -337,7 +397,38 @@ export function VoiceAgent() {
 
           {/* body */}
           <div className="flex-1 flex flex-col min-h-0">
-            {!inCall && (
+            {/* ringing — the outbound call screen */}
+            {ringing && (
+              <div className="flex-1 flex flex-col items-center justify-center text-center px-7">
+                <div className="va-caller relative flex items-center justify-center">
+                  <span aria-hidden className="va-ring absolute rounded-full" style={{ width: 116, height: 116, border: '1.5px solid rgba(230,57,70,0.45)' }} />
+                  <span aria-hidden className="va-ring va-ring-delay absolute rounded-full" style={{ width: 116, height: 116, border: '1.5px solid rgba(230,57,70,0.45)' }} />
+                  <span className="va-caller-avatar relative flex items-center justify-center">
+                    <span className="font-display font-bold text-white" style={{ fontSize: 34, letterSpacing: '-0.02em' }}>A</span>
+                  </span>
+                </div>
+
+                <h3 className="font-display font-bold mt-6 mb-1.5" style={{ fontSize: '21px', letterSpacing: '-0.03em', color: LABEL }}>
+                  Ava
+                </h3>
+                <p className="text-[13.5px] mb-1" style={{ color: LABEL_2 }}>Alvis Marketing</p>
+                <p className="va-calling-text text-[13px] font-medium" style={{ color: RED_DEEP }}>
+                  Calling<span className="va-dots" />
+                </p>
+
+                <button
+                  type="button"
+                  onClick={endCall}
+                  aria-label="Cancel call"
+                  className="va-ctrl va-ctrl-end mt-8"
+                >
+                  <HangUpIcon size={21} />
+                </button>
+                <p className="text-[11px] mt-3" style={{ color: LABEL_3 }}>Cancel</p>
+              </div>
+            )}
+
+            {!inCall && !ringing && (
               <div className="flex-1 flex flex-col items-center justify-center text-center px-7 py-4">
                 <Orb level={0} speaking={false} phase={phase} />
 
@@ -355,8 +446,12 @@ export function VoiceAgent() {
                 )}
 
                 <button type="button" onClick={startCall} className="va-cta">
-                  <span>{phase === 'ended' || phase === 'error' ? 'Start again' : 'Start conversation'}</span>
-                  <span className="va-cta-chip"><MicIcon size={15} strokeWidth={2} /></span>
+                  <span>{phase === 'ended' || phase === 'error' ? 'Call again' : 'Start a call'}</span>
+                  <span className="va-cta-chip">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.2 2.2z" />
+                    </svg>
+                  </span>
                 </button>
 
                 <p className="text-[11px] mt-4" style={{ color: LABEL_3 }}>
