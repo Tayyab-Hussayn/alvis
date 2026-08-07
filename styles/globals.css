@@ -215,85 +215,250 @@ img {
   -webkit-touch-callout: none;
 }
 
-/* ── Voice assistant widget (components/ui/VoiceAgent.tsx) ─────── */
+/* ── Voice assistant widget (components/ui/VoiceAgent.tsx) ─────────────────
+   iOS-style light material: frosted translucent surfaces, hairline separators,
+   spring easing. Colour comes from the brand red only where it carries meaning
+   (the CTA, the agent orb, the end-call button). Everything else is system grey.  */
 
-/* Launcher: icon-only by default, label slides open on hover (pointer devices).
-   max-width is animated rather than width so the label can size to its content. */
+:root {
+  --va-spring: cubic-bezier(0.32, 0.72, 0, 1);          /* iOS sheet curve */
+  --va-sep: rgba(60, 60, 67, 0.14);                     /* iOS separator */
+  --va-fill: rgba(120, 120, 128, 0.12);                 /* iOS secondary fill */
+  --va-fill-strong: rgba(120, 120, 128, 0.2);
+}
+
+/* ---------------------------------------------------------------- launcher */
+.va-launcher {
+  right: clamp(16px, 4vw, 28px);
+  bottom: clamp(16px, 4vw, 28px);
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  backdrop-filter: blur(28px) saturate(180%);
+  border: 0.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 12px 32px -8px rgba(28, 20, 20, 0.22),
+    0 2px 8px rgba(28, 20, 20, 0.06);
+  transition: transform 0.34s var(--va-spring), box-shadow 0.34s var(--va-spring);
+}
+.va-launcher:hover  { transform: scale(1.045); box-shadow: 0 18px 44px -10px rgba(183, 16, 42, 0.32), 0 2px 8px rgba(28,20,20,0.06); }
+.va-launcher:active { transform: scale(0.96); }
+
 .va-launcher-label {
   max-width: 0;
   opacity: 0;
-  transition: max-width 0.34s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease;
+  transition: max-width 0.42s var(--va-spring), opacity 0.24s ease;
 }
 @media (hover: hover) and (pointer: fine) {
   .va-launcher:hover .va-launcher-label,
-  .va-launcher:focus-visible .va-launcher-label {
-    max-width: 130px;
-    opacity: 1;
-  }
+  .va-launcher:focus-visible .va-launcher-label { max-width: 130px; opacity: 1; }
 }
 
-/* Expanding attention / connecting rings */
-@keyframes va-ring {
-  0%   { transform: scale(1);    opacity: 0.55; }
-  70%  { transform: scale(1.85); opacity: 0; }
-  100% { transform: scale(1.85); opacity: 0; }
-}
-.va-ring {
-  animation: va-ring 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
-  pointer-events: none;
-}
-.va-ring-delay { animation-delay: 1.2s; }
-
-/* Idle orb breathing */
-@keyframes va-breathe {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.06); }
-}
-
-/* Live status dot */
-@keyframes va-blink {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0.35; }
-}
-
-/* Panel entrance */
+/* ------------------------------------------------------------------- panel */
 @keyframes va-panel-in {
-  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
   to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 .va-panel {
-  animation: va-panel-in 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   right: clamp(16px, 4vw, 28px);
   bottom: clamp(16px, 4vw, 28px);
-  width: 380px;
-  height: min(560px, calc(100vh - 56px));
-  border-radius: 24px;
+  width: 384px;
+  height: min(580px, calc(100vh - 56px));
+  border-radius: 30px;
+  background: rgba(252, 250, 250, 0.78);
+  -webkit-backdrop-filter: blur(44px) saturate(190%);
+  backdrop-filter: blur(44px) saturate(190%);
+  border: 0.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 32px 80px -20px rgba(28, 20, 20, 0.3),
+    0 8px 24px -8px rgba(28, 20, 20, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  animation: va-panel-in 0.42s var(--va-spring);
 }
 
-/* Mobile: full-width bottom sheet */
+/* Fallback for browsers without backdrop-filter — keep it readable, not translucent */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .va-panel    { background: #fdfbfb; }
+  .va-launcher { background: #ffffff; }
+}
+
+.va-grabber { display: none; }
+
+.va-header {
+  padding: 16px 16px 14px 16px;
+  border-bottom: 0.5px solid var(--va-sep);
+}
+
+.va-close {
+  width: 30px; height: 30px;
+  background: var(--va-fill);
+  color: rgba(60, 60, 67, 0.6);
+  transition: background 0.2s ease, transform 0.2s var(--va-spring);
+}
+.va-close:hover  { background: var(--va-fill-strong); }
+.va-close:active { transform: scale(0.9); }
+
+/* --------------------------------------------------------------------- orb */
+.va-orb-disc {
+  background: rgba(255, 255, 255, 0.6);
+  border: 0.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 12px 30px -10px rgba(183, 16, 42, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+/* Soft colour mesh drifting behind the frosted disc. */
+.va-blob {
+  position: absolute;
+  width: 78px; height: 78px;
+  border-radius: 50%;
+  filter: blur(17px);
+  opacity: 0.75;
+}
+.va-blob-a { background: #ff6b76; animation: va-drift-a 9s ease-in-out infinite; }
+.va-blob-b { background: #ffb3a7; animation: va-drift-b 11s ease-in-out infinite; }
+.va-blob-c { background: #f8d3d0; animation: va-drift-c 13s ease-in-out infinite; }
+
+@keyframes va-drift-a {
+  0%, 100% { transform: translate(-19px, -15px) scale(1); }
+  50%      { transform: translate(15px, 12px)   scale(1.16); }
+}
+@keyframes va-drift-b {
+  0%, 100% { transform: translate(17px, -12px) scale(1.1); }
+  50%      { transform: translate(-14px, 15px) scale(0.92); }
+}
+@keyframes va-drift-c {
+  0%, 100% { transform: translate(4px, 18px)   scale(0.95); }
+  50%      { transform: translate(-8px, -16px) scale(1.14); }
+}
+
+@keyframes va-ring {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  75%  { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+.va-ring { animation: va-ring 2.4s var(--va-spring) infinite; pointer-events: none; }
+.va-ring-delay { animation-delay: 1.2s; }
+
+@keyframes va-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.045); }
+}
+@keyframes va-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* --------------------------------------------------------------------- CTA */
+.va-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 7px 7px 7px 22px;
+  border-radius: 999px;
+  font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em;
+  color: #fff;
+  background: linear-gradient(135deg, #e63946, #b7102a);
+  box-shadow: 0 14px 30px -10px rgba(183, 16, 42, 0.6);
+  transition: transform 0.3s var(--va-spring), box-shadow 0.3s var(--va-spring);
+}
+.va-cta:hover  { transform: scale(1.035); box-shadow: 0 18px 38px -10px rgba(183, 16, 42, 0.7); }
+.va-cta:active { transform: scale(0.96); }
+.va-cta-chip {
+  display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.va-alert {
+  padding: 9px 14px;
+  border-radius: 14px;
+  background: rgba(230, 57, 70, 0.1);
+  color: #b7102a;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------- transcript bubbles */
+.va-log { scrollbar-width: thin; scrollbar-color: rgba(60,60,67,0.2) transparent; }
+.va-log::-webkit-scrollbar { width: 4px; }
+.va-log::-webkit-scrollbar-track { background: transparent; }
+.va-log::-webkit-scrollbar-thumb { background: rgba(60,60,67,0.2); border-radius: 999px; }
+
+.va-bubble {
+  display: inline-block;
+  max-width: 84%;
+  padding: 9px 14px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  border-radius: 20px;
+  animation: va-bubble-in 0.32s var(--va-spring);
+}
+@keyframes va-bubble-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+.va-bubble-agent {
+  background: rgba(120, 120, 128, 0.14);
+  color: #0b0b0f;
+  border-bottom-left-radius: 7px;
+}
+.va-bubble-user {
+  background: linear-gradient(135deg, #e63946, #b7102a);
+  color: #fff;
+  border-bottom-right-radius: 7px;
+}
+
+/* ---------------------------------------------------------------- controls */
+.va-controls {
+  display: flex; align-items: center; justify-content: center; gap: 22px;
+  padding: 16px;
+  border-top: 0.5px solid var(--va-sep);
+}
+.va-ctrl {
+  display: flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px;
+  border-radius: 999px;
+  background: var(--va-fill);
+  color: #0b0b0f;
+  transition: transform 0.26s var(--va-spring), background 0.2s ease;
+}
+.va-ctrl:hover:not(:disabled)  { background: var(--va-fill-strong); }
+.va-ctrl:active:not(:disabled) { transform: scale(0.9); }
+.va-ctrl:disabled { opacity: 0.4; }
+.va-ctrl-on { background: rgba(230, 57, 70, 0.14); color: #b7102a; }
+.va-ctrl-end {
+  background: linear-gradient(135deg, #ff4d5a, #b7102a);
+  color: #fff;
+  box-shadow: 0 10px 24px -8px rgba(183, 16, 42, 0.65);
+}
+.va-ctrl-end:hover { background: linear-gradient(135deg, #ff3a49, #a00d24); }
+
+/* ------------------------------------------------------- mobile bottom sheet */
 @media (max-width: 640px) {
   @keyframes va-panel-in {
     from { opacity: 0; transform: translateY(100%); }
     to   { opacity: 1; transform: translateY(0); }
   }
   .va-panel {
-    right: 0;
-    left: 0;
-    bottom: 0;
+    right: 0; left: 0; bottom: 0;
     width: 100%;
-    height: 82vh;
-    border-radius: 24px 24px 0 0;
+    height: 84vh;
+    border-radius: 26px 26px 0 0;
+    border-bottom: none;
   }
+  .va-grabber {
+    display: block;
+    width: 36px; height: 5px;
+    margin: 8px auto 0;
+    border-radius: 999px;
+    background: rgba(60, 60, 67, 0.22);
+    flex-shrink: 0;
+  }
+  .va-header { padding-top: 12px; }
 }
-
-/* Transcript scrollbar */
-.va-log { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.22) transparent; }
-.va-log::-webkit-scrollbar { width: 5px; }
-.va-log::-webkit-scrollbar-track { background: transparent; }
-.va-log::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.22); border-radius: 999px; }
 
 @media (prefers-reduced-motion: reduce) {
   .va-ring { animation: none; opacity: 0; }
-  .va-panel { animation: none; }
-  .va-launcher-label { transition: none; }
+  .va-panel, .va-bubble { animation: none; }
+  .va-blob { animation: none; }
+  .va-orb-disc { animation: none !important; }
+  .va-launcher, .va-launcher-label, .va-cta, .va-ctrl, .va-close { transition: none; }
 }

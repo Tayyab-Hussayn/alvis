@@ -12,14 +12,18 @@ interface Turn {
 
 const RED = '#e63946'
 const RED_DEEP = '#b7102a'
-const NAVY = '#0a1b3d'
+
+/* iOS label colours — kept as constants so the whole panel stays on one system. */
+const LABEL = '#0b0b0f'
+const LABEL_2 = 'rgba(60,60,67,0.62)'
+const LABEL_3 = 'rgba(60,60,67,0.36)'
 
 /* ------------------------------------------------------------------ icons */
 
-function MicIcon({ size = 20 }: { size?: number }) {
+function MicIcon({ size = 20, strokeWidth = 1.8 }: { size?: number; strokeWidth?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+      strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
       <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3" />
     </svg>
@@ -29,7 +33,7 @@ function MicIcon({ size = 20 }: { size?: number }) {
 function MicOffIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+      strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
       <path d="M2 2l20 20" />
       <path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V5a3 3 0 0 0-5.94-.6" />
       <path d="M19 10v2a7 7 0 0 1-.31 2.05M12 19v3M5 10v2a7 7 0 0 0 10.68 5.96" />
@@ -37,59 +41,69 @@ function MicOffIcon({ size = 20 }: { size?: number }) {
   )
 }
 
-function CloseIcon() {
+function HangUpIcon({ size = 22 }: { size?: number }) {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 9c-1.6 0-3.15.25-4.6.7v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85a.99.99 0 0 1-1.35-.02L.29 13.08a.99.99 0 0 1 0-1.4C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.68a.99.99 0 0 1 0 1.4l-2.54 2.45a.99.99 0 0 1-1.35.02 11.7 11.7 0 0 0-2.66-1.85.998.998 0 0 1-.56-.9V9.7C15.15 9.25 13.6 9 12 9z" />
+    </svg>
+  )
+}
+
+function CloseIcon({ size = 15 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth="2.6" strokeLinecap="round">
       <path d="M18 6 6 18M6 6l12 12" />
     </svg>
   )
 }
 
-/* --------------------------------------------------------- audio-reactive orb */
+/* ------------------------------------------------------------- Siri-style orb */
 
 /**
- * Scales with live mic/agent volume via the SDK's analyser. Falls back to a calm
- * idle pulse when there is no signal, so it never looks frozen.
+ * Layered blurred gradient blobs behind a frosted disc. Scales with live volume so
+ * the orb physically reacts to speech rather than looping a canned animation.
  */
 function Orb({ level, speaking, phase }: { level: number; speaking: boolean; phase: Phase }) {
-  const active = phase === 'live'
-  const scale = active ? 1 + Math.min(level, 1) * 0.42 : 1
+  const active = phase === 'live' || phase === 'connecting'
+  const v = Math.min(level, 1)
 
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 132, height: 132 }}>
-      {/* outer reactive halo */}
+    <div className="va-orb relative flex items-center justify-center" style={{ width: 150, height: 150 }}>
+      {/* ambient glow */}
       <span
         aria-hidden
-        className="absolute rounded-full transition-transform duration-100 ease-out"
+        className="absolute rounded-full transition-transform duration-150 ease-out"
         style={{
-          width: 132, height: 132,
-          background: `radial-gradient(circle, ${speaking ? 'rgba(230,57,70,0.42)' : 'rgba(255,255,255,0.18)'} 0%, transparent 68%)`,
-          transform: `scale(${scale})`,
+          width: 150, height: 150,
+          background: `radial-gradient(circle, rgba(230,57,70,${speaking ? 0.3 : 0.16}) 0%, rgba(230,57,70,0) 70%)`,
+          transform: `scale(${active ? 1 + v * 0.35 : 1})`,
         }}
       />
-      {/* breathing rings while connecting */}
+
+      {/* connecting pulse */}
       {phase === 'connecting' && (
         <>
-          <span aria-hidden className="va-ring absolute rounded-full" style={{ width: 96, height: 96, border: `2px solid ${RED}` }} />
-          <span aria-hidden className="va-ring va-ring-delay absolute rounded-full" style={{ width: 96, height: 96, border: `2px solid ${RED}` }} />
+          <span aria-hidden className="va-ring absolute rounded-full" style={{ width: 104, height: 104, border: `1.5px solid rgba(230,57,70,0.5)` }} />
+          <span aria-hidden className="va-ring va-ring-delay absolute rounded-full" style={{ width: 104, height: 104, border: `1.5px solid rgba(230,57,70,0.5)` }} />
         </>
       )}
-      {/* core */}
+
+      {/* frosted disc holding the animated mesh */}
       <span
-        className="relative rounded-full flex items-center justify-center text-white transition-transform duration-100 ease-out"
+        className="va-orb-disc relative rounded-full overflow-hidden flex items-center justify-center transition-transform duration-150 ease-out"
         style={{
-          width: 84, height: 84,
-          background: speaking
-            ? `linear-gradient(140deg, ${RED}, ${RED_DEEP})`
-            : 'linear-gradient(140deg, rgba(255,255,255,0.16), rgba(255,255,255,0.06))',
-          border: `1px solid ${speaking ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.22)'}`,
-          boxShadow: speaking ? '0 0 44px -6px rgba(230,57,70,0.75)' : 'none',
-          transform: `scale(${active ? 1 + Math.min(level, 1) * 0.1 : 1})`,
-          animation: !active ? 'va-breathe 3.2s ease-in-out infinite' : undefined,
+          width: 104, height: 104,
+          transform: `scale(${active ? 1 + v * 0.08 : 1})`,
+          animation: !active ? 'va-breathe 4s ease-in-out infinite' : undefined,
         }}
       >
-        <MicIcon size={30} />
+        <span aria-hidden className="va-blob va-blob-a" />
+        <span aria-hidden className="va-blob va-blob-b" />
+        <span aria-hidden className="va-blob va-blob-c" />
+        <span className="relative" style={{ color: speaking ? '#fff' : RED_DEEP, transition: 'color 0.25s' }}>
+          <MicIcon size={30} strokeWidth={1.7} />
+        </span>
       </span>
     </div>
   )
@@ -105,19 +119,17 @@ export function VoiceAgent() {
   const [speaking, setSpeaking] = useState(false)
   const [turns, setTurns] = useState<Turn[]>([])
   const [error, setError] = useState('')
-  const [seenBefore, setSeenBefore] = useState(true)
+  const [firstVisit, setFirstVisit] = useState(false)
 
   const clientRef = useRef<RetellWebClient | null>(null)
   const rafRef = useRef<number | null>(null)
-  const panelRef = useRef<HTMLDivElement>(null)
   const logRef = useRef<HTMLDivElement>(null)
 
-  /* Nudge first-time visitors once per session. */
   useEffect(() => {
     try {
       const key = 'alvis_voice_seen'
       if (!sessionStorage.getItem(key)) {
-        setSeenBefore(false)
+        setFirstVisit(true)
         sessionStorage.setItem(key, '1')
       }
     } catch { /* private mode */ }
@@ -134,10 +146,8 @@ export function VoiceAgent() {
     stopMeter()
   }, [stopMeter])
 
-  /* Tear down on unmount so a call never outlives the widget. */
   useEffect(() => () => { endCall() }, [endCall])
 
-  /* Escape closes the panel (and hangs up if live). */
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
@@ -147,7 +157,6 @@ export function VoiceAgent() {
     return () => window.removeEventListener('keydown', onKey)
   }, [open, endCall])
 
-  /* Keep the transcript pinned to the newest line. */
   useEffect(() => {
     if (logRef.current) logRef.current.scrollTop = logRef.current.scrollHeight
   }, [turns])
@@ -158,16 +167,13 @@ export function VoiceAgent() {
     setPhase('connecting')
 
     try {
-      // Imported lazily: the SDK touches browser-only APIs and must not run during SSR.
+      // Lazy: the SDK touches browser-only APIs and must not run during SSR.
       const { RetellWebClient } = await import('retell-client-js-sdk')
 
       const res = await fetch('/api/retell/web-call', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pagePath: window.location.pathname,
-          referrer: document.referrer,
-        }),
+        body: JSON.stringify({ pagePath: window.location.pathname, referrer: document.referrer }),
       })
 
       if (!res.ok) {
@@ -185,12 +191,10 @@ export function VoiceAgent() {
       client.on('call_started', () => {
         setPhase('live')
         setMuted(false)
-
-        // Drive the orb from the SDK analyser.
         const tick = () => {
           try {
-            const v = client.analyzerComponent?.calculateVolume?.() ?? 0
-            setLevel(Number.isFinite(v) ? v : 0)
+            const val = client.analyzerComponent?.calculateVolume?.() ?? 0
+            setLevel(Number.isFinite(val) ? val : 0)
           } catch { /* analyser not ready */ }
           rafRef.current = requestAnimationFrame(tick)
         }
@@ -219,13 +223,13 @@ export function VoiceAgent() {
         try { client.stopCall() } catch { /* noop */ }
       })
 
-      // Token is only valid for 30s — start immediately.
+      // Token expires after 30s — start immediately.
       await client.startCall({ accessToken })
     } catch (err) {
       console.error('[VoiceAgent] start failed', err)
       setError(
         err instanceof DOMException && err.name === 'NotAllowedError'
-          ? 'Microphone access was blocked. Allow it in your browser and try again.'
+          ? 'Microphone access was blocked. Allow it in your browser settings and try again.'
           : 'Could not start the call. Please try again.',
       )
       setPhase('error')
@@ -239,13 +243,18 @@ export function VoiceAgent() {
   }, [muted])
 
   const statusLabel =
-    phase === 'connecting' ? 'Connecting…'
-    : phase === 'live' ? (speaking ? 'Ava is speaking' : muted ? 'Microphone muted' : 'Listening…')
+    phase === 'connecting' ? 'Connecting'
+    : phase === 'live' ? (speaking ? 'Speaking' : muted ? 'Muted' : 'Listening')
     : phase === 'ended' ? 'Call ended'
-    : phase === 'error' ? 'Something went wrong'
-    : 'Ready when you are'
+    : phase === 'error' ? 'Not connected'
+    : 'Ready'
 
-  const lastTurns = turns.slice(-8)
+  const dotColor =
+    phase === 'live' ? '#34c759' : phase === 'connecting' ? '#ff9f0a'
+    : phase === 'error' ? RED : 'rgba(60,60,67,0.3)'
+
+  const lastTurns = turns.slice(-10)
+  const inCall = phase === 'connecting' || phase === 'live'
 
   return (
     <>
@@ -255,28 +264,22 @@ export function VoiceAgent() {
           type="button"
           onClick={() => setOpen(true)}
           aria-label="Talk to the Alvis voice assistant"
-          className="va-launcher group fixed z-[60] flex items-center gap-0 rounded-full text-white shadow-2xl transition-transform hover:scale-[1.04] active:scale-95"
-          style={{
-            right: 'clamp(16px, 4vw, 28px)',
-            bottom: 'clamp(16px, 4vw, 28px)',
-            background: `linear-gradient(135deg, ${RED}, ${RED_DEEP})`,
-            boxShadow: '0 18px 44px -12px rgba(183,16,42,0.6)',
-            padding: '14px',
-          }}
+          className="va-launcher group fixed z-[60] flex items-center rounded-full"
         >
-          {/* attention rings, first visit only */}
-          {!seenBefore && (
+          {firstVisit && (
             <>
-              <span aria-hidden className="va-ring absolute inset-0 rounded-full" style={{ border: `2px solid ${RED}` }} />
-              <span aria-hidden className="va-ring va-ring-delay absolute inset-0 rounded-full" style={{ border: `2px solid ${RED}` }} />
+              <span aria-hidden className="va-ring absolute inset-0 rounded-full" style={{ border: `1.5px solid rgba(230,57,70,0.55)` }} />
+              <span aria-hidden className="va-ring va-ring-delay absolute inset-0 rounded-full" style={{ border: `1.5px solid rgba(230,57,70,0.55)` }} />
             </>
           )}
-          <span className="relative flex items-center justify-center" style={{ width: 26, height: 26 }}>
-            <MicIcon size={22} />
+          <span
+            className="relative flex items-center justify-center rounded-full shrink-0"
+            style={{ width: 30, height: 30, color: RED_DEEP }}
+          >
+            <MicIcon size={21} strokeWidth={1.9} />
           </span>
-          {/* label expands on hover (pointer devices only) */}
-          <span className="va-launcher-label relative overflow-hidden whitespace-nowrap text-[13px] font-bold tracking-[0.02em]">
-            <span className="block pl-2 pr-1">Talk to us</span>
+          <span className="va-launcher-label overflow-hidden whitespace-nowrap text-[14px] font-semibold" style={{ color: LABEL, letterSpacing: '-0.01em' }}>
+            <span className="block pl-2.5 pr-1.5">Talk to us</span>
           </span>
         </button>
       )}
@@ -284,39 +287,37 @@ export function VoiceAgent() {
       {/* ------------------------------------------------------------- panel */}
       {open && (
         <div
-          ref={panelRef}
           role="dialog"
-          aria-modal="false"
           aria-label="Alvis voice assistant"
           className="va-panel fixed z-[60] flex flex-col overflow-hidden"
-          style={{
-            background: `linear-gradient(168deg, #0d2149 0%, ${NAVY} 46%, #071229 100%)`,
-            border: '1px solid rgba(255,255,255,0.10)',
-            boxShadow: '0 40px 90px -30px rgba(0,0,0,0.75)',
-          }}
         >
+          {/* mobile grabber */}
+          <span aria-hidden className="va-grabber" />
+
           {/* header */}
-          <div
-            className="flex items-center justify-between px-5 py-4 shrink-0"
-            style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}
-          >
-            <div className="flex items-center gap-3">
+          <div className="va-header flex items-center justify-between shrink-0">
+            <div className="flex items-center gap-2.5 min-w-0">
               <span
-                className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: `linear-gradient(140deg, ${RED}, ${RED_DEEP})` }}
+                className="flex items-center justify-center rounded-full shrink-0"
+                style={{
+                  width: 34, height: 34,
+                  background: `linear-gradient(150deg, ${RED}, ${RED_DEEP})`,
+                  color: '#fff',
+                  boxShadow: '0 4px 12px -3px rgba(230,57,70,0.55)',
+                }}
               >
-                <MicIcon size={17} />
+                <MicIcon size={16} strokeWidth={2} />
               </span>
-              <span>
-                <span className="block font-display font-extrabold text-[14px] text-white leading-tight">
+              <span className="min-w-0">
+                <span className="block font-display font-bold text-[14.5px] leading-tight truncate" style={{ color: LABEL, letterSpacing: '-0.02em' }}>
                   Alvis Assistant
                 </span>
-                <span className="flex items-center gap-1.5 text-[11px]" style={{ color: 'rgba(255,255,255,0.55)' }}>
+                <span className="flex items-center gap-1.5 text-[11.5px] font-medium" style={{ color: LABEL_2 }}>
                   <span
-                    className="w-1.5 h-1.5 rounded-full"
+                    className="rounded-full shrink-0"
                     style={{
-                      background: phase === 'live' ? '#4ade80' : phase === 'connecting' ? '#fbbf24' : 'rgba(255,255,255,0.4)',
-                      animation: phase === 'live' ? 'va-blink 1.8s ease-in-out infinite' : undefined,
+                      width: 6, height: 6, background: dotColor,
+                      animation: phase === 'live' ? 'va-blink 1.9s ease-in-out infinite' : undefined,
                     }}
                   />
                   {statusLabel}
@@ -328,67 +329,49 @@ export function VoiceAgent() {
               type="button"
               onClick={() => { endCall(); setOpen(false) }}
               aria-label="Close voice assistant"
-              className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-              style={{ color: 'rgba(255,255,255,0.65)', background: 'rgba(255,255,255,0.06)' }}
+              className="va-close flex items-center justify-center rounded-full shrink-0"
             >
               <CloseIcon />
             </button>
           </div>
 
           {/* body */}
-          <div className="flex-1 flex flex-col items-center justify-center px-5 py-5 min-h-0">
-            {/* idle / ended / error: pitch + CTA */}
-            {(phase === 'idle' || phase === 'ended' || phase === 'error') && (
-              <div className="text-center">
+          <div className="flex-1 flex flex-col min-h-0">
+            {!inCall && (
+              <div className="flex-1 flex flex-col items-center justify-center text-center px-7 py-4">
                 <Orb level={0} speaking={false} phase={phase} />
 
-                <h3 className="font-display font-extrabold text-white mt-4 mb-2" style={{ fontSize: '19px', letterSpacing: '-0.02em' }}>
-                  {phase === 'ended' ? 'Thanks for calling' : 'Ask us anything'}
+                <h3 className="font-display font-bold mt-5 mb-2" style={{ fontSize: '21px', letterSpacing: '-0.03em', color: LABEL }}>
+                  {phase === 'ended' ? 'Thanks for talking' : 'Ask us anything'}
                 </h3>
-                <p className="text-[13px] mb-5 mx-auto max-w-[260px]" style={{ lineHeight: '1.6', color: 'rgba(255,255,255,0.62)' }}>
+                <p className="text-[13.5px] mb-6 max-w-[264px]" style={{ lineHeight: '1.55', color: LABEL_2 }}>
                   {phase === 'ended'
                     ? 'Want to pick up where you left off?'
                     : 'Talk to our assistant about services, pricing or past work. It only takes a minute.'}
                 </p>
 
-                {(phase === 'error' || error) && (
-                  <p className="text-[12px] mb-4 rounded-lg px-3 py-2 mx-auto max-w-[280px]"
-                     style={{ background: 'rgba(230,57,70,0.14)', color: '#ffb3b8' }} role="alert">
-                    {error}
-                  </p>
+                {phase === 'error' && error && (
+                  <p className="va-alert text-[12.5px] mb-4 max-w-[280px]" role="alert">{error}</p>
                 )}
 
-                <button
-                  type="button"
-                  onClick={startCall}
-                  className="inline-flex items-center gap-2.5 rounded-full text-white text-[13px] font-bold pl-6 pr-2 py-2 transition-transform hover:scale-[1.03] active:scale-95"
-                  style={{ background: `linear-gradient(135deg, ${RED}, ${RED_DEEP})`, boxShadow: '0 16px 36px -14px rgba(230,57,70,0.8)' }}
-                >
-                  {phase === 'ended' || phase === 'error' ? 'Start again' : 'Start conversation'}
-                  <span className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.22)' }}>
-                    <MicIcon size={16} />
-                  </span>
+                <button type="button" onClick={startCall} className="va-cta">
+                  <span>{phase === 'ended' || phase === 'error' ? 'Start again' : 'Start conversation'}</span>
+                  <span className="va-cta-chip"><MicIcon size={15} strokeWidth={2} /></span>
                 </button>
 
-                <p className="text-[10.5px] mt-4" style={{ color: 'rgba(255,255,255,0.35)' }}>
+                <p className="text-[11px] mt-4" style={{ color: LABEL_3 }}>
                   Your browser will ask for microphone access
                 </p>
               </div>
             )}
 
-            {/* connecting / live */}
-            {(phase === 'connecting' || phase === 'live') && (
-              <div className="w-full flex flex-col items-center min-h-0 flex-1">
+            {inCall && (
+              <div className="flex-1 flex flex-col items-center min-h-0 px-5 pt-2">
                 <Orb level={level} speaking={speaking} phase={phase} />
 
-                {/* transcript */}
-                <div
-                  ref={logRef}
-                  className="va-log w-full mt-4 flex-1 min-h-0 overflow-y-auto space-y-2.5 pr-1"
-                  aria-live="polite"
-                >
+                <div ref={logRef} className="va-log w-full mt-3 flex-1 min-h-0 overflow-y-auto space-y-2" aria-live="polite">
                   {lastTurns.length === 0 && phase === 'live' && (
-                    <p className="text-center text-[12px]" style={{ color: 'rgba(255,255,255,0.4)' }}>
+                    <p className="text-center text-[12.5px] pt-3" style={{ color: LABEL_3 }}>
                       Say hello to get started
                     </p>
                   )}
@@ -396,16 +379,7 @@ export function VoiceAgent() {
                     const isAgent = t.role === 'agent' || t.role === 'assistant'
                     return (
                       <div key={i} className={`flex ${isAgent ? 'justify-start' : 'justify-end'}`}>
-                        <span
-                          className="inline-block rounded-2xl px-3.5 py-2 text-[12.5px] max-w-[85%]"
-                          style={{
-                            lineHeight: '1.5',
-                            background: isAgent ? 'rgba(255,255,255,0.09)' : `linear-gradient(135deg, ${RED}, ${RED_DEEP})`,
-                            color: isAgent ? 'rgba(255,255,255,0.9)' : '#fff',
-                            borderBottomLeftRadius: isAgent ? 6 : undefined,
-                            borderBottomRightRadius: isAgent ? undefined : 6,
-                          }}
-                        >
+                        <span className={isAgent ? 'va-bubble va-bubble-agent' : 'va-bubble va-bubble-user'}>
                           {t.content}
                         </span>
                       </div>
@@ -416,39 +390,27 @@ export function VoiceAgent() {
             )}
           </div>
 
-          {/* controls */}
-          {(phase === 'connecting' || phase === 'live') && (
-            <div
-              className="flex items-center justify-center gap-3 px-5 py-4 shrink-0"
-              style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
-            >
+          {/* FaceTime-style control row */}
+          {inCall && (
+            <div className="va-controls shrink-0">
               <button
                 type="button"
                 onClick={toggleMute}
                 disabled={phase !== 'live'}
                 aria-pressed={muted}
-                className="flex items-center gap-2 rounded-full px-4 py-2.5 text-[12px] font-bold transition-colors disabled:opacity-40"
-                style={{
-                  background: muted ? 'rgba(230,57,70,0.18)' : 'rgba(255,255,255,0.08)',
-                  color: muted ? '#ffb3b8' : 'rgba(255,255,255,0.85)',
-                }}
+                aria-label={muted ? 'Unmute microphone' : 'Mute microphone'}
+                className={`va-ctrl ${muted ? 'va-ctrl-on' : ''}`}
               >
-                {muted ? <MicOffIcon size={15} /> : <MicIcon size={15} />}
-                {muted ? 'Unmute' : 'Mute'}
+                {muted ? <MicOffIcon size={19} /> : <MicIcon size={19} />}
               </button>
 
               <button
                 type="button"
                 onClick={endCall}
-                className="flex items-center gap-2 rounded-full px-5 py-2.5 text-[12px] font-bold text-white transition-transform hover:scale-[1.03] active:scale-95"
-                style={{ background: `linear-gradient(135deg, ${RED}, ${RED_DEEP})` }}
+                aria-label="End call"
+                className="va-ctrl va-ctrl-end"
               >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91" />
-                  <path d="M2 2l20 20" />
-                </svg>
-                End call
+                <HangUpIcon size={21} />
               </button>
             </div>
           )}
