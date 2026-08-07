@@ -58,6 +58,17 @@ The `deploy.py` script automates the entire production workflow:
 - **Newsletter forms** (footer, blog sidebar, blog CTA) all share
   `components/hooks/useNewsletterSubscribe.ts`. Markup differs per placement, behaviour
   does not. Two of the three previously had no submit handler at all.
+- **Voice assistant:** Retell AI web-call widget, `components/ui/VoiceAgent.tsx`, mounted
+  globally in `app/layout.tsx`. Three routes under `app/api/retell/`:
+  `web-call` (mints a 30-second access token — never prefetch it, it expires),
+  `lead` (the agent's `capture_lead` function), `webhook` (`call_analyzed`).
+  Both inbound routes verify `X-Retell-Signature` against the **raw** body via
+  `lib/retell.ts` — parsing and re-serialising the JSON breaks the HMAC.
+  Leads are appended to `.leads/voice-leads.jsonl` **before** email is attempted, so a
+  failing SMTP account cannot lose them. `.leads/` is gitignored.
+  Agent config reference lives in `AGENTS/retell-voice-agent.md` (gitignored).
+  Needs `RETELL_API_KEY` and `RETELL_AGENT_ID` in `.env.local` **and on the server** —
+  `deploy.py` never uploads `.env.local`.
 - **No global state.** All state is local React or URL params.
 
 ## Design system
@@ -236,6 +247,16 @@ screen id (**`edit_screens` mints a new screen id every pass**).
   raw serif HTML with the `sr-only` "Skip to main content" link visible. Restart `npm run dev`.
   Verify it is only a cache issue by confirming `npm run build` still emits a full-size
   `.next/static/css/*.css` (~56KB); if it does, the config is fine.
+- **The CSP and Permissions-Policy gate the voice widget.** `next.config.mjs` must keep
+  `microphone=(self)` (not `microphone=()`, which blocks getUserMedia outright even
+  same-origin) and `connect-src` must allow `wss://*.livekit.cloud` — the Retell SDK
+  signals through LiveKit Cloud (`wss://retell-ai-4ihahnq7.livekit.cloud`). Tightening
+  either one silently kills the assistant with no visible error but a console CSP block.
+- **Retell agent versioning:** a published agent version cannot be PATCHed
+  (`422 Cannot update published agent`). Create a draft with
+  `POST /create-agent-version/{id}` with `base_version`, PATCH that version, then
+  `POST /publish-agent/{id}?version=N`. Note the new draft branches its Retell-LLM from
+  the *base* version, so prompt edits made on a different LLM version do not carry over.
 - **Google Fonts timeouts in dev are harmless.** `next/font/google` logs `AbortError` /
   "Failed to download `Plus Jakarta Sans`" and falls back to system fonts on a slow connection.
   Pages still return 200 and production builds fetch and inline the fonts correctly.

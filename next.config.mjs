@@ -18,7 +18,10 @@ const nextConfig = {
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-XSS-Protection',       value: '1; mode=block' },
           { key: 'Referrer-Policy',        value: 'strict-origin-when-cross-origin' },
-          { key: 'Permissions-Policy',             value: 'camera=(), microphone=(), geolocation=(), payment=()' },
+          // microphone=(self) is required by the Retell voice widget. With the
+          // previous `microphone=()` the browser blocks getUserMedia outright,
+          // even same-origin, and the assistant can never connect.
+          { key: 'Permissions-Policy',             value: 'camera=(), microphone=(self), geolocation=(), payment=()' },
           { key: 'Cross-Origin-Opener-Policy',   value: 'same-origin-allow-popups' },
           { key: 'Cross-Origin-Resource-Policy', value: 'same-site' },
           {
@@ -29,7 +32,14 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: blob: https:",
-              "connect-src 'self'",
+              // Retell web calls: token exchange over the API, then signalling over
+              // LiveKit Cloud. The SDK currently targets
+              // wss://retell-ai-4ihahnq7.livekit.cloud — wildcarded so a subdomain
+              // rotation on their side does not take the widget down.
+              "connect-src 'self' https://api.retellai.com https://*.retellai.com wss://*.livekit.cloud https://*.livekit.cloud",
+              // WebRTC audio playback is delivered as blob/MediaStream.
+              "media-src 'self' blob:",
+              "worker-src 'self' blob:",
               "frame-src 'none'",
               "object-src 'none'",
               "base-uri 'self'",

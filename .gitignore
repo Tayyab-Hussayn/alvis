@@ -35,3 +35,6 @@ state.json
 alvis-deploy.zip
 specs/
 __pycache__/
+
+# Voice-agent lead capture (runtime data, never commit)
+.leads/

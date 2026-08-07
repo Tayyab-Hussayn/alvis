@@ -53,6 +53,56 @@ export async function sendNewsletterSignup(email: string, source = 'website'): P
   })
 }
 
+/** Voice-agent lead → agency inbox. Shape matches VoiceLead in the Retell lead route. */
+export async function sendVoiceLeadEmail(lead: {
+  name: string
+  email: string
+  phone: string
+  company: string
+  serviceInterest: string
+  summary: string
+  callId: string
+  pagePath: string
+}): Promise<void> {
+  const row = (label: string, value: string) =>
+    value
+      ? `<tr><td style="padding:8px 0;color:#6b7280;width:150px;font-size:14px;">${label}</td>
+         <td style="padding:8px 0;color:#0d0d0d;font-weight:600;">${escapeHtml(value)}</td></tr>`
+      : ''
+
+  await transporter.sendMail({
+    from:    `"Alvis Voice Assistant" <${process.env.SMTP_USER}>`,
+    to:      process.env.CONTACT_EMAIL ?? contactEmail,
+    replyTo: lead.email,
+    subject: `Voice lead: ${lead.name}${lead.company ? ` — ${lead.company}` : ''}`,
+    html: `
+      <div style="font-family: Inter, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; background: #f9f9f7;">
+        <div style="background: #b7102a; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+          <h1 style="color: white; font-size: 22px; margin: 0;">New Lead from the Voice Assistant</h1>
+        </div>
+        <div style="background: white; border-radius: 12px; padding: 24px; border: 1px solid #e5e5e3;">
+          <table style="width: 100%; border-collapse: collapse;">
+            ${row('Name', lead.name)}
+            <tr><td style="padding:8px 0;color:#6b7280;font-size:14px;">Email</td>
+              <td style="padding:8px 0;"><a href="mailto:${escapeHtml(lead.email)}" style="color:#e63946;font-weight:600;">${escapeHtml(lead.email)}</a></td></tr>
+            ${row('Phone', lead.phone)}
+            ${row('Company', lead.company)}
+            ${row('Interested in', lead.serviceInterest)}
+          </table>
+          ${lead.summary ? `
+          <div style="margin-top:20px;padding-top:20px;border-top:1px solid #e5e5e3;">
+            <p style="color:#6b7280;font-size:14px;margin:0 0 8px;">What they said</p>
+            <p style="color:#0d0d0d;line-height:1.6;white-space:pre-wrap;margin:0;">${escapeHtml(lead.summary)}</p>
+          </div>` : ''}
+        </div>
+        <p style="color:#a1a1aa;font-size:12px;text-align:center;margin-top:24px;">
+          Captured on ${escapeHtml(lead.pagePath)} · call ${escapeHtml(lead.callId || 'n/a')} · ${siteUrl}
+        </p>
+      </div>
+    `,
+  })
+}
+
 export async function sendContactEmail(data: ContactFormData): Promise<void> {
   const { name, email, phone, subject, message } = data
 

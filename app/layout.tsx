@@ -6,6 +6,7 @@ import { CustomCursor }   from '@/components/ui/CustomCursor'
 import { GSAPProvider }   from '@/components/animations/GSAPProvider'
 import { PageTransition } from '@/components/animations/PageTransition'
 import { Preloader }      from '@/components/ui/Preloader'
+import { VoiceAgent }     from '@/components/ui/VoiceAgent'
 import { ImageProtection } from '@/components/ImageProtection'
 import {
   siteUrl, siteName, contactEmail, contactPhone, address, socialLinks,
@@ -147,6 +148,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </PageTransition>
           </main>
           <Footer />
+          <VoiceAgent />
         </GSAPProvider>
       </body>
     </html>
