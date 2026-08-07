@@ -62,13 +62,19 @@ The `deploy.py` script automates the entire production workflow:
   globally in `app/layout.tsx`. Three routes under `app/api/retell/`:
   `web-call` (mints a 30-second access token — never prefetch it, it expires),
   `lead` (the agent's `capture_lead` function), `webhook` (`call_analyzed`).
-  Both inbound routes verify `X-Retell-Signature` against the **raw** body via
-  `lib/retell.ts` — parsing and re-serialising the JSON breaks the HMAC.
+  Both inbound routes verify `X-Retell-Signature` via `lib/retell.ts`, which delegates
+  to `retell-sdk`'s `verify()` — see the signature gotcha below before touching it.
+  Always pass the **raw** body; re-serialising parsed JSON changes the bytes.
   Leads are appended to `.leads/voice-leads.jsonl` **before** email is attempted, so a
   failing SMTP account cannot lose them. `.leads/` is gitignored.
+  The call flow rings first and connects after (`RING_MIN_MS` in `VoiceAgent.tsx`,
+  currently 4000ms): Retell speaks its greeting the instant it joins, so connecting
+  during the ring would talk over the ringtone or clip the opening line.
+  The ringback is synthesized in `lib/ringtone.ts` (Web Audio, no audio file).
   Agent config reference lives in `AGENTS/retell-voice-agent.md` (gitignored).
   Needs `RETELL_API_KEY` and `RETELL_AGENT_ID` in `.env.local` **and on the server** —
-  `deploy.py` never uploads `.env.local`.
+  `deploy.py` never uploads `.env.local`. Optional `RETELL_AGENT_VERSION` pins the
+  agent version (see versioning gotcha).
 - **No global state.** All state is local React or URL params.
 
 ## Design system
@@ -223,7 +229,18 @@ screen id (**`edit_screens` mints a new screen id every pass**).
   Watch the crop height so you don't catch the next section's pills/cards in the bleed.
 
 ## Known gotchas
+- **OUTSTANDING — outbound email is broken in production.** SMTP auth fails with
+  `535 5.7.8 Authentication failed` because `SMTP_USER` is a **Gmail address** while
+  `SMTP_HOST` is `mail.privateemail.com` (Namecheap). You cannot authenticate to Namecheap's
+  mail server with a Gmail account. Nothing sends: contact form, newsletter signups, and
+  voice-agent lead notifications all fail. Fix on the server in `~/alvis/.env.local` —
+  `SMTP_USER` and `CONTACT_EMAIL` must be `info@alvismarketing.com` with that mailbox's own
+  password. Until then, voice leads survive only in `.leads/voice-leads.jsonl` on the server
+  and the contact form silently loses every submission.
 - **cPanel deploy:** Use `python3 deploy.py` to push to production. It handles the full build → zip → upload → extract → restart cycle. The `server.js` file is the production entry point (not `npm start`).
+- **`.env.local` is never uploaded by `deploy.py`** (by design — it must not clobber server
+  secrets). Any new env var has to be added to `~/alvis/.env.local` by hand or the feature
+  500s in production while working fine locally. Bit us with `RETELL_API_KEY`.
 - **`speech-bubble::after`** in `styles/globals.css` is hardcoded `border-top: 15px solid #ffffff`.
   If the testimonials Card 7 background changes from white, this triangle will be the wrong color.
 - **`ProcessCascading.tsx` zigzag layout is coordinate-coupled.** On `lg+` the four step cards
@@ -252,11 +269,29 @@ screen id (**`edit_screens` mints a new screen id every pass**).
   same-origin) and `connect-src` must allow `wss://*.livekit.cloud` — the Retell SDK
   signals through LiveKit Cloud (`wss://retell-ai-4ihahnq7.livekit.cloud`). Tightening
   either one silently kills the assistant with no visible error but a console CSP block.
+- **Never hand-roll the Retell webhook signature.** It is *not* `HMAC-SHA256(apiKey, body)`.
+  The header is `v=<timestamp>,d=<hex>`, the digest covers `body + timestamp`, and there
+  is a five-minute replay window. Retell does not publish the algorithm; the docs only say
+  to use the SDK. A hand-written HMAC over the body alone returns 401 for every genuine
+  request while still passing your own tests — which is exactly how it shipped once and
+  silently 401'd 28 calls' worth of webhooks. Use `retell-sdk`'s `verify()`; it is async,
+  so `await` it. To generate a valid test signature, use the SDK's `sign()`.
+- **Retell serves the LATEST agent version, published or not.** `create-web-call` without
+  an explicit `agent_version` ignores both the publish flag and the version selected in the
+  dashboard UI. An unfinished draft is live to visitors the moment it exists. Confirmed
+  against real call records. Set `RETELL_AGENT_VERSION` to pin the site to a known-good
+  version while editing. Also note the dashboard's version *titles* are free text and drift
+  from the real numbers (a version titled "v06" was actually V7) — trust the API, not the label.
 - **Retell agent versioning:** a published agent version cannot be PATCHed
   (`422 Cannot update published agent`). Create a draft with
   `POST /create-agent-version/{id}` with `base_version`, PATCH that version, then
   `POST /publish-agent/{id}?version=N`. Note the new draft branches its Retell-LLM from
   the *base* version, so prompt edits made on a different LLM version do not carry over.
+- **Retell knowledge bases are multipart, not JSON.** `create-knowledge-base` takes
+  `multipart/form-data` where `knowledge_base_urls` / `knowledge_base_texts` are
+  **JSON-encoded strings**, not repeated `field[]` entries. A JSON body returns a bare
+  `500 Internal Server Error`. Adding a text source to an existing KB also 500s — create a
+  second KB instead; an agent can have several attached.
 - **Google Fonts timeouts in dev are harmless.** `next/font/google` logs `AbortError` /
   "Failed to download `Plus Jakarta Sans`" and falls back to system fonts on a slow connection.
   Pages still return 200 and production builds fetch and inline the fonts correctly.
