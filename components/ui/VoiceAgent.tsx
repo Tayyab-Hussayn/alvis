@@ -13,8 +13,12 @@ type Phase = 'idle' | 'ringing' | 'connecting' | 'live' | 'ended' | 'error'
  * Retell speaks its greeting the moment it joins, so connecting during the ring
  * would mean either talking over the ringtone or clipping the opening line.
  * Ringing first gives a clean "ring → pickup → hello", exactly like a real call.
+ *
+ * 4s spans just under two 2.2s ring cycles, landing in a quiet part of the
+ * second one — only the A5 tail is still sounding, and it is 80% through its
+ * decay — so the stop fade has almost nothing to cut off.
  */
-const RING_MIN_MS = 3000
+const RING_MIN_MS = 4000
 
 interface Turn {
   role: string
