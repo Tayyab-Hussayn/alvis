@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
   const raw = await req.text()
   const signature = req.headers.get('x-retell-signature')
 
-  if (!verifyRetellSignature(raw, signature)) {
+  if (!(await verifyRetellSignature(raw, signature))) {
     console.warn('[Retell webhook] Rejected request with invalid signature')
     return NextResponse.json({ error: 'Invalid signature.' }, { status: 401 })
   }

@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+import { verify as retellVerify } from 'retell-sdk'
 
 /**
  * Server-side Retell helpers.
@@ -28,23 +28,24 @@ export function isRetellConfigured(): boolean {
 /**
  * Verify the `X-Retell-Signature` header on inbound function/webhook requests.
  *
- * Retell signs the raw request body with the account API key using HMAC-SHA256.
- * Compare against the *raw* body string — re-serialising parsed JSON changes the
- * bytes and the signature will never match.
+ * Delegates to the official SDK. Retell's scheme is not merely
+ * `HMAC-SHA256(apiKey, body)` — the header is `v=<timestamp>,d=<hex>` and the
+ * digest covers `body + timestamp`, with a five-minute replay window. A
+ * hand-rolled HMAC over the body alone silently rejects every genuine request,
+ * which is exactly what happened here before this was switched to the SDK.
+ *
+ * Always pass the *raw* body: re-serialising parsed JSON changes the bytes and
+ * the digest will not match.
  */
-export function verifyRetellSignature(rawBody: string, signature: string | null): boolean {
+export async function verifyRetellSignature(
+  rawBody: string,
+  signature: string | null,
+): Promise<boolean> {
   const { apiKey } = getRetellConfig()
   if (!apiKey || !signature) return false
 
-  const expected = crypto.createHmac('sha256', apiKey).update(rawBody).digest('hex')
-
-  // Both sides must be equal length for timingSafeEqual, and the header may carry
-  // a `v=` style prefix depending on account settings.
-  const provided = signature.includes('=') ? signature.split('=').pop()!.trim() : signature.trim()
-  if (provided.length !== expected.length) return false
-
   try {
-    return crypto.timingSafeEqual(Buffer.from(provided, 'hex'), Buffer.from(expected, 'hex'))
+    return await retellVerify(rawBody, apiKey, signature)
   } catch {
     return false
   }
